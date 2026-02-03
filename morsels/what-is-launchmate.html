@@ -25,7 +25,6 @@
 .box p{font-size:.95rem;color:#666}
 .num{font-size:4rem;font-weight:800;color:#6366f1}
 .numl{font-size:1rem;color:#666;margin-top:4px}
-.q{font-size:2.2rem;line-height:1.6;max-width:800px;margin:0 auto;font-style:italic;opacity:.9}
 .bul{font-size:1.6rem;line-height:2.2;text-align:left;display:inline-block}
 .bul span{opacity:.5;margin-right:12px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:60px;text-align:left;align-items:center}
@@ -36,52 +35,54 @@
 .nav{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
 .nb{background:#222;border:none;color:#fff;padding:12px 24px;border-radius:50px;cursor:pointer;font-weight:600}.nb:hover{background:#444}
 .ct{position:fixed;bottom:40px;right:40px;color:#999;font-weight:600}
+.dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:100}
+.dot{width:12px;height:12px;border-radius:50%;background:rgba(0,0,0,.2);cursor:pointer;transition:all .2s;position:relative}
+.dot:hover{transform:scale(1.3)}
+.dot.on{background:#6366f1;transform:scale(1.2)}
+.dot .tip{position:absolute;right:24px;top:50%;transform:translateY(-50%);background:#222;color:#fff;padding:8px 14px;border-radius:6px;font-size:.8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.dot:hover .tip{opacity:1}
+.prog{position:fixed;top:0;left:0;height:3px;background:#6366f1;transition:width .3s;z-index:100}
 </style>
 </head>
 <body>
+<div class="prog" id="prog"></div>
+<div class="dots" id="dots"></div>
 <div class="w" id="w">
-
-<section class="s p"><div class="c">
+<section class="s p" data-t="What is LaunchMate?"><div class="c">
 <div class="ic">🚀</div>
 <h1 class="t">What is LaunchMate?</h1>
 <p class="sub">AI-powered startup accountability for ZIP Launchpad</p>
 </div></section>
-
-<section class="s gr"><div class="c">
+<section class="s gr" data-t="The Problem"><div class="c">
 <div class="ic">😩</div>
 <h1 class="t" style="font-size:3rem">The Problem</h1>
-<p class="q">"Founders build in isolation, avoid validation, and lose momentum between mentor check-ins"</p>
+<p style="font-size:1.8rem;max-width:700px;margin:0 auto;color:#666;font-style:italic">"Founders build in isolation, avoid validation, and lose momentum between mentor check-ins"</p>
 </div></section>
-
-<section class="s b"><div class="c">
+<section class="s b" data-t="AI Mentor Agent"><div class="c">
 <div class="ic">🤖</div>
 <h1 class="t">AI Mentor Agent</h1>
 <p class="sub">Every founder gets a personalized AI that remembers everything</p>
 </div></section>
-
-<section class="s gr"><div class="c">
+<section class="s gr" data-t="What It Does"><div class="c">
 <h1 class="t" style="font-size:2.8rem;margin-bottom:40px">What It Does</h1>
 <div class="grid">
-<div class="box"><div class="ic">📋</div><h3>Weekly Check-ins</h3><p>Structured momentum tracking with accountability</p></div>
-<div class="box"><div class="ic">🧠</div><h3>Persistent Memory</h3><p>Remembers your startup, goals, and history</p></div>
-<div class="box"><div class="ic">🎯</div><h3>Lean Methodology</h3><p>Pushes founders toward real user validation</p></div>
+<div class="box"><div class="ic">📋</div><h3>Weekly Check-ins</h3><p>Structured momentum tracking</p></div>
+<div class="box"><div class="ic">🧠</div><h3>Persistent Memory</h3><p>Remembers your startup history</p></div>
+<div class="box"><div class="ic">🎯</div><h3>Lean Methodology</h3><p>Pushes real user validation</p></div>
 </div>
 </div></section>
-
-<section class="s g"><div class="c">
+<section class="s g" data-t="The Neal Test"><div class="c">
 <div class="ic">💡</div>
 <h1 class="t">The Neal Test</h1>
 <p class="sub">Can you deliver your service manually and get paid?</p>
 </div></section>
-
-<section class="s gr"><div class="c split">
+<section class="s gr" data-t="Real Validation"><div class="c split">
 <div>
 <h1 class="t">Real Validation</h1>
 <div class="bul">
 <p><span>1.</span> Do the work yourself</p>
 <p><span>2.</span> No technology yet</p>
 <p><span>3.</span> Get customers to pay</p>
-<p><span>4.</span> Learn what matters</p>
 </div>
 </div>
 <div class="crd">
@@ -91,55 +92,61 @@
 <p style="margin-top:16px;color:#10b981;font-weight:600">100% referral conversion</p>
 </div>
 </div></section>
-
-<section class="s o"><div class="c">
+<section class="s o" data-t="By The Numbers"><div class="c">
 <div class="ic">📊</div>
 <h1 class="t">By The Numbers</h1>
 </div></section>
-
-<section class="s gr"><div class="c">
+<section class="s gr" data-t="Stats"><div class="c">
 <div class="grid">
-<div class="box"><div class="num">67%</div><div class="numl">would be disappointed if LaunchMate stopped</div></div>
-<div class="box"><div class="num">80+</div><div class="numl">founder agents deployed</div></div>
-<div class="box"><div class="num">24/7</div><div class="numl">always-available mentor</div></div>
+<div class="box"><div class="num">67%</div><div class="numl">would miss LaunchMate</div></div>
+<div class="box"><div class="num">80+</div><div class="numl">founder agents</div></div>
+<div class="box"><div class="num">24/7</div><div class="numl">always available</div></div>
 </div>
 </div></section>
-
-<section class="s d"><div class="c">
+<section class="s d" data-t="The Stack"><div class="c">
 <h1 class="t" style="font-size:2.8rem;margin-bottom:40px">The Stack</h1>
 <div class="row">
 <div class="pill">🧠 Letta AI</div>
-<div class="pill">💬 Chat Interface</div>
-<div class="pill">📝 Memory System</div>
-<div class="pill">🔗 Tool Ecosystem</div>
+<div class="pill">💬 Chat</div>
+<div class="pill">📝 Memory</div>
+<div class="pill">🔗 Tools</div>
 </div>
 </div></section>
-
-<section class="s gr"><div class="c">
+<section class="s gr" data-t="Why It Matters"><div class="c">
 <h1 class="t" style="font-size:2.8rem;margin-bottom:40px">Why It Matters</h1>
 <div class="grid">
-<div class="box"><div class="ic">⏰</div><h3>Scale Mentorship</h3><p>Support more founders without more staff</p></div>
-<div class="box"><div class="ic">📈</div><h3>Track Progress</h3><p>Visibility into founder momentum</p></div>
-<div class="box"><div class="ic">🏆</div><h3>Better Outcomes</h3><p>More validation, less building in the dark</p></div>
+<div class="box"><div class="ic">⏰</div><h3>Scale Mentorship</h3><p>More founders, same staff</p></div>
+<div class="box"><div class="ic">📈</div><h3>Track Progress</h3><p>Visibility into momentum</p></div>
+<div class="box"><div class="ic">🏆</div><h3>Better Outcomes</h3><p>More validation, less guessing</p></div>
 </div>
 </div></section>
-
-<section class="s p"><div class="c">
+<section class="s p" data-t="Questions?"><div class="c">
 <h1 class="t">Questions?</h1>
-<p class="sub">LaunchMate • Built by ZIP Launchpad students</p>
+<p class="sub">LaunchMate • Built by ZIP students</p>
 </div></section>
-
 </div>
 <div class="nav"><button class="nb" onclick="prev()">←</button><button class="nb" onclick="next()">→</button></div>
-<div class="ct" id="ct">1/12</div>
+<div class="ct" id="ct">1/11</div>
 <script>
-const w=document.getElementById('w'),tot=12;let cur=0;
-function go(n){cur=n;w.children[n].scrollIntoView({behavior:'smooth'});upd()}
+const w=document.getElementById('w'),dots=document.getElementById('dots'),prog=document.getElementById('prog'),slides=[...document.querySelectorAll('.s')],tot=slides.length;
+let cur=0;
+slides.forEach((s,i)=>{
+const d=document.createElement('div');
+d.className='dot'+(i===0?' on':'');
+d.innerHTML=`<span class="tip">${s.dataset.t}</span>`;
+d.onclick=()=>go(i);
+dots.appendChild(d);
+});
+function go(n){cur=n;slides[n].scrollIntoView({behavior:'smooth'});upd()}
 function prev(){if(cur>0)go(cur-1)}
 function next(){if(cur<tot-1)go(cur+1)}
-function upd(){document.getElementById('ct').textContent=(cur+1)+'/'+tot}
+function upd(){
+document.getElementById('ct').textContent=(cur+1)+'/'+tot;
+prog.style.width=((cur+1)/tot*100)+'%';
+document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+}
 w.addEventListener('scroll',()=>{cur=Math.round(w.scrollLeft/window.innerWidth);upd()});
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev()});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev();});
 </script>
 </body>
 </html>
