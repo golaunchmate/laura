@@ -6,8 +6,10 @@
 <title>What is LaunchMate?</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#fff;overflow:hidden;height:100vh}
-.w{display:flex;height:100vh;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth}.w::-webkit-scrollbar{display:none}
-.s{min-width:100vw;height:100vh;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;padding:60px}
+.tabs{position:fixed;top:0;left:0;right:0;display:flex;background:#f8f8f8;border-bottom:1px solid #e0e0e0;z-index:100;padding:0 30px}
+.tab{padding:14px 20px;font-size:.8rem;color:#888;cursor:pointer;font-weight:500}.tab:hover{color:#333}.tab.on{color:#6366f1;border-bottom:3px solid #6366f1}
+.w{display:flex;height:100vh;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-top:48px}.w::-webkit-scrollbar{display:none}
+.s{min-width:100vw;height:calc(100vh - 48px);scroll-snap-align:start;display:flex;align-items:center;justify-content:center;padding:60px}
 .s.p{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .s.b{background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff}
 .s.g{background:linear-gradient(135deg,#10b981,#34d399);color:#fff}
@@ -41,10 +43,17 @@
 .dot.on{background:#6366f1;transform:scale(1.2)}
 .dot .tip{position:absolute;right:24px;top:50%;transform:translateY(-50%);background:#222;color:#fff;padding:8px 14px;border-radius:6px;font-size:.8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
 .dot:hover .tip{opacity:1}
-.prog{position:fixed;top:0;left:0;height:3px;background:#6366f1;transition:width .3s;z-index:100}
+.prog{position:fixed;top:48px;left:0;height:3px;background:#6366f1;transition:width .3s;z-index:100}
 </style>
 </head>
 <body>
+<div class="tabs">
+<div class="tab on" onclick="go(0)">Intro</div>
+<div class="tab" onclick="go(2)">Solution</div>
+<div class="tab" onclick="go(4)">Neal Test</div>
+<div class="tab" onclick="go(6)">Numbers</div>
+<div class="tab" onclick="go(9)">Impact</div>
+</div>
 <div class="prog" id="prog"></div>
 <div class="dots" id="dots"></div>
 <div class="w" id="w">
@@ -128,7 +137,7 @@
 <div class="nav"><button class="nb" onclick="prev()">←</button><button class="nb" onclick="next()">→</button></div>
 <div class="ct" id="ct">1/11</div>
 <script>
-const w=document.getElementById('w'),dots=document.getElementById('dots'),prog=document.getElementById('prog'),slides=[...document.querySelectorAll('.s')],tot=slides.length;
+const w=document.getElementById('w'),dots=document.getElementById('dots'),prog=document.getElementById('prog'),slides=[...document.querySelectorAll('.s')],tabs=[...document.querySelectorAll('.tab')],tot=slides.length;
 let cur=0;
 slides.forEach((s,i)=>{
 const d=document.createElement('div');
@@ -144,9 +153,10 @@ function upd(){
 document.getElementById('ct').textContent=(cur+1)+'/'+tot;
 prog.style.width=((cur+1)/tot*100)+'%';
 document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+tabs.forEach(t=>{const ti=parseInt(t.getAttribute('onclick').match(/\d+/)[0]);t.classList.toggle('on',ti<=cur);});
 }
 w.addEventListener('scroll',()=>{cur=Math.round(w.scrollLeft/window.innerWidth);upd()});
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev();});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}if(e.key==='ArrowLeft')prev();});
 </script>
 </body>
 </html>
