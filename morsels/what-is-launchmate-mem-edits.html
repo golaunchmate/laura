@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What is LaunchMate?</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:#fff;overflow:hidden;height:100vh}
+.tabs{position:fixed;top:0;left:0;right:0;display:flex;background:#f8f8f8;border-bottom:1px solid #e0e0e0;z-index:100;padding:0 30px}
+.tab{padding:14px 20px;font-size:.8rem;color:#888;cursor:pointer;font-weight:500}.tab:hover{color:#333}.tab.on{color:#6366f1;border-bottom:3px solid #6366f1}
+.w{display:flex;height:100vh;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-top:48px}.w::-webkit-scrollbar{display:none}
+.s{min-width:100vw;height:calc(100vh - 48px);scroll-snap-align:start;display:flex;align-items:center;justify-content:center;padding:60px}
+.s.p{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.s.b{background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff}
+.s.g{background:linear-gradient(135deg,#10b981,#34d399);color:#fff}
+.s.o{background:linear-gradient(135deg,#f97316,#fbbf24);color:#fff}
+.s.d{background:#1e1e2e;color:#fff}
+.s.gr{background:#f5f5f5}
+.c{max-width:1000px;width:100%;text-align:center}
+.t{font-size:4.5rem;font-weight:800;line-height:1.1;margin-bottom:20px}
+.sub{font-size:1.6rem;opacity:.85}
+.ic{font-size:6rem;margin-bottom:24px}
+</style>
+</head>
+
+<style>
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.box{background:#fff;border-radius:16px;padding:32px;box-shadow:0 8px 30px rgba(0,0,0,.1);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.box:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
+.box .ic{font-size:3rem;margin-bottom:12px}
+.box h3{font-size:1.2rem;margin-bottom:8px}
+.box p{font-size:.95rem;color:#666}
+.box .tip{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #eee;font-size:.85rem;color:#6366f1}
+.box:hover .tip{display:block}
+.num{font-size:4rem;font-weight:800;color:#6366f1}
+.numl{font-size:1rem;color:#666;margin-top:4px}
+.bul{font-size:1.6rem;line-height:2.2;text-align:left;display:inline-block}
+.bul span{opacity:.5;margin-right:12px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;text-align:left;align-items:center}
+.split .t{font-size:3rem}
+.crd{background:#fff;border-radius:20px;padding:40px;box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.row{display:flex;gap:20px;justify-content:center;margin-top:40px;flex-wrap:wrap}
+.pill{background:#fff;color:#333;padding:16px 28px;border-radius:50px;font-weight:600;font-size:1.1rem;cursor:pointer;transition:all .2s}
+.pill:hover{transform:scale(1.05);background:#6366f1;color:#fff}
+</style>
+
+<style>
+.nav{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
+.nb{background:#222;border:none;color:#fff;padding:12px 24px;border-radius:50px;cursor:pointer;font-weight:600}.nb:hover{background:#444}
+.ct{position:fixed;bottom:40px;right:40px;color:#999;font-weight:600}
+.dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:100}
+.dot{width:12px;height:12px;border-radius:50%;background:rgba(0,0,0,.2);cursor:pointer;transition:all .2s;position:relative}
+.dot:hover{transform:scale(1.3)}
+.dot.on{background:#6366f1;transform:scale(1.2)}
+.dot .tip{position:absolute;right:24px;top:50%;transform:translateY(-50%);background:#222;color:#fff;padding:8px 14px;border-radius:6px;font-size:.8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.dot:hover .tip{opacity:1}
+.prog{position:fixed;top:48px;left:0;height:3px;background:#6366f1;transition:width .3s;z-index:100}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s}
+.reveal.vis{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.reveal{transition:none;transform:none;opacity:1}*{animation:none!important}}
+</style>
+
+<body>
+<div class="tabs">
+<div class="tab on" onclick="go(0)">Intro</div>
+<div class="tab" onclick="go(2)">Solution</div>
+<div class="tab" onclick="go(4)">Neal Test</div>
+<div class="tab" onclick="go(6)">Numbers</div>
+<div class="tab" onclick="go(9)">Impact</div>
+</div>
+<div class="prog" id="prog"></div>
+<div class="dots" id="dots"></div>
+<div class="w" id="w">
+<section class="s p" data-t="What is LaunchMate?"><div class="c">
+<div class="ic reveal">🚀</div>
+<h1 class="t reveal">What is LaunchMate?</h1>
+<p class="sub reveal">AI-powered startup accountability for ZIP Launchpad</p>
+</div></section>
+<section class="s gr" data-t="The Problem"><div class="c">
+<div class="ic reveal">😩</div>
+<h1 class="t reveal" style="font-size:3rem">The Problem</h1>
+<p class="reveal" style="font-size:1.8rem;max-width:700px;margin:0 auto;color:#666;font-style:italic">"Founders build in isolation, avoid validation, and lose momentum between mentor check-ins"</p>
+</div></section>
+<section class="s b" data-t="AI Mentor Agent"><div class="c">
+<div class="ic reveal">🤖</div>
+<h1 class="t reveal">AI Mentor Agent</h1>
+<p class="sub reveal">Every founder gets a personalized AI that remembers everything</p>
+</div></section>
+
+<section class="s gr" data-t="What It Does"><div class="c">
+<h1 class="t reveal" style="font-size:2.8rem;margin-bottom:40px">What It Does</h1>
+<div class="grid">
+<div class="box reveal"><div class="ic">📋</div><h3>Weekly Check-ins</h3><p>Structured momentum tracking</p><div class="tip">3 questions: What tried? What learned? What's next?</div></div>
+<div class="box reveal"><div class="ic">🧠</div><h3>Persistent Memory</h3><p>Remembers your startup history</p><div class="tip">Never repeat yourself - agent knows your context</div></div>
+<div class="box reveal"><div class="ic">🎯</div><h3>Lean Methodology</h3><p>Pushes real user validation</p><div class="tip">Stop building, start validating with customers</div></div>
+</div>
+</div></section>
+<section class="s g" data-t="The Neal Test"><div class="c">
+<div class="ic reveal">💡</div>
+<h1 class="t reveal">The Neal Test</h1>
+<p class="sub reveal">Can you deliver your service manually and get paid?</p>
+</div></section>
+<section class="s gr" data-t="Real Validation"><div class="c split">
+<div>
+<h1 class="t reveal">Real Validation</h1>
+<div class="bul reveal">
+<p><span>1.</span> Do the work yourself</p>
+<p><span>2.</span> No technology yet</p>
+<p><span>3.</span> Get customers to pay</p>
+</div>
+</div>
+<div class="crd reveal">
+<p style="font-size:1.1rem;color:#666;margin-bottom:16px">Example: Wasay (TransferTrack)</p>
+<div class="num">9</div>
+<div class="numl">paying customers at $5 each</div>
+<p style="margin-top:16px;color:#10b981;font-weight:600">100% referral conversion</p>
+</div>
+</div></section>
+
+<section class="s o" data-t="By The Numbers"><div class="c">
+<div class="ic reveal">📊</div>
+<h1 class="t reveal">By The Numbers</h1>
+</div></section>
+<section class="s gr" data-t="Stats"><div class="c">
+<div class="grid">
+<div class="box reveal"><div class="num">67%</div><div class="numl">would miss LaunchMate</div><div class="tip">From user survey - strong PMF signal</div></div>
+<div class="box reveal"><div class="num">80+</div><div class="numl">founder agents</div><div class="tip">Deployed across ZIP cohorts</div></div>
+<div class="box reveal"><div class="num">24/7</div><div class="numl">always available</div><div class="tip">Unlike human mentors!</div></div>
+</div>
+</div></section>
+<section class="s d" data-t="The Stack"><div class="c">
+<h1 class="t reveal" style="font-size:2.8rem;margin-bottom:40px">The Stack</h1>
+<div class="row">
+<div class="pill reveal">🧠 Letta AI</div>
+<div class="pill reveal">💬 Chat</div>
+<div class="pill reveal">📝 Memory</div>
+<div class="pill reveal">🔗 Tools</div>
+</div>
+</div></section>
+<section class="s gr" data-t="Why It Matters"><div class="c">
+<h1 class="t reveal" style="font-size:2.8rem;margin-bottom:40px">Why It Matters</h1>
+<div class="grid">
+<div class="box reveal"><div class="ic">⏰</div><h3>Scale Mentorship</h3><p>More founders, same staff</p><div class="tip">AI handles daily touchpoints</div></div>
+<div class="box reveal"><div class="ic">📈</div><h3>Track Progress</h3><p>Visibility into momentum</p><div class="tip">See who's validating vs building in isolation</div></div>
+<div class="box reveal"><div class="ic">🏆</div><h3>Better Outcomes</h3><p>More validation, less guessing</p><div class="tip">Founders get nudged toward customers</div></div>
+</div>
+</div></section>
+<section class="s p" data-t="Questions?"><div class="c">
+<h1 class="t reveal">Questions?</h1>
+<p class="sub reveal">LaunchMate • Built by ZIP students</p>
+</div></section>
+</div>
+
+<div class="nav"><button class="nb" onclick="prev()">←</button><button class="nb" onclick="next()">→</button></div>
+<div class="ct" id="ct">1/11</div>
+<script>
+const w=document.getElementById('w'),dots=document.getElementById('dots'),prog=document.getElementById('prog'),sl=[...document.querySelectorAll('.s')],tabs=[...document.querySelectorAll('.tab')],tot=sl.length;
+let cur=0,tx=0,ty=0;
+sl.forEach((s,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' on':'');d.innerHTML=`<span class="tip">${s.dataset.t}</span>`;d.onclick=()=>go(i);dots.appendChild(d);});
+function go(n){cur=n;sl[n].scrollIntoView({behavior:'smooth'});upd()}
+function prev(){if(cur>0)go(cur-1)}
+function next(){if(cur<tot-1)go(cur+1)}
+function upd(){document.getElementById('ct').textContent=(cur+1)+'/'+tot;prog.style.width=((cur+1)/tot*100)+'%';document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));tabs.forEach(t=>{const ti=parseInt(t.getAttribute('onclick').match(/\d+/)[0]);t.classList.toggle('on',ti<=cur);});}
+w.addEventListener('scroll',()=>{cur=Math.round(w.scrollLeft/window.innerWidth);upd();anim();});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}if(e.key==='ArrowLeft')prev();});
+w.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+w.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){dx<0?next():prev();}},{passive:true});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.querySelectorAll('.reveal').forEach(r=>r.classList.add('vis'));}),{threshold:.3});
+sl.forEach(s=>obs.observe(s));
+function anim(){sl[cur].querySelectorAll('.reveal').forEach(r=>r.classList.add('vis'));}
+anim();
+</script>
+</body>
+</html>
