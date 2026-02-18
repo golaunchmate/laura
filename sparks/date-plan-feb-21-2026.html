@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craig's Date Plan for You ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 50%, #ffe4f1 100%);
+  color: #4a2c3e;
+  line-height: 1.7;
+  padding: 40px 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(219, 112, 147, 0.15);
+  overflow: hidden;
+}
+.header {
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  padding: 60px 40px;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+.header::before {
+  content: "💕";
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  font-size: 2rem;
+  opacity: 0.3;
+}
+.header::after {
+  content: "✨";
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 2rem;
+  opacity: 0.3;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  font-weight: 300;
+}
+.content {
+  padding: 50px 40px;
+}
+.meta {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, #fff5f7, #ffeef8);
+  border-radius: 16px;
+  border-left: 4px solid #ff6b9d;
+}
+.meta-item {
+  flex: 1;
+}
+.meta-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #c44569;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.meta-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #4a2c3e;
+}
+.summary {
+  background: #fff;
+  padding: 35px;
+  border-radius: 16px;
+  border: 2px solid #ffe4f1;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 15px rgba(219, 112, 147, 0.08);
+}
+.summary-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: #c44569;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.summary-title::before {
+  content: "🌹";
+  font-size: 1.5rem;
+}
+.summary p {
+  font-size: 1.05rem;
+  color: #5a3c4e;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 50px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #c44569;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.stop {
+  background: linear-gradient(135deg, #fff 0%, #fffbfc 100%);
+  padding: 35px;
+  border-radius: 20px;
+  margin-bottom: 35px;
+  border: 2px solid #ffe4f1;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(219, 112, 147, 0.1);
+}
+.stop::before {
+  content: attr(data-number);
+  position: absolute;
+  top: -15px;
+  left: 30px;
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(196, 69, 105, 0.3);
+}
+.stop-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: #4a2c3e;
+  margin-bottom: 8px;
+  margin-top: 10px;
+}
+.stop-location {
+  color: #c44569;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.stop-phone {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.vibe {
+  background: #fff5f7;
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  border-left: 3px solid #ff6b9d;
+  font-style: italic;
+  color: #5a3c4e;
+}
+.detail-section {
+  margin: 20px 0;
+}
+.detail-title {
+  font-weight: 600;
+  color: #c44569;
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+}
+.detail-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+.detail-section li {
+  padding-left: 25px;
+  position: relative;
+  margin-bottom: 8px;
+  color: #5a3c4e;
+}
+.detail-section li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #ff6b9d;
+  font-weight: 600;
+}
+.recommendations {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin: 40px 0;
+}
+.rec-card {
+  background: linear-gradient(135deg, #fff5f7, #ffeef8);
+  padding: 25px;
+  border-radius: 16px;
+  border: 2px solid #ffe4f1;
+}
+.rec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #c44569;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.rec-item {
+  margin-bottom: 18px;
+}
+.rec-number {
+  display: inline-block;
+  background: #ff6b9d;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-right: 8px;
+}
+.rec-text {
+  color: #5a3c4e;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.budget {
+  background: linear-gradient(135deg, #c44569, #ff6b9d);
+  color: white;
+  padding: 35px;
+  border-radius: 20px;
+  margin-top: 50px;
+  text-align: center;
+}
+.budget-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+.budget-items {
+  display: flex;
+  justify-content: space-around;
+  margin: 25px 0;
+}
+.budget-item {
+  text-align: center;
+}
+.budget-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+.budget-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.budget-total {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+.weather {
+  background: #e8f4fd;
+  border: 2px solid #c4e1f5;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 30px 0;
+  color: #2c5f8d;
+}
+.backup {
+  background: #fff9e6;
+  border: 2px solid #ffd966;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin: 15px 0;
+  font-size: 0.95rem;
+  color: #8b6914;
+}
+.backup strong {
+  color: #d4a017;
+}
+@media (max-width: 768px) {
+  .recommendations { grid-template-columns: 1fr; }
+  .meta { flex-direction: column; gap: 15px; }
+  .budget-items { flex-direction: column; gap: 15px; }
+  h1 { font-size: 2rem; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="header">
+    <h1>A Date Plan for You</h1>
+    <p class="subtitle">Made with love and thought ✨</p>
+  </div>
+  
+  <div class="content">
+    <div class="meta">
+      <div class="meta-item">
+        <div class="meta-label">Date</div>
+        <div class="meta-value">February 21, 2026</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Time</div>
+        <div class="meta-value">5:00 PM - 10:30 PM</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Duration</div>
+        <div class="meta-value">~5 hours</div>
+      </div>
+    </div>
+    
+    <div class="summary">
+      <h2 class="summary-title">The Evening</h2>
+      <p>A golden-hour park stroll that feels like a deep breath, a cozy sushi dinner that feels special (not "fine"), then a sweet finish with a little birthday glow and a subtle Grateful Dead touch.</p>
+      <p style="margin-top: 12px; font-style: italic; opacity: 0.8;">About 5 hours, relaxed and unhurried, with plenty of sitting built in. Walking only between stops—one tight, easy cluster.</p>
+    </div>
+    
+    <div class="weather">
+      <strong>🌤️ Weather:</strong> Cooling down from 62°F to 55°F this evening (5 PM to 10 PM). No rain expected during your window.
+    </div>
+
+    
+    <div class="recommendations">
+      <div class="rec-card">
+        <h3 class="rec-title">For Craig 💙</h3>
+        <div class="rec-item">
+          <span class="rec-number">1</span>
+          <span class="rec-text">Handle the "acts of service" part upfront: book dinner and screenshot the reservation details so nothing feels last-minute.</span>
+        </div>
+        <div class="rec-item">
+          <span class="rec-number">2</span>
+          <span class="rec-text">Bring one small Grateful Dead touch that's not performative: a tiny "setlist-style" birthday card or note in your pocket (simple, thoughtful, not cheesy).</span>
+        </div>
+        <div class="rec-item">
+          <span class="rec-number">3</span>
+          <span class="rec-text">Pre-pick the walking loop: you're not "wandering," you're guiding her through a pretty, calm route with the best light.</span>
+        </div>
+      </div>
+      
+      <div class="rec-card">
+        <h3 class="rec-title">For Her 💕</h3>
+        <div class="rec-item">
+          <span class="rec-number">1</span>
+          <span class="rec-text">Let the sushi be the main event: steer toward Hane's plated specialties (not just random rolls).</span>
+        </div>
+        <div class="rec-item">
+          <span class="rec-number">2</span>
+          <span class="rec-text">Make the Dead touch feel like her, not a theme party: one short "favorite live track" moment during the walk (quietly, just for you two).</span>
+        </div>
+        <div class="rec-item">
+          <span class="rec-number">3</span>
+          <span class="rec-text">End somewhere that feels celebratory without alcohol: dessert and tea in a candlelit room where she can linger.</span>
+        </div>
+      </div>
+    </div>
+    
+    <h2 class="section-title">✨ The Date Plan</h2>
+
+    
+    <div class="stop" data-number="1">
+      <h3 class="stop-title">Golden-Hour Stroll into Balboa Park</h3>
+      <div class="stop-location">📍 Cabrillo Bridge, Balboa Park</div>
+      <div class="stop-phone">☎️ (619) 527-7500</div>
+      
+      <div class="vibe">
+        Classic San Diego, airy and romantic without trying too hard.
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">What you do:</div>
+        <p>Walk the bridge slowly, pause for the canyon view, then take a short loop along El Prado where the buildings feel like old-world movie sets.</p>
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">You might like:</div>
+        <p>Keep it simple: one photo together here (it's flattering light), then phone away.</p>
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">🚗 Parking:</div>
+        <ul>
+          <li><strong>Best:</strong> Use Balboa Park lots and plan on paid parking being enforced until evening.</li>
+          <li><strong>Closest backup:</strong> Park in Bankers Hill (street/metered as posted) and walk in; this is often smoother around event turnover.</li>
+        </ul>
+      </div>
+      
+      <div class="backup">
+        <strong>⚠️ Small heads up:</strong> The Balboa Park Chinese New Year Fair runs 11 AM to 5 PM today, so the area can feel busier right at your start time as people clear out. <br><br><strong>Backup:</strong> Stay on the Bankers Hill side and do a neighborhood stroll instead (still scenic, less event foot traffic).
+      </div>
+    </div>
+
+
+    <div class="stop" data-number="2">
+      <h3 class="stop-title">Dinner at Hane Sushi</h3>
+      <div class="stop-location">📍 2760 Fifth Ave, San Diego, CA 92103 (Bankers Hill)</div>
+      <div class="stop-phone">☎️ (619) 260-1411 | Reserve on OpenTable or Yelp</div>
+      
+      <div class="vibe">
+        Feels special without feeling pretentious—small, candlelit, intimate room where you sit and someone brings you beautiful things.
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">What you order:</div>
+        <ul>
+          <li><strong>Skip the random roll combos</strong>—go for Hane's plated specialties (ask server "what are tonight's featured nigiri or sashimi plates?")</li>
+          <li><strong>Sake pairing:</strong> Ask for a light, fragrant one (avoid heavy) — or skip entirely and stick with water/tea if that feels more like her</li>
+          <li><strong>Don't order too much</strong> — you have dessert later</li>
+        </ul>
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">The moment:</div>
+        <p>This is where you give her the little "setlist-style" Grateful Dead birthday card—quiet, personal, nothing showy.</p>
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">🚗 Parking:</div>
+        <ul>
+          <li><strong>Best:</strong> Street parking on Fifth Ave or nearby side streets (check meter signs; some are free after 6 PM)</li>
+          <li><strong>Closest paid lot:</strong> Parking structure at 2727 Fifth Ave (short walk)</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="stop" data-number="3">
+      <h3 class="stop-title">Short "Grateful Dead Moment" Walk</h3>
+      <div class="stop-location">📍 Between Hane Sushi and Extraordinary Desserts (0.4 miles, ~10 min walk)</div>
+      
+      <div class="vibe">
+        Quiet, unhurried. Just the two of you, one favorite track, soft and personal.
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">What you do:</div>
+        <p>After dinner, stroll down Fifth Ave toward University Ave. Pull up one favorite live Grateful Dead track (something meaningful to her, not a whole set)—play it quietly on your phone, just for you two. No big deal. Just a moment.</p>
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">Why this works:</div>
+        <p>It's not a "themed experience." It's you remembering something she loves and sharing it with her in a simple, thoughtful way.</p>
+      </div>
+    </div>
+
+    <div class="stop" data-number="4">
+      <h3 class="stop-title">Birthday Finale at Extraordinary Desserts</h3>
+      <div class="stop-location">📍 2929 Fifth Ave, San Diego, CA 92103 (Bankers Hill)</div>
+      <div class="stop-phone">☎️ (619) 294-7001</div>
+      
+      <div class="vibe">
+        Candlelit, dreamy, indulgent without being over-the-top. The kind of place where you can linger over tea and cake and just talk.
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">What you order:</div>
+        <ul>
+          <li><strong>Pick one cake to share</strong> — their Passion Fruit Mango Mousse or Raspberry White Chocolate Cake are stunning</li>
+          <li><strong>Tea service</strong> — calming, fragrant, perfect for a birthday toast without alcohol</li>
+          <li><strong>Optional:</strong> Ask if they can add a tiny birthday candle (low-key, not a whole song-and-dance)</li>
+        </ul>
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">The closing moment:</div>
+        <p>This is where you linger. No rush. Just the two of you, good conversation, something sweet to share. End the night feeling full—not stuffed, just content.</p>
+      </div>
+      
+      <div class="detail-section">
+        <div class="detail-title">🚗 Parking:</div>
+        <ul>
+          <li><strong>Same as Hane</strong> — you're already parked on Fifth Ave or nearby</li>
+          <li>Short 3-minute walk from dinner</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="budget">
+      <h3 class="budget-title">💰 Estimated Budget</h3>
+      <div class="budget-items">
+        <div class="budget-item">
+          <div class="budget-label">Hane Sushi Dinner</div>
+          <div class="budget-value">$70-100</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-label">Extraordinary Desserts</div>
+          <div class="budget-value">$20-30</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-label">Parking</div>
+          <div class="budget-value">$5-10</div>
+        </div>
+      </div>
+      <div class="budget-total">
+        Total: ~$95-$140 for the evening
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+</body>
+</html>
