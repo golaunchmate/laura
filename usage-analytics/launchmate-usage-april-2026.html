@@ -4,630 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LaunchMate Usage Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg-primary: #0f0f0f;
-            --bg-secondary: #1a1a2e;
-            --bg-card: #16162a;
-            --accent-blue: #60a5fa;
-            --accent-green: #34d399;
-            --accent-orange: #f97316;
-            --accent-purple: #a78bfa;
-            --accent-pink: #f472b6;
-            --text-primary: #e5e5e5;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
-            --border: #2a2a3e;
-            --cohort-inflight: #60a5fa;
-            --cohort-launchtrack: #34d399;
-            --cohort-bootcamp: #f97316;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .generated {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-        }
-
-        /* Summary Cards */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .summary-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .summary-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-        }
-
-        .summary-card.inflight::before { background: var(--cohort-inflight); }
-        .summary-card.launchtrack::before { background: var(--cohort-launchtrack); }
-        .summary-card.bootcamp::before { background: var(--cohort-bootcamp); }
-
-        .summary-card h3 {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .summary-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .stat-value.inflight { color: var(--cohort-inflight); }
-        .stat-value.launchtrack { color: var(--cohort-launchtrack); }
-        .stat-value.bootcamp { color: var(--cohort-bootcamp); }
-
-        /* Charts Section */
-        .charts-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .chart-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem;
-        }
-
-        .chart-card h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .chart-wrapper {
-            height: 350px;
-        }
-
-        /* Leaderboard */
-        .leaderboard-section {
-            margin-bottom: 3rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .tab {
-            padding: 0.5rem 1rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-        }
-
-        .tab:hover {
-            border-color: var(--accent-blue);
-        }
-
-        .tab.active {
-            background: var(--accent-blue);
-            color: white;
-            border-color: var(--accent-blue);
-        }
-
-        .leaderboard-table {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: var(--bg-secondary);
-            padding: 1rem;
-            text-align: left;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-        }
-
-        td {
-            padding: 1rem;
-            border-top: 1px solid var(--border);
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .rank {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            width: 50px;
-        }
-
-        .rank-1 { color: #ffd700; }
-        .rank-2 { color: #c0c0c0; }
-        .rank-3 { color: #cd7f32; }
-
-        .founder-name {
-            font-weight: 600;
-        }
-
-        .cohort-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .cohort-badge.inflight {
-            background: rgba(96, 165, 250, 0.15);
-            color: var(--cohort-inflight);
-        }
-
-        .cohort-badge.launchtrack {
-            background: rgba(52, 211, 153, 0.15);
-            color: var(--cohort-launchtrack);
-        }
-
-        .cohort-badge.bootcamp {
-            background: rgba(249, 115, 22, 0.15);
-            color: var(--cohort-bootcamp);
-        }
-
-        .metric {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-        }
-
-        .metric-highlight {
-            color: var(--accent-green);
-        }
-
-        .metric-low {
-            color: var(--accent-orange);
-        }
-
-        .metric-zero {
-            color: var(--text-muted);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        .data-source {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            margin-top: 0.5rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            h1 { font-size: 2rem; }
-            .charts-section { grid-template-columns: 1fr; }
-            .summary-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Search */
-        .search-box {
-            margin-bottom: 1rem;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 0.875rem;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-        }
-
-        .search-input::placeholder {
-            color: var(--text-muted);
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:#0f0f0f;color:#e5e5e5;min-height:100vh}
+        .container{max-width:1200px;margin:0 auto;padding:2rem}
+        header{text-align:center;margin-bottom:2rem;padding:1.5rem 0;border-bottom:1px solid #2a2a3e}
+        h1{font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+        .subtitle{color:#9ca3af;font-size:1rem}
+        .note{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:8px;padding:1rem;margin-bottom:2rem;font-size:0.875rem;color:#81c784}
+        .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+        h2{font-size:1.25rem;font-weight:700}
+        table{width:100%;border-collapse:collapse;background:#16162a;border:1px solid #2a2a3e;border-radius:12px;overflow:hidden}
+        th{background:#1a1a2e;padding:0.75rem;text-align:left;font-size:0.7rem;text-transform:uppercase;color:#6b7280}
+        td{padding:0.75rem;border-top:1px solid #2a2a3e;font-size:0.85rem}
+        tr:hover td{background:rgba(255,255,255,0.02)}
+        .rank{font-family:'JetBrains Mono',monospace;font-weight:700;width:40px}
+        .r1{color:#ffd700}.r2{color:#c0c0c0}.r3{color:#cd7f32}
+        .name{font-weight:600}
+        .cohort{display:inline-block;padding:0.2rem 0.6rem;border-radius:9999px;font-size:0.65rem;font-weight:500;background:rgba(96,165,250,0.15);color:#60a5fa}
+        .num{font-family:'JetBrains Mono',monospace;text-align:center}
+        .hi{color:#34d399;font-weight:600}
+        .search{width:100%;padding:0.6rem 1rem;background:#1a1a2e;border:1px solid #2a2a3e;border-radius:8px;color:#e5e5e5;font-size:0.85rem;margin-bottom:1rem}
+        .search:focus{outline:none;border-color:#60a5fa}
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>LaunchMate Usage Analytics</h1>
-            <p class="subtitle">Founders conversations per week across all cohorts</p>
-            <p class="generated">Generated: April 17, 2026 &bull; 28 founders tracked</p>
-        </header>
-
-        <!-- Summary Cards -->
-        <div class="summary-grid">
-            <div class="summary-card inflight">
-                <h3>🚀 Inflight Cohort</h3>
-                <div class="summary-stats">
-                    <div>
-                        <div class="stat-value inflight">15</div>
-                        <div class="stat-label">Founders</div>
-                    </div>
-                    <div>
-                        <div class="stat-value inflight">1.59</div>
-                        <div class="stat-label">Avg Msgs/Week</div>
-                    </div>
-                    <div>
-                        <div class="stat-value inflight">554</div>
-                        <div class="stat-label">Total User Messages</div>
-                    </div>
-                    <div>
-                        <div class="stat-value inflight">878</div>
-                        <div class="stat-label">Agent Responses</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="summary-card launchtrack">
-                <h3>🎯 Launch Track Cohort</h3>
-                <div class="summary-stats">
-                    <div>
-                        <div class="stat-value launchtrack">9</div>
-                        <div class="stat-label">Founders</div>
-                    </div>
-                    <div>
-                        <div class="stat-value launchtrack">0.87</div>
-                        <div class="stat-label">Avg Msgs/Week</div>
-                    </div>
-                    <div>
-                        <div class="stat-value launchtrack">180</div>
-                        <div class="stat-label">Total User Messages</div>
-                    </div>
-                    <div>
-                        <div class="stat-value launchtrack">357</div>
-                        <div class="stat-label">Agent Responses</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="summary-card bootcamp">
-                <h3>🎓 Bootcamp Cohort</h3>
-                <div class="summary-stats">
-                    <div>
-                        <div class="stat-value bootcamp">4</div>
-                        <div class="stat-label">Founders</div>
-                    </div>
-                    <div>
-                        <div class="stat-value bootcamp">1.95</div>
-                        <div class="stat-label">Avg Msgs/Week</div>
-                    </div>
-                    <div>
-                        <div class="stat-value bootcamp">73</div>
-                        <div class="stat-label">Total User Messages</div>
-                    </div>
-                    <div>
-                        <div class="stat-value bootcamp">104</div>
-                        <div class="stat-label">Agent Responses</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Charts -->
-        <div class="charts-section">
-            <div class="chart-card">
-                <h3>📊 Messages per Week Distribution</h3>
-                <div class="chart-wrapper">
-                    <canvas id="distributionChart"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-card">
-                <h3>👥 Cohort Comparison</h3>
-                <div class="chart-wrapper">
-                    <canvas id="cohortChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Leaderboard -->
-        <div class="leaderboard-section">
-            <div class="section-header">
-                <h2>🏆 Founder Leaderboard</h2>
-                <div class="tabs">
-                    <button class="tab active" onclick="filterTable('all')">All</button>
-                    <button class="tab" onclick="filterTable('inflight')">Inflight</button>
-                    <button class="tab" onclick="filterTable('launch_track')">Launch Track</button>
-                    <button class="tab" onclick="filterTable('bootcamp')">Bootcamp</button>
-                </div>
-            </div>
-
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search founders..." onkeyup="searchTable()">
-            </div>
-
-            <div class="leaderboard-table">
-                <table id="leaderboard">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Founder</th>
-                            <th>Cohort</th>
-                            <th>User Messages</th>
-                            <th>Agent Responses</th>
-                            <th>Weeks Active</th>
-                            <th>Msgs/Week</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <!-- Populated by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <footer>
-            <p>Data collected directly from Letta API for accuracy</p>
-            <p class="data-source">Source: Letta Messages API &bull; No agent self-reporting</p>
-        </footer>
-    </div>
-
-    <script>
-        // Founder data
-        const founders = [
-            {rank: 1, name: "Mohammad Qudsi", cohort: "bootcamp", cohortDisplay: "Bootcamp", userMessages: 32, agentResponses: 61, weeks: 7.9, msgsPerWeek: 4.1},
-            {rank: 2, name: "Daniel Self", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 64, agentResponses: 82, weeks: 22.1, msgsPerWeek: 2.9},
-            {rank: 3, name: "Troy Grandi", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 64, agentResponses: 75, weeks: 23.4, msgsPerWeek: 2.7},
-            {rank: 4, name: "Kavindi Seneviratne", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 62, agentResponses: 81, weeks: 23.4, msgsPerWeek: 2.6},
-            {rank: 5, name: "Holland Peil", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 61, agentResponses: 80, weeks: 23.4, msgsPerWeek: 2.6},
-            {rank: 6, name: "Gavin Bartow", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 58, agentResponses: 76, weeks: 23.4, msgsPerWeek: 2.5},
-            {rank: 7, name: "Stacey Lehrer", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 50, agentResponses: 65, weeks: 23.4, msgsPerWeek: 2.1},
-            {rank: 8, name: "Robert Sanchez", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 48, agentResponses: 69, weeks: 23.4, msgsPerWeek: 2.0},
-            {rank: 9, name: "Juan Alcala", cohort: "bootcamp", cohortDisplay: "Bootcamp", userMessages: 21, agentResponses: 21, weeks: 11.0, msgsPerWeek: 1.9},
-            {rank: 10, name: "Lisa Lamb", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 41, agentResponses: 75, weeks: 23.3, msgsPerWeek: 1.8},
-            {rank: 11, name: "Sammie Bradley", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 41, agentResponses: 55, weeks: 23.4, msgsPerWeek: 1.8},
-            {rank: 12, name: "Wasay Zaman", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 40, agentResponses: 61, weeks: 23.4, msgsPerWeek: 1.7},
-            {rank: 13, name: "Nick Bernal", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 39, agentResponses: 51, weeks: 23.4, msgsPerWeek: 1.7},
-            {rank: 14, name: "Zach Brenner", cohort: "bootcamp", cohortDisplay: "Bootcamp", userMessages: 18, agentResponses: 20, weeks: 11.0, msgsPerWeek: 1.6},
-            {rank: 15, name: "Wayne McClellan", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 25, agentResponses: 38, weeks: 23.4, msgsPerWeek: 1.1},
-            {rank: 16, name: "Sanchit Singh", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 24, agentResponses: 51, weeks: 23.4, msgsPerWeek: 1.0},
-            {rank: 17, name: "Rachel Dakin", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 23, agentResponses: 32, weeks: 23.4, msgsPerWeek: 1.0},
-            {rank: 18, name: "Kanna Ecklund", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 21, agentResponses: 33, weeks: 23.4, msgsPerWeek: 0.9},
-            {rank: 19, name: "Daniel Generalov", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 18, agentResponses: 64, weeks: 23.4, msgsPerWeek: 0.8},
-            {rank: 20, name: "Thaddeus Okasinski", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 13, agentResponses: 50, weeks: 23.4, msgsPerWeek: 0.6},
-            {rank: 21, name: "Jourdan Ziff", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 13, agentResponses: 30, weeks: 23.3, msgsPerWeek: 0.6},
-            {rank: 22, name: "Jai Sharma", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 11, agentResponses: 60, weeks: 23.4, msgsPerWeek: 0.5},
-            {rank: 23, name: "Sandy Basaka", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 10, agentResponses: 32, weeks: 23.4, msgsPerWeek: 0.4},
-            {rank: 24, name: "Billy Carter", cohort: "bootcamp", cohortDisplay: "Bootcamp", userMessages: 2, agentResponses: 2, weeks: 11.0, msgsPerWeek: 0.2},
-            {rank: 25, name: "Jani Shaik", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 2, agentResponses: 13, weeks: 23.4, msgsPerWeek: 0.1},
-            {rank: 26, name: "Sky Soltero", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 3, agentResponses: 30, weeks: 23.4, msgsPerWeek: 0.1},
-            {rank: 27, name: "Joshua Shuttleworth", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 3, agentResponses: 32, weeks: 23.4, msgsPerWeek: 0.1},
-            {rank: 28, name: "Vineeta Khanna", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 0, agentResponses: 0, weeks: 23.4, msgsPerWeek: 0.0}
-        ];
-
-        // Populate table
-        function populateTable(data) {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-
-            data.forEach(founder => {
-                const row = document.createElement('tr');
-                row.dataset.cohort = founder.cohort;
-
-                const rankClass = founder.rank <= 3 ? `rank-${founder.rank}` : '';
-                const metricClass = founder.msgsPerWeek >= 2 ? 'metric-highlight' : 
-                                   founder.msgsPerWeek >= 1 ? '' : 
-                                   founder.msgsPerWeek > 0 ? 'metric-low' : 'metric-zero';
-
-                row.innerHTML = `
-                    <td class="rank ${rankClass}">#${founder.rank}</td>
-                    <td class="founder-name">${founder.name}</td>
-                    <td><span class="cohort-badge ${founder.cohort}">${founder.cohortDisplay}</span></td>
-                    <td class="metric">${founder.userMessages}</td>
-                    <td class="metric">${founder.agentResponses}</td>
-                    <td class="metric">${founder.weeks}</td>
-                    <td class="metric ${metricClass}">${founder.msgsPerWeek.toFixed(1)}</td>
-                `;
-
-                tbody.appendChild(row);
-            });
-        }
-
-        // Filter table by cohort
-        function filterTable(cohort) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (cohort === 'all') {
-                populateTable(founders);
-            } else {
-                populateTable(founders.filter(f => f.cohort === cohort));
-            }
-        }
-
-        // Search table
-        function searchTable() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = founders.filter(f => f.name.toLowerCase().includes(query));
-            populateTable(filtered);
-        }
-
-        // Initialize table
-        populateTable(founders);
-
-        // Distribution Chart
-        const ctx1 = document.getElementById('distributionChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: founders.filter(f => f.msgsPerWeek > 0).map(f => f.name.split(' ')[0]),
-                datasets: [{
-                    label: 'Messages per Week',
-                    data: founders.filter(f => f.msgsPerWeek > 0).map(f => f.msgsPerWeek),
-                    backgroundColor: founders.filter(f => f.msgsPerWeek > 0).map(f => 
-                        f.cohort === 'inflight' ? 'rgba(96, 165, 250, 0.7)' :
-                        f.cohort === 'launch_track' ? 'rgba(52, 211, 153, 0.7)' :
-                        'rgba(249, 115, 22, 0.7)'
-                    ),
-                    borderColor: founders.filter(f => f.msgsPerWeek > 0).map(f => 
-                        f.cohort === 'inflight' ? '#60a5fa' :
-                        f.cohort === 'launch_track' ? '#34d399' :
-                        '#f97316'
-                    ),
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: { color: '#9ca3af' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#9ca3af', maxRotation: 45 }
-                    }
-                }
-            }
-        });
-
-        // Cohort Comparison Chart
-        const ctx2 = document.getElementById('cohortChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: ['Inflight', 'Launch Track', 'Bootcamp'],
-                datasets: [{
-                    label: 'Avg Messages/Week',
-                    data: [1.59, 0.87, 1.95],
-                    backgroundColor: ['rgba(96, 165, 250, 0.7)', 'rgba(52, 211, 153, 0.7)', 'rgba(249, 115, 22, 0.7)'],
-                    borderColor: ['#60a5fa', '#34d399', '#f97316'],
-                    borderWidth: 2,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 2.5,
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: { color: '#9ca3af' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#9ca3af' }
-                    }
-                }
-            }
-        });
-    </script>
-</body>
-</html>
+<div class="container">
+<header>
+<h1>LaunchMate Usage Analytics</h1>
+<p class="subtitle">User engagement from first message date • All Inflight Cohort</p>
+</header>
+<div class="note">
+<strong>Methodology:</strong> Calculated from each founder's FIRST USER MESSAGE. Only counts user-typed messages (message_type = user_message). Not system/assistant messages.
+</div>
+<div class="section-header"><h2>🏆 Leaderboard</h2></div>
+<input type="text" class="search" id="search" placeholder="Search..." onkeyup="filter()">
+<table id="table">
+<thead><tr><th>#</th><th>Name</th><th>Company</th><th>Cohort</th><th class="num">User Msgs</th><th>First Msg</th><th class="num">Weeks</th><th class="num">Msgs/Week</th></tr></thead>
+<tbody id="tbody">
+<tr><td class="rank r1">1</td><td class="name">Mohammad Qudsi</td><td>DateFlo</td><td><span class="cohort">Inflight</span></td><td class="num">32</td><td>Mar 1, 2026</td><td class="num">6.6</td><td class="num hi">4.87</td></tr>
+<tr><td class="rank r2">2</td><td class="name">Kavindi Seneviratne</td><td>Foodie</td><td><span class="cohort">Inflight</span></td><td class="num">62</td><td>Dec 10, 2025</td><td class="num">18.1</td><td class="num hi">3.42</td></tr>
+<tr><td class="rank r3">3</td><td class="name">Daniel Self</td><td>Second Course</td><td><span class="cohort">Inflight</span></td><td class="num">64</td><td>Dec 2, 2025</td><td class="num">19.3</td><td class="num hi">3.32</td></tr>
+<tr><td class="rank">4</td><td class="name">Troy Grandi</td><td>Fit Me</td><td><span class="cohort">Inflight</span></td><td class="num">64</td><td>Oct 17, 2025</td><td class="num">25.9</td><td class="num hi">2.48</td></tr>
+<tr><td class="rank">5</td><td class="name">Holland Peil</td><td>The T-Squeeze</td><td><span class="cohort">Inflight</span></td><td class="num">61</td><td>Oct 23, 2025</td><td class="num">25.0</td><td class="num hi">2.44</td></tr>
+<tr><td class="rank">6</td><td class="name">Gavin Bartow</td><td>Second Course</td><td><span class="cohort">Inflight</span></td><td class="num">58</td><td>Oct 30, 2025</td><td class="num">24.0</td><td class="num hi">2.42</td></tr>
+<tr><td class="rank">7</td><td class="name">Vineeta Khanna</td><td>Harmony Health AI</td><td><span class="cohort">Inflight</span></td><td class="num">55</td><td>Oct 31, 2025</td><td class="num">23.9</td><td class="num hi">2.31</td></tr>
+<tr><td class="rank">8</td><td class="name">Stacey Lehrer</td><td>Vital Tidal</td><td><span class="cohort">Inflight</span></td><td class="num">50</td><td>Oct 31, 2025</td><td class="num">23.9</td><td class="num hi">2.10</td></tr>
+<tr><td class="rank">9</td><td class="name">Juan Alcala</td><td>RAFRS</td><td><span class="cohort">Inflight</span></td><td class="num">21</td><td>Jan 30, 2026</td><td class="num">10.9</td><td class="num">1.93</td></tr>
+<tr><td class="rank">10</td><td class="name">Robert Sanchez</td><td>Academic Advisor AI</td><td><span class="cohort">Inflight</span></td><td class="num">48</td><td>Oct 21, 2025</td><td class="num">25.3</td><td class="num">1.90</td></tr>
+<tr><td class="rank">11</td><td class="name">Zach Brenner</td><td>Sonomos</td><td><span class="cohort">Inflight</span></td><td class="num">18</td><td>Jan 30, 2026</td><td class="num">10.9</td><td class="num">1.66</td></tr>
+<tr><td class="rank">12</td><td class="name">Wasay Zaman</td><td>TransferTrack</td><td><span class="cohort">Inflight</span></td><td class="num">40</td><td>Oct 11, 2025</td><td class="num">26.7</td><td class="num">1.50</td></tr>
+<tr><td class="rank">13</td><td class="name">Sammie Bradley</td><td>Foot Kinetics</td><td><span class="cohort">Inflight</span></td><td class="num">41</td><td>Sep 4, 2025</td><td class="num">32.0</td><td class="num">1.28</td></tr>
+<tr><td class="rank">14</td><td class="name">Nick Bernal</td><td>University Valet</td><td><span class="cohort">Inflight</span></td><td class="num">39</td><td>Sep 5, 2025</td><td class="num">31.9</td><td class="num">1.22</td></tr>
+<tr><td class="rank">15</td><td class="name">Lisa Lamb</td><td>Her Sports San Diego</td><td><span class="cohort">Inflight</span></td><td class="num">41</td><td>Jun 24, 2025</td><td class="num">42.3</td><td class="num">0.97</td></tr>
+<tr><td class="rank">16</td><td class="name">Sanchit Singh</td><td>Redtrieve</td><td><span class="cohort">Inflight</span></td><td class="num">24</td><td>Sep 12, 2025</td><td class="num">30.9</td><td class="num">0.78</td></tr>
+<tr><td class="rank">17</td><td class="name">Wayne McClellan</td><td>Protocol Grip Trainer</td><td><span class="cohort">Inflight</span></td><td class="num">25</td><td>Aug 29, 2025</td><td class="num">32.9</td><td class="num">0.76</td></tr>
+<tr><td class="rank">18</td><td class="name">Rachel Dakin</td><td>ASAICHI</td><td><span class="cohort">Inflight</span></td><td class="num">23</td><td>Aug 29, 2025</td><td class="num">32.9</td><td class="num">0.70</td></tr>
+<tr><td class="rank">19</td><td class="name">Kanna Ecklund</td><td>ASAICHI</td><td><span class="cohort">Inflight</span></td><td class="num">21</td><td>Sep 9, 2025</td><td class="num">31.3</td><td class="num">0.67</td></tr>
+<tr><td class="rank">20</td><td class="name">Daniel Generalov</td><td>Wayvlo</td><td><span class="cohort">Inflight</span></td><td class="num">18</td><td>Sep 23, 2025</td><td class="num">29.3</td><td class="num">0.61</td></tr>
+<tr><td class="rank">21</td><td class="name">Jai Sharma</td><td>Redtrieve</td><td><span class="cohort">Inflight</span></td><td class="num">11</td><td>Oct 17, 2025</td><td class="num">25.9</td><td class="num">0.43</td></tr>
+<tr><td class="rank">22</td><td class="name">Jourdan Ziff</td><td>Her Sports San Diego</td><td><span class="cohort">Inflight</span></td><td class="num">13</td><td>Sep 4, 2025</td><td class="num">32.0</td><td class="num">0.41</td></tr>
+<tr><td class="rank">23</td><td class="name">Thaddeus Okasinski</td><td>The T-Squeeze</td><td><span class="cohort">Inflight</span></td><td class="num">13</td><td>Aug 29, 2025</td><td class="num">32.9</td><td class="num">0.40</td></tr>
+<tr><td class="rank">24</td><td class="name">Sandy Basaka</td><td>UniExchange</td><td><span class="cohort">Inflight</span></td><td class="num">10</td><td>Sep 4, 2025</td><td class="num">32.0</td><td class="num">0.31</td></tr>
+<tr><td class="rank">25</td><td class="name">Billy Carter</td><td>Celebrity Concierge</td><td><span class="cohort">Inflight</span></td><td class="num">2</td><td>Jan 30, 2026</td><td class="num">10.9</td><td class="num">0.18</td></tr>
+<tr><td class="rank">26</td><td class="name">Jani Shaik</td><td>Her Health AI</td><td><span class="cohort">Inflight</span></td><td class="num">2</td><td>Dec 3, 2025</td><td class="num">19.1</td><td class="num">0.10</td></tr>
+<tr><td class="rank">27</td><td class="name">Sky Soltero</td><td>SipSecure</td><td><span class="cohort">Inflight</span></td><td class="num">3</td><td>Aug 29, 2025</td><td class="num">32.9</td><td class="num">0.09</td></tr>
+<tr><td class="rank">28</td><td class="name">Joshua Shuttleworth</td><td>CRAM</td><td><span class="cohort">Inflight</span></td><td class="num">3</td><td>Aug 29, 2025</td><td class="num">32.9</td><td class="num">0.09</td></tr>
+</tbody></table>
+</div>
+<script>
+function filter(){
+const q=document.getElementById('search').value.toLowerCase();
+const rows=document.querySelectorAll('#tbody tr');
+rows.forEach(r=>{const t=r.textContent.toLowerCase();r.style.display=t.includes(q)?'':'none'})}
+</script>
+</body></html>
