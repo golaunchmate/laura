@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaunchMate Usage Data - Spreadsheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .copy-btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+
+        .copy-btn:hover {
+            background: #3367d6;
+        }
+
+        .copied {
+            background: #34a853 !important;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #1a1a2e;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #eee;
+            font-size: 0.875rem;
+        }
+
+        tr:hover td {
+            background: #f9f9f9;
+        }
+
+        .cohort-inflight { color: #4285f4; font-weight: 600; }
+        .cohort-launch_track { color: #34a853; font-weight: 600; }
+        .cohort-bootcamp { color: #f97316; font-weight: 600; }
+
+        .number {
+            font-family: monospace;
+            text-align: center;
+        }
+
+        .highlight {
+            background: #e8f5e9;
+        }
+
+        .note {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #fff3cd;
+            border-radius: 8px;
+            color: #856404;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>LaunchMate Usage Data</h1>
+    <p class="subtitle">April 17, 2026 • 28 founders • Ready to copy into Google Sheets</p>
+
+    <button class="copy-btn" onclick="copyTable()">📋 Copy Entire Table</button>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Company Name</th>
+                <th>Description</th>
+                <th style="text-align:center"># Chats</th>
+                <th style="text-align:center">Weeks Active</th>
+                <th style="text-align:center">Msgs/Week</th>
+                <th style="text-align:center">Cohort</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mohammad Qudsi</td>
+                <td>DateFlo</td>
+                <td>Date Concierge Service — ongoing relationship, subscription model</td>
+                <td class="number">32</td>
+                <td class="number">7.9</td>
+                <td class="number highlight">4.1</td>
+                <td class="cohort-bootcamp">Bootcamp</td>
+            </tr>
+            <tr>
+                <td>Daniel Self</td>
+                <td>Second Course</td>
+                <td>Meal delivery for busy professionals</td>
+                <td class="number">64</td>
+                <td class="number">22.1</td>
+                <td class="number highlight">2.9</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Troy Grandi</td>
+                <td>Fit Me</td>
+                <td>Fitness matching platform</td>
+                <td class="number">64</td>
+                <td class="number">23.4</td>
+                <td class="number highlight">2.7</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Kavindi Seneviratne</td>
+                <td>Foodie</td>
+                <td>Food discovery/deals platform for SDSU students</td>
+                <td class="number">62</td>
+                <td class="number">23.4</td>
+                <td class="number highlight">2.6</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Holland Peil</td>
+                <td>The T-Squeeze</td>
+                <td>Reusable tea infuser</td>
+                <td class="number">61</td>
+                <td class="number">23.4</td>
+                <td class="number highlight">2.6</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Gavin Bartow</td>
+                <td>Second Course</td>
+                <td>Meal delivery for busy professionals</td>
+                <td class="number">58</td>
+                <td class="number">23.4</td>
+                <td class="number highlight">2.5</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Stacey Lehrer</td>
+                <td>Vital Tidal</td>
+                <td>Functional supplement for ocean athletes</td>
+                <td class="number">50</td>
+                <td class="number">23.4</td>
+                <td class="number highlight">2.1</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Robert Sanchez</td>
+                <td>Academic Advisor AI</td>
+                <td>AI-powered academic advising for students</td>
+                <td class="number">48</td>
+                <td class="number">23.4</td>
+                <td class="number highlight">2.0</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Juan Alcala</td>
+                <td>RAFRS</td>
+                <td>Carbon-fiber cloth + adhesive composite system</td>
+                <td class="number">21</td>
+                <td class="number">11.0</td>
+                <td class="number">1.9</td>
+                <td class="cohort-bootcamp">Bootcamp</td>
+            </tr>
+            <tr>
+                <td>Lisa Lamb</td>
+                <td>Her Sports San Diego</td>
+                <td>Women's sports coverage newsletter for San Diego</td>
+                <td class="number">41</td>
+                <td class="number">23.3</td>
+                <td class="number">1.8</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Sammie Bradley</td>
+                <td>Foot Kinetics</td>
+                <td>Blister prevention products for feet</td>
+                <td class="number">41</td>
+                <td class="number">23.4</td>
+                <td class="number">1.8</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Wasay Zaman</td>
+                <td>TransferTrack</td>
+                <td>Transfer process simplification for community college students</td>
+                <td class="number">40</td>
+                <td class="number">23.4</td>
+                <td class="number">1.7</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Nick Bernal</td>
+                <td>University Valet</td>
+                <td>Parking and accessibility help for commuters</td>
+                <td class="number">39</td>
+                <td class="number">23.4</td>
+                <td class="number">1.7</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Zach Brenner</td>
+                <td>Sonomos</td>
+                <td>On-device privacy layer for sensitive info masking</td>
+                <td class="number">18</td>
+                <td class="number">11.0</td>
+                <td class="number">1.6</td>
+                <td class="cohort-bootcamp">Bootcamp</td>
+            </tr>
+            <tr>
+                <td>Wayne McClellan</td>
+                <td>Protocol Grip Trainer</td>
+                <td>Connected grip trainer for phone</td>
+                <td class="number">25</td>
+                <td class="number">23.4</td>
+                <td class="number">1.1</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Sanchit Singh</td>
+                <td>Redtrieve</td>
+                <td>Redesigning food waste through smart retrieval</td>
+                <td class="number">24</td>
+                <td class="number">23.4</td>
+                <td class="number">1.0</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Rachel Dakin</td>
+                <td>ASAICHI</td>
+                <td>Sustainable flower base</td>
+                <td class="number">23</td>
+                <td class="number">23.4</td>
+                <td class="number">1.0</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Kanna Ecklund</td>
+                <td>ASAICHI</td>
+                <td>Plant-based hydrogel floral base</td>
+                <td class="number">21</td>
+                <td class="number">23.4</td>
+                <td class="number">0.9</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Daniel Generalov</td>
+                <td>Wayvlo</td>
+                <td>Wave-powered energy device</td>
+                <td class="number">18</td>
+                <td class="number">23.4</td>
+                <td class="number">0.8</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Thaddeus Okasinski</td>
+                <td>The T-Squeeze</td>
+                <td>Reusable tea infuser solving weak brews and messy cleanup</td>
+                <td class="number">13</td>
+                <td class="number">23.4</td>
+                <td class="number">0.6</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Jourdan Ziff</td>
+                <td>Her Sports San Diego</td>
+                <td>Women's sports coverage platform</td>
+                <td class="number">13</td>
+                <td class="number">23.3</td>
+                <td class="number">0.6</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Jai Sharma</td>
+                <td>Redtrieve</td>
+                <td>Redesigning food waste through smart retrieval</td>
+                <td class="number">11</td>
+                <td class="number">23.4</td>
+                <td class="number">0.5</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Sandy Basaka</td>
+                <td>UniExchange</td>
+                <td>Marketplace app for college students</td>
+                <td class="number">10</td>
+                <td class="number">23.4</td>
+                <td class="number">0.4</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Billy Carter</td>
+                <td>Celebrity Concierge</td>
+                <td>Centralized nightlife concierge using verified promoters</td>
+                <td class="number">2</td>
+                <td class="number">11.0</td>
+                <td class="number">0.2</td>
+                <td class="cohort-bootcamp">Bootcamp</td>
+            </tr>
+            <tr>
+                <td>Jani Shaik</td>
+                <td>Her Health AI</td>
+                <td>AI health solutions for women with PCOD/PCOS</td>
+                <td class="number">2</td>
+                <td class="number">23.4</td>
+                <td class="number">0.1</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+            <tr>
+                <td>Sky Soltero</td>
+                <td>SipSecure</td>
+                <td>Auto-seal lid for canned beverages</td>
+                <td class="number">3</td>
+                <td class="number">23.4</td>
+                <td class="number">0.1</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Joshua Shuttleworth</td>
+                <td>CRAM</td>
+                <td>AI-powered study organization platform</td>
+                <td class="number">3</td>
+                <td class="number">23.4</td>
+                <td class="number">0.1</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td>Vineeta Khanna</td>
+                <td>Harmony Health AI</td>
+                <td>AI health solutions for PCOS sufferers</td>
+                <td class="number">0</td>
+                <td class="number">23.4</td>
+                <td class="number">0.0</td>
+                <td class="cohort-inflight">Inflight</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="note">
+        <strong>💡 Tip:</strong> Click "Copy Entire Table" then paste directly into Google Sheets (Ctrl+V or Cmd+V). The data will format automatically into cells.
+    </div>
+
+    <script>
+        function copyTable() {
+            const table = document.getElementById('dataTable');
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+            try {
+                document.execCommand('copy');
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copy Entire Table';
+                    btn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                alert('Copy failed - try selecting the table manually');
+            }
+
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+</body>
+</html>
