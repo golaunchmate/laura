@@ -131,7 +131,7 @@
         <!-- Summary Cards -->
         <div class="summary-grid">
             <div class="summary-card inflight">
-                <h3>🚀 Inflight Cohort</h3>
+                <h3>🚀 In Flight Cohort</h3>
                 <div class="summary-stats">
                     <div><div class="stat-value inflight">19</div><div class="stat-label">Founders</div></div>
                     <div><div class="stat-value inflight">1.49</div><div class="stat-label">Avg Msgs/Week</div></div>
@@ -195,7 +195,7 @@
                 <h2>🏆 Founder Leaderboard</h2>
                 <div class="tabs">
                     <button class="tab active" onclick="filterTable('all')">All</button>
-                    <button class="tab" onclick="filterTable('inflight')">Inflight</button>
+                    <button class="tab" onclick="filterTable('inflight')">In Flight</button>
                     <button class="tab" onclick="filterTable('launch_track')">Launch Track</button>
                     <button class="tab" onclick="filterTable('bootcamp')">Bootcamp</button>
                 </div>
@@ -218,9 +218,7 @@
                             <th style="text-align:center">Msgs/Week</th>
                         </tr>
                     </thead>
-                    <tbody id="tableBody">
-                        <!-- Populated by JavaScript -->
-                    </tbody>
+                    <tbody id="tableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -232,54 +230,47 @@
     </div>
 
     <script>
-        // Founder data with weekly activity
         const founders = [
-            {rank: 1, name: "Mohammad Qudsi", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 32, agentResponses: 61, weeks: 6.6, msgsPerWeek: 4.87, weeklyData: [["2026-W09",4],["2026-W10",28]]},
-            {rank: 2, name: "Kavindi Seneviratne", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 62, agentResponses: 81, weeks: 18.1, msgsPerWeek: 3.42, weeklyData: [["2025-W50",5],["2025-W51",7],["2026-W02",13],["2026-W04",37]]},
-            {rank: 3, name: "Daniel Self", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 64, agentResponses: 82, weeks: 19.3, msgsPerWeek: 3.32, weeklyData: [["2025-W49",11],["2025-W50",10],["2026-W04",23],["2026-W05",2],["2026-W07",2],["2026-W08",15],["2026-W10",1]]},
-            {rank: 4, name: "Troy Grandi", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 64, agentResponses: 75, weeks: 25.9, msgsPerWeek: 2.48, weeklyData: [["2025-W42",26],["2025-W43",1],["2025-W45",9],["2025-W46",14],["2025-W47",13],["2025-W49",1]]},
-            {rank: 5, name: "Holland Peil", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 61, agentResponses: 80, weeks: 25.0, msgsPerWeek: 2.44, weeklyData: [["2025-W43",10],["2025-W44",10],["2025-W45",12],["2025-W46",12],["2025-W47",14],["2025-W49",1],["2025-W50",2]]},
-            {rank: 6, name: "Gavin Bartow", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 58, agentResponses: 76, weeks: 24.0, msgsPerWeek: 2.42},
-            {rank: 7, name: "Vineeta Khanna", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 55, agentResponses: 72, weeks: 23.9, msgsPerWeek: 2.31},
-            {rank: 8, name: "Stacey Lehrer", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 50, agentResponses: 65, weeks: 23.9, msgsPerWeek: 2.10},
-            {rank: 9, name: "Juan Alcala", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 21, agentResponses: 21, weeks: 10.9, msgsPerWeek: 1.93},
-            {rank: 10, name: "Robert Sanchez", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 48, agentResponses: 69, weeks: 25.3, msgsPerWeek: 1.90},
-            {rank: 11, name: "Zach Brenner", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 18, agentResponses: 20, weeks: 10.9, msgsPerWeek: 1.66},
-            {rank: 12, name: "Wasay Zaman", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 40, agentResponses: 61, weeks: 26.7, msgsPerWeek: 1.50},
+            {rank: 1, name: "Mohammad Qudsi", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 32, agentResponses: 61, weeks: 6.6, msgsPerWeek: 4.87, weeklyData: [["2026-W09",4],["2026-W10",28]]},
+            {rank: 2, name: "Kavindi Seneviratne", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 62, agentResponses: 81, weeks: 18.1, msgsPerWeek: 3.42, weeklyData: [["2025-W50",5],["2025-W51",7],["2026-W02",13],["2026-W04",37]]},
+            {rank: 3, name: "Daniel Self", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 64, agentResponses: 82, weeks: 19.3, msgsPerWeek: 3.32, weeklyData: [["2025-W49",11],["2025-W50",10],["2026-W04",23],["2026-W05",2],["2026-W07",2],["2026-W08",15],["2026-W10",1]]},
+            {rank: 4, name: "Troy Grandi", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 64, agentResponses: 75, weeks: 25.9, msgsPerWeek: 2.48, weeklyData: [["2025-W42",26],["2025-W43",1],["2025-W45",9],["2025-W46",14],["2025-W47",13],["2025-W49",1]]},
+            {rank: 5, name: "Holland Peil", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 61, agentResponses: 80, weeks: 25.0, msgsPerWeek: 2.44, weeklyData: [["2025-W43",10],["2025-W44",10],["2025-W45",12],["2025-W46",12],["2025-W47",14],["2025-W49",1],["2025-W50",2]]},
+            {rank: 6, name: "Gavin Bartow", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 58, agentResponses: 76, weeks: 24.0, msgsPerWeek: 2.42},
+            {rank: 7, name: "Vineeta Khanna", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 55, agentResponses: 72, weeks: 23.9, msgsPerWeek: 2.31},
+            {rank: 8, name: "Stacey Lehrer", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 50, agentResponses: 65, weeks: 23.9, msgsPerWeek: 2.10},
+            {rank: 9, name: "Juan Alcala", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 21, agentResponses: 21, weeks: 10.9, msgsPerWeek: 1.93},
+            {rank: 10, name: "Robert Sanchez", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 48, agentResponses: 69, weeks: 25.3, msgsPerWeek: 1.90},
+            {rank: 11, name: "Zach Brenner", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 18, agentResponses: 20, weeks: 10.9, msgsPerWeek: 1.66},
+            {rank: 12, name: "Wasay Zaman", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 40, agentResponses: 61, weeks: 26.7, msgsPerWeek: 1.50},
             {rank: 13, name: "Sammie Bradley", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 41, agentResponses: 55, weeks: 32.0, msgsPerWeek: 1.28},
-            {rank: 14, name: "Nick Bernal", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 39, agentResponses: 51, weeks: 31.9, msgsPerWeek: 1.22},
+            {rank: 14, name: "Nick Bernal", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 39, agentResponses: 51, weeks: 31.9, msgsPerWeek: 1.22},
             {rank: 15, name: "Lisa Lamb", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 41, agentResponses: 75, weeks: 42.3, msgsPerWeek: 0.97},
-            {rank: 16, name: "Sanchit Singh", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 24, agentResponses: 51, weeks: 30.9, msgsPerWeek: 0.78},
+            {rank: 16, name: "Sanchit Singh", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 24, agentResponses: 51, weeks: 30.9, msgsPerWeek: 0.78},
             {rank: 17, name: "Wayne McClellan", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 25, agentResponses: 38, weeks: 32.9, msgsPerWeek: 0.76},
             {rank: 18, name: "Rachel Dakin", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 23, agentResponses: 32, weeks: 32.9, msgsPerWeek: 0.70},
             {rank: 19, name: "Kanna Ecklund", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 21, agentResponses: 33, weeks: 31.3, msgsPerWeek: 0.67},
-            {rank: 20, name: "Daniel Generalov", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 18, agentResponses: 64, weeks: 29.3, msgsPerWeek: 0.61},
+            {rank: 20, name: "Daniel Generalov", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 18, agentResponses: 64, weeks: 29.3, msgsPerWeek: 0.61},
             {rank: 21, name: "Jourdan Ziff", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 13, agentResponses: 30, weeks: 32.0, msgsPerWeek: 0.41},
-            {rank: 22, name: "Jai Sharma", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 11, agentResponses: 60, weeks: 25.9, msgsPerWeek: 0.43},
-            {rank: 23, name: "Thaddeus Okasinski", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 13, agentResponses: 50, weeks: 32.9, msgsPerWeek: 0.40},
+            {rank: 22, name: "Jai Sharma", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 11, agentResponses: 60, weeks: 25.9, msgsPerWeek: 0.43},
+            {rank: 23, name: "Thaddeus Okasinski", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 13, agentResponses: 50, weeks: 32.9, msgsPerWeek: 0.40},
             {rank: 24, name: "Sandy Basaka", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 10, agentResponses: 32, weeks: 32.0, msgsPerWeek: 0.31},
-            {rank: 25, name: "Billy Carter", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 2, agentResponses: 2, weeks: 10.9, msgsPerWeek: 0.18},
-            {rank: 26, name: "Jani Shaik", cohort: "inflight", cohortDisplay: "Inflight", userMessages: 2, agentResponses: 13, weeks: 19.1, msgsPerWeek: 0.10},
+            {rank: 25, name: "Billy Carter", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 2, agentResponses: 2, weeks: 10.9, msgsPerWeek: 0.18},
+            {rank: 26, name: "Jani Shaik", cohort: "inflight", cohortDisplay: "In Flight", userMessages: 2, agentResponses: 13, weeks: 19.1, msgsPerWeek: 0.10},
             {rank: 27, name: "Sky Soltero", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 3, agentResponses: 30, weeks: 32.9, msgsPerWeek: 0.09},
             {rank: 28, name: "Joshua Shuttleworth", cohort: "launch_track", cohortDisplay: "Launch Track", userMessages: 3, agentResponses: 32, weeks: 32.9, msgsPerWeek: 0.09}
         ];
 
         let founderActivityChart = null;
 
-        // Populate table
         function populateTable(data) {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
-
             data.forEach(founder => {
                 const row = document.createElement('tr');
                 row.dataset.cohort = founder.cohort;
-
                 const rankClass = founder.rank <= 3 ? `rank-${founder.rank}` : '';
-                const metricClass = founder.msgsPerWeek >= 2 ? 'metric-highlight' : 
-                                   founder.msgsPerWeek >= 1 ? '' : 
-                                   founder.msgsPerWeek > 0 ? 'metric-low' : 'metric-zero';
-
+                const metricClass = founder.msgsPerWeek >= 2 ? 'metric-highlight' : founder.msgsPerWeek >= 1 ? '' : founder.msgsPerWeek > 0 ? 'metric-low' : 'metric-zero';
                 row.innerHTML = `
                     <td class="rank ${rankClass}">#${founder.rank}</td>
                     <td class="founder-name" onclick="showFounderDetail('${founder.name}')">${founder.name}</td>
@@ -289,45 +280,32 @@
                     <td class="metric" style="text-align:center">${founder.weeks}</td>
                     <td class="metric ${metricClass}" style="text-align:center">${founder.msgsPerWeek.toFixed(2)}</td>
                 `;
-
                 tbody.appendChild(row);
             });
         }
 
-        // Filter table by cohort
         function filterTable(cohort) {
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             event.target.classList.add('active');
-
-            if (cohort === 'all') {
-                populateTable(founders);
-            } else {
-                populateTable(founders.filter(f => f.cohort === cohort));
-            }
+            if (cohort === 'all') populateTable(founders);
+            else populateTable(founders.filter(f => f.cohort === cohort));
         }
 
-        // Search table
         function searchTable() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = founders.filter(f => f.name.toLowerCase().includes(query));
-            populateTable(filtered);
+            populateTable(founders.filter(f => f.name.toLowerCase().includes(query)));
         }
 
-        // Show founder detail
         function showFounderDetail(name) {
             const founder = founders.find(f => f.name === name);
             if (!founder) return;
-
             if (!founder.weeklyData || founder.weeklyData.length === 0) {
                 alert('No weekly activity data available for ' + name);
                 return;
             }
-
             document.getElementById('detailName').textContent = name + ' - Week-by-Week Activity';
             document.getElementById('founderDetail').classList.add('active');
-
             if (founderActivityChart) founderActivityChart.destroy();
-
             const ctx = document.getElementById('founderActivityChart').getContext('2d');
             founderActivityChart = new Chart(ctx, {
                 type: 'line',
@@ -358,7 +336,6 @@
             document.getElementById('founderDetail').classList.remove('active');
         }
 
-        // Initialize table
         populateTable(founders);
 
         // Distribution Chart - ALL founders with colored bars
@@ -399,7 +376,7 @@
         new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['Inflight', 'Launch Track', 'Bootcamp'],
+                labels: ['In Flight', 'Launch Track', 'Bootcamp'],
                 datasets: [{
                     label: 'Avg Messages/Week',
                     data: [1.49, 0.49, 0],
