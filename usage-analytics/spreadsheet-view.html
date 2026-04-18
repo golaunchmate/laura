@@ -3,82 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaunchMate Usage Data</title>
+    <title>LaunchMate Usage Data - Spreadsheet</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f5f5f5; padding: 2rem; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
         h1 { color: #1a1a2e; margin-bottom: 0.5rem; }
-        .subtitle { color: #666; margin-bottom: 0.5rem; }
-        .note { background: #e8f5e9; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.875rem; border-left: 4px solid #4caf50; }
-        .copy-btn { background: #4285f4; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; cursor: pointer; margin-bottom: 1rem; }
+        .subtitle { color: #666; margin-bottom: 2rem; }
+        .copy-btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
         .copy-btn:hover { background: #3367d6; }
         .copied { background: #34a853 !important; }
-        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; font-size: 0.85rem; }
-        th { background: #1a1a2e; color: white; padding: 0.75rem; text-align: left; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
-        td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #eee; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th {
+            background: #1a1a2e;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            position: sticky;
+            top: 0;
+        }
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #eee;
+            font-size: 0.875rem;
+        }
         tr:hover td { background: #f9f9f9; }
-        .inflight { color: #4285f4; font-weight: 600; }
-        .launch_track { color: #34a853; font-weight: 600; }
-        .bootcamp { color: #f97316; font-weight: 600; }
+        .cohort-inflight { color: #4285f4; font-weight: 600; }
+        .cohort-launch_track { color: #34a853; font-weight: 600; }
         .number { font-family: monospace; text-align: center; }
-        .highlight { background: #e8f5e9; font-weight: 600; color: #2e7d32; }
-        .ts { font-size: 0.75rem; color: #888; margin-top: 1rem; }
+        .highlight { background: #e8f5e9; }
+        .note {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #fff3cd;
+            border-radius: 8px;
+            color: #856404;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 <body>
     <h1>LaunchMate Usage Data</h1>
-    <p class="subtitle">April 17, 2026 • User messages only • From first message date</p>
-    <p class="subtitle" style="color:#999;font-size:0.8rem;">Click Copy, then paste into Google Sheets (Ctrl+V)</p>
-    <div class="note">
-        <strong>Methodology:</strong> From each founder's FIRST USER MESSAGE. Only counts user-typed messages.
-    </div>
-    <button class="copy-btn" onclick="copyTable()">📋 Copy for Google Sheets</button>
+    <p class="subtitle">April 17, 2026 • 28 founders • From first user message date</p>
+
+    <button class="copy-btn" onclick="copyTable()">📋 Copy Entire Table</button>
+
     <table id="dataTable">
         <thead>
             <tr>
-                <th>#</th>
+                <th style="text-align:center">#</th>
                 <th>Name</th>
-                <th>Cohort</th>
-                <th style="text-align:center">User Msgs</th>
-                <th style="text-align:center">Agent Resp</th>
-                <th style="text-align:center">Weeks</th>
+                <th>Company Name</th>
+                <th>Description</th>
+                <th style="text-align:center"># Chats</th>
+                <th style="text-align:center">Weeks Active</th>
                 <th style="text-align:center">Msgs/Week</th>
+                <th style="text-align:center">First Chat</th>
+                <th style="text-align:center">Cohort</th>
             </tr>
         </thead>
         <tbody>
-        <tr><td class="number">1</td><td>Mohammad Qudsi</td><td class="inflight">Inflight</td><td class="number">32</td><td class="number">61</td><td class="number">6.6</td><td class="number highlight">4.87</td></tr>
-        <tr><td class="number">2</td><td>Kavindi Seneviratne</td><td class="inflight">Inflight</td><td class="number">62</td><td class="number">81</td><td class="number">18.1</td><td class="number highlight">3.42</td></tr>
-        <tr><td class="number">3</td><td>Daniel Self</td><td class="inflight">Inflight</td><td class="number">64</td><td class="number">82</td><td class="number">19.3</td><td class="number highlight">3.32</td></tr>
-        <tr><td class="number">4</td><td>Troy Grandi</td><td class="inflight">Inflight</td><td class="number">64</td><td class="number">75</td><td class="number">25.9</td><td class="number highlight">2.48</td></tr>
-        <tr><td class="number">5</td><td>Holland Peil</td><td class="inflight">Inflight</td><td class="number">61</td><td class="number">80</td><td class="number">25.0</td><td class="number highlight">2.44</td></tr>
-        <tr><td class="number">6</td><td>Gavin Bartow</td><td class="inflight">Inflight</td><td class="number">58</td><td class="number">76</td><td class="number">24.0</td><td class="number highlight">2.42</td></tr>
-        <tr><td class="number">7</td><td>Vineeta Khanna</td><td class="inflight">Inflight</td><td class="number">55</td><td class="number">72</td><td class="number">23.9</td><td class="number highlight">2.31</td></tr>
-        <tr><td class="number">8</td><td>Stacey Lehrer</td><td class="inflight">Inflight</td><td class="number">50</td><td class="number">65</td><td class="number">23.9</td><td class="number highlight">2.10</td></tr>
-        <tr><td class="number">9</td><td>Juan Alcala</td><td class="inflight">Inflight</td><td class="number">21</td><td class="number">21</td><td class="number">10.9</td><td class="number">1.93</td></tr>
-        <tr><td class="number">10</td><td>Robert Sanchez</td><td class="inflight">Inflight</td><td class="number">48</td><td class="number">69</td><td class="number">25.3</td><td class="number">1.90</td></tr>
-        <tr><td class="number">11</td><td>Zach Brenner</td><td class="inflight">Inflight</td><td class="number">18</td><td class="number">20</td><td class="number">10.9</td><td class="number">1.66</td></tr>
-        <tr><td class="number">12</td><td>Wasay Zaman</td><td class="inflight">Inflight</td><td class="number">40</td><td class="number">61</td><td class="number">26.7</td><td class="number">1.50</td></tr>
-        <tr><td class="number">13</td><td>Sammie Bradley</td><td class="launch_track">Launch Track</td><td class="number">41</td><td class="number">55</td><td class="number">32.0</td><td class="number">1.28</td></tr>
-        <tr><td class="number">14</td><td>Nick Bernal</td><td class="inflight">Inflight</td><td class="number">39</td><td class="number">51</td><td class="number">31.9</td><td class="number">1.22</td></tr>
-        <tr><td class="number">15</td><td>Lisa Lamb</td><td class="launch_track">Launch Track</td><td class="number">41</td><td class="number">75</td><td class="number">42.3</td><td class="number">0.97</td></tr>
-        <tr><td class="number">16</td><td>Sanchit Singh</td><td class="inflight">Inflight</td><td class="number">24</td><td class="number">51</td><td class="number">30.9</td><td class="number">0.78</td></tr>
-        <tr><td class="number">17</td><td>Wayne McClellan</td><td class="launch_track">Launch Track</td><td class="number">25</td><td class="number">38</td><td class="number">32.9</td><td class="number">0.76</td></tr>
-        <tr><td class="number">18</td><td>Rachel Dakin</td><td class="launch_track">Launch Track</td><td class="number">23</td><td class="number">32</td><td class="number">32.9</td><td class="number">0.70</td></tr>
-        <tr><td class="number">19</td><td>Kanna Ecklund</td><td class="launch_track">Launch Track</td><td class="number">21</td><td class="number">33</td><td class="number">31.3</td><td class="number">0.67</td></tr>
-        <tr><td class="number">20</td><td>Daniel Generalov</td><td class="inflight">Inflight</td><td class="number">18</td><td class="number">64</td><td class="number">29.3</td><td class="number">0.61</td></tr>
-        <tr><td class="number">21</td><td>Jourdan Ziff</td><td class="launch_track">Launch Track</td><td class="number">13</td><td class="number">30</td><td class="number">32.0</td><td class="number">0.41</td></tr>
-        <tr><td class="number">22</td><td>Jai Sharma</td><td class="inflight">Inflight</td><td class="number">11</td><td class="number">60</td><td class="number">25.9</td><td class="number">0.43</td></tr>
-        <tr><td class="number">23</td><td>Thaddeus Okasinski</td><td class="inflight">Inflight</td><td class="number">13</td><td class="number">50</td><td class="number">32.9</td><td class="number">0.40</td></tr>
-        <tr><td class="number">24</td><td>Sandy Basaka</td><td class="launch_track">Launch Track</td><td class="number">10</td><td class="number">32</td><td class="number">32.0</td><td class="number">0.31</td></tr>
-        <tr><td class="number">25</td><td>Billy Carter</td><td class="inflight">Inflight</td><td class="number">2</td><td class="number">2</td><td class="number">10.9</td><td class="number">0.18</td></tr>
-        <tr><td class="number">26</td><td>Jani Shaik</td><td class="inflight">Inflight</td><td class="number">2</td><td class="number">13</td><td class="number">19.1</td><td class="number">0.10</td></tr>
-        <tr><td class="number">27</td><td>Sky Soltero</td><td class="launch_track">Launch Track</td><td class="number">3</td><td class="number">30</td><td class="number">32.9</td><td class="number">0.09</td></tr>
-        <tr><td class="number">28</td><td>Joshua Shuttleworth</td><td class="launch_track">Launch Track</td><td class="number">3</td><td class="number">32</td><td class="number">32.9</td><td class="number">0.09</td></tr>
+            <tr>
+                <td class="number">1</td>
+                <td>Mohammad Qudsi</td>
+                <td>DateFlo</td>
+                <td>Date Concierge Service — ongoing relationship, subscription model</td>
+                <td class="number">32</td>
+                <td class="number">6.6</td>
+                <td class="number highlight">4.87</td>
+                <td class="number">Mar 1</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">2</td>
+                <td>Kavindi Seneviratne</td>
+                <td>Foodie</td>
+                <td>Food discovery/deals platform for SDSU students</td>
+                <td class="number">62</td>
+                <td class="number">18.1</td>
+                <td class="number highlight">3.42</td>
+                <td class="number">Dec 10</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">3</td>
+                <td>Daniel Self</td>
+                <td>Second Course</td>
+                <td>Meal delivery for busy professionals</td>
+                <td class="number">64</td>
+                <td class="number">19.3</td>
+                <td class="number highlight">3.32</td>
+                <td class="number">Dec 2</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">4</td>
+                <td>Troy Grandi</td>
+                <td>Fit Me</td>
+                <td>Fitness matching platform</td>
+                <td class="number">64</td>
+                <td class="number">25.9</td>
+                <td class="number highlight">2.48</td>
+                <td class="number">Oct 17</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">5</td>
+                <td>Holland Peil</td>
+                <td>The T-Squeeze</td>
+                <td>Reusable tea infuser</td>
+                <td class="number">61</td>
+                <td class="number">25.0</td>
+                <td class="number highlight">2.44</td>
+                <td class="number">Oct 23</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">6</td>
+                <td>Gavin Bartow</td>
+                <td>Second Course</td>
+                <td>Meal delivery for busy professionals</td>
+                <td class="number">58</td>
+                <td class="number">24.0</td>
+                <td class="number highlight">2.42</td>
+                <td class="number">Oct 30</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">7</td>
+                <td>Vineeta Khanna</td>
+                <td>Harmony Health AI</td>
+                <td>AI health solutions for PCOS sufferers</td>
+                <td class="number">55</td>
+                <td class="number">23.9</td>
+                <td class="number highlight">2.31</td>
+                <td class="number">Oct 31</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">8</td>
+                <td>Stacey Lehrer</td>
+                <td>Vital Tidal</td>
+                <td>Functional supplement for ocean athletes</td>
+                <td class="number">50</td>
+                <td class="number">23.9</td>
+                <td class="number highlight">2.10</td>
+                <td class="number">Oct 31</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">9</td>
+                <td>Juan Alcala</td>
+                <td>RAFRS</td>
+                <td>Carbon-fiber cloth + adhesive composite system</td>
+                <td class="number">21</td>
+                <td class="number">10.9</td>
+                <td class="number">1.93</td>
+                <td class="number">Jan 30</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">10</td>
+                <td>Robert Sanchez</td>
+                <td>Academic Advisor AI</td>
+                <td>AI-powered academic advising for students</td>
+                <td class="number">48</td>
+                <td class="number">25.3</td>
+                <td class="number">1.90</td>
+                <td class="number">Oct 21</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">11</td>
+                <td>Zach Brenner</td>
+                <td>Sonomos</td>
+                <td>On-device privacy layer for sensitive info masking</td>
+                <td class="number">18</td>
+                <td class="number">10.9</td>
+                <td class="number">1.66</td>
+                <td class="number">Jan 30</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">12</td>
+                <td>Wasay Zaman</td>
+                <td>TransferTrack</td>
+                <td>Transfer process simplification for community college students</td>
+                <td class="number">40</td>
+                <td class="number">26.7</td>
+                <td class="number">1.50</td>
+                <td class="number">Oct 11</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">13</td>
+                <td>Sammie Bradley</td>
+                <td>Foot Kinetics</td>
+                <td>Blister prevention products for feet</td>
+                <td class="number">41</td>
+                <td class="number">32.0</td>
+                <td class="number">1.28</td>
+                <td class="number">Sep 4</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td class="number">14</td>
+                <td>Nick Bernal</td>
+                <td>University Valet</td>
+                <td>Parking and accessibility help for commuters</td>
+                <td class="number">39</td>
+                <td class="number">31.9</td>
+                <td class="number">1.22</td>
+                <td class="number">Sep 5</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">15</td>
+                <td>Lisa Lamb</td>
+                <td>Her Sports San Diego</td>
+                <td>Women's sports coverage newsletter for San Diego</td>
+                <td class="number">41</td>
+                <td class="number">42.3</td>
+                <td class="number">0.97</td>
+                <td class="number">Jun 24</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td class="number">16</td>
+                <td>Sanchit Singh</td>
+                <td>Redtrieve</td>
+                <td>Redesigning food waste through smart retrieval</td>
+                <td class="number">24</td>
+                <td class="number">30.9</td>
+                <td class="number">0.78</td>
+                <td class="number">Sep 12</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">17</td>
+                <td>Wayne McClellan</td>
+                <td>Protocol Grip Trainer</td>
+                <td>Connected grip trainer for phone</td>
+                <td class="number">25</td>
+                <td class="number">32.9</td>
+                <td class="number">0.76</td>
+                <td class="number">Aug 29</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td class="number">18</td>
+                <td>Rachel Dakin</td>
+                <td>ASAICHI</td>
+                <td>Sustainable flower base</td>
+                <td class="number">23</td>
+                <td class="number">32.9</td>
+                <td class="number">0.70</td>
+                <td class="number">Aug 29</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td class="number">19</td>
+                <td>Kanna Ecklund</td>
+                <td>ASAICHI</td>
+                <td>Plant-based hydrogel floral base</td>
+                <td class="number">21</td>
+                <td class="number">31.3</td>
+                <td class="number">0.67</td>
+                <td class="number">Sep 9</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td class="number">20</td>
+                <td>Daniel Generalov</td>
+                <td>Wayvlo</td>
+                <td>Wave-powered energy device</td>
+                <td class="number">18</td>
+                <td class="number">29.3</td>
+                <td class="number">0.61</td>
+                <td class="number">Sep 23</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">21</td>
+                <td>Jourdan Ziff</td>
+                <td>Her Sports San Diego</td>
+                <td>Women's sports coverage platform</td>
+                <td class="number">13</td>
+                <td class="number">32.0</td>
+                <td class="number">0.41</td>
+                <td class="number">Sep 4</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td class="number">22</td>
+                <td>Jai Sharma</td>
+                <td>Redtrieve</td>
+                <td>Redesigning food waste through smart retrieval</td>
+                <td class="number">11</td>
+                <td class="number">25.9</td>
+                <td class="number">0.43</td>
+                <td class="number">Oct 17</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">23</td>
+                <td>Thaddeus Okasinski</td>
+                <td>The T-Squeeze</td>
+                <td>Reusable tea infuser solving weak brews and messy cleanup</td>
+                <td class="number">13</td>
+                <td class="number">32.9</td>
+                <td class="number">0.40</td>
+                <td class="number">Aug 29</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">24</td>
+                <td>Sandy Basaka</td>
+                <td>UniExchange</td>
+                <td>Marketplace app for college students</td>
+                <td class="number">10</td>
+                <td class="number">32.0</td>
+                <td class="number">0.31</td>
+                <td class="number">Sep 4</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td class="number">25</td>
+                <td>Billy Carter</td>
+                <td>Celebrity Concierge</td>
+                <td>Centralized nightlife concierge using verified promoters</td>
+                <td class="number">2</td>
+                <td class="number">10.9</td>
+                <td class="number">0.18</td>
+                <td class="number">Jan 30</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">26</td>
+                <td>Jani Shaik</td>
+                <td>Her Health AI</td>
+                <td>AI health solutions for women with PCOD/PCOS</td>
+                <td class="number">2</td>
+                <td class="number">19.1</td>
+                <td class="number">0.10</td>
+                <td class="number">Dec 3</td>
+                <td class="cohort-inflight">In Flight</td>
+            </tr>
+            <tr>
+                <td class="number">27</td>
+                <td>Sky Soltero</td>
+                <td>SipSecure</td>
+                <td>Auto-seal lid for canned beverages</td>
+                <td class="number">3</td>
+                <td class="number">32.9</td>
+                <td class="number">0.09</td>
+                <td class="number">Aug 29</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
+            <tr>
+                <td class="number">28</td>
+                <td>Joshua Shuttleworth</td>
+                <td>CRAM</td>
+                <td>AI-powered study organization platform</td>
+                <td class="number">3</td>
+                <td class="number">32.9</td>
+                <td class="number">0.09</td>
+                <td class="number">Aug 29</td>
+                <td class="cohort-launch_track">Launch Track</td>
+            </tr>
         </tbody>
     </table>
-    <p class="ts">Data: Letta API | Apr 17, 2026 | 19 Inflight + 9 Launch Track = 28 founders</p>
+
+    <div class="note">
+        <strong>💡 Tip:</strong> Click "Copy Entire Table" then paste directly into Google Sheets (Ctrl+V or Cmd+V). The data will format automatically into cells.
+    </div>
+
     <script>
-    function copyTable(){const t=document.getElementById('dataTable'),r=document.createRange();r.selectNode(t),window.getSelection().removeAllRanges(),window.getSelection().addRange(r);try{document.execCommand('copy'),document.querySelector('.copy-btn').textContent='✓ Copied!',document.querySelector('.copy-btn').classList.add('copied'),setTimeout(()=>{document.querySelector('.copy-btn').textContent='📋 Copy for Google Sheets',document.querySelector('.copy-btn').classList.remove('copied')},2e3)}catch(e){alert('Copy failed')}window.getSelection().removeAllRanges()}
+        function copyTable() {
+            const table = document.getElementById('dataTable');
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+            try {
+                document.execCommand('copy');
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copy Entire Table';
+                    btn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                alert('Copy failed - try selecting the table manually');
+            }
+
+            window.getSelection().removeAllRanges();
+        }
     </script>
-</body></html>
+</body>
+</html>
