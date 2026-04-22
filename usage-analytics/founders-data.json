@@ -2,16 +2,35 @@
   "metadata": {
     "source": "Letta API (api.letta.com)",
     "methodology": "User messages from first user_message. Weeks = days/7. Weekly data extends to current date with zeros for inactive weeks.",
-    "lastUpdated": "April 22, 2026 at 09:18 PM PDT",
-    "totalFounders": 0,
-    "totalAgents": 54,
-    "crossCohortPeople": 0
+    "lastUpdated": "April 22, 2026 at 09:21 PM PDT",
+    "totalFounders": 83,
+    "totalAgents": 94,
+    "crossCohortPeople": 10
   },
   "cohorts": {
     "inflight": {
       "name": "In Flight",
       "color": "#3b82f6",
-      "count": 27,
+      "count": 26,
+      "founderCount": 26,
+      "totalUserMessages": 351,
+      "totalAgentResponses": 478,
+      "avgMsgsPerWeek": 13.5
+    },
+    "launch-track": {
+      "name": "Launch Track",
+      "color": "#10b981",
+      "count": 9,
+      "founderCount": 9,
+      "totalUserMessages": 118,
+      "totalAgentResponses": 281,
+      "avgMsgsPerWeek": 13.11
+    },
+    "litf": {
+      "name": "LITF",
+      "color": "#8b5cf6",
+      "count": 1,
+      "founderCount": 1,
       "totalUserMessages": 0,
       "totalAgentResponses": 0,
       "avgMsgsPerWeek": 0.0
@@ -19,27 +38,1813 @@
     "inflight-v1": {
       "name": "In Flight V1",
       "color": "#6366f1",
-      "count": 17,
-      "totalUserMessages": 0,
-      "totalAgentResponses": 0,
-      "avgMsgsPerWeek": 0.0
+      "count": 16,
+      "founderCount": 16,
+      "totalUserMessages": 436,
+      "totalAgentResponses": 609,
+      "avgMsgsPerWeek": 27.25
     },
-    "launch-track": {
-      "name": "Launch Track",
-      "color": "#10b981",
-      "count": 9,
-      "totalUserMessages": 0,
-      "totalAgentResponses": 0,
-      "avgMsgsPerWeek": 0.0
+    "bootcamp-s26": {
+      "name": "Bootcamp S26",
+      "color": "#f59e0b",
+      "count": 13,
+      "founderCount": 13,
+      "totalUserMessages": 352,
+      "totalAgentResponses": 370,
+      "avgMsgsPerWeek": 27.08
     },
-    "litf": {
-      "name": "LITF",
-      "color": "#8b5cf6",
-      "count": 1,
-      "totalUserMessages": 0,
-      "totalAgentResponses": 0,
-      "avgMsgsPerWeek": 0.0
+    "community": {
+      "name": "Community",
+      "color": "#ec4899",
+      "count": 6,
+      "founderCount": 5,
+      "totalUserMessages": 94,
+      "totalAgentResponses": 104,
+      "avgMsgsPerWeek": 18.8
+    },
+    "named-person": {
+      "name": "Named Agents",
+      "color": "#f97316",
+      "count": 23,
+      "founderCount": 23,
+      "totalUserMessages": 333,
+      "totalAgentResponses": 236,
+      "avgMsgsPerWeek": 14.48
     }
   },
-  "founders": []
+  "founders": [
+    {
+      "name": "Laura Wetherhold",
+      "cohorts": [
+        "community",
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "Community",
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-b86549ac-4995-4d37-ad0d-c3119a3a093a",
+        "community": "agent-9d5f995b-14ec-4346-8664-7cf9b85f9ebf"
+      },
+      "userMessages": 58,
+      "agentResponses": 67,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 580.0,
+      "weeklyData": [],
+      "rank": 1
+    },
+    {
+      "name": "Kavindi Seneviratne",
+      "cohorts": [
+        "inflight",
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight",
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-8247fbfd-c600-4ab1-a133-8fee44c39480",
+        "inflight-v1": "agent-032899a2-cda6-4d5e-b215-80b14cb17833"
+      },
+      "userMessages": 55,
+      "agentResponses": 66,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 550.0,
+      "weeklyData": [],
+      "rank": 2
+    },
+    {
+      "name": "Ayden Yevilov",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-48fbeea4-0abc-4f51-9e99-3e61f5f0f538"
+      },
+      "userMessages": 50,
+      "agentResponses": 46,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 500.0,
+      "weeklyData": [],
+      "rank": 3
+    },
+    {
+      "name": "Zachary Brenner",
+      "cohorts": [
+        "bootcamp-s26",
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26",
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-52da569f-e001-4099-8bca-8539c4a175c9",
+        "bootcamp-s26": "agent-7f16d102-84b7-424c-8d76-8b9c74947fd2"
+      },
+      "userMessages": 43,
+      "agentResponses": 54,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 430.0,
+      "weeklyData": [],
+      "rank": 4
+    },
+    {
+      "name": "Juan Alcala",
+      "cohorts": [
+        "bootcamp-s26",
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26",
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-a14b8e7f-8e98-488b-becd-ad2390fbe18c",
+        "bootcamp-s26": "agent-5efa8391-9646-4825-974e-73f49f8a7d97"
+      },
+      "userMessages": 43,
+      "agentResponses": 47,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 430.0,
+      "weeklyData": [],
+      "rank": 5
+    },
+    {
+      "name": "Erica Summarizer Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-35ff0962-2261-4962-9c10-8cb7c83d60fb"
+      },
+      "userMessages": 39,
+      "agentResponses": 7,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 390.0,
+      "weeklyData": [],
+      "rank": 6
+    },
+    {
+      "name": "Stacey Lehrer",
+      "cohorts": [
+        "inflight",
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight",
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-cf73e4a7-daa3-4069-8547-11bc7a6a741c",
+        "inflight-v1": "agent-23e67765-c6b0-4c73-9714-98943b01eb09"
+      },
+      "userMessages": 36,
+      "agentResponses": 46,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 360.0,
+      "weeklyData": [],
+      "rank": 7
+    },
+    {
+      "name": "Michael Hayes",
+      "cohorts": [
+        "bootcamp-s26",
+        "community"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26",
+        "Community"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-2810c995-33fc-4635-bdea-121b5e61fcf6",
+        "community": "agent-4f6115a4-4080-46f7-9118-3220a883b74b"
+      },
+      "userMessages": 36,
+      "agentResponses": 37,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 360.0,
+      "weeklyData": [],
+      "rank": 8
+    },
+    {
+      "name": "Nick Bernal",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-64463d56-3a8d-476b-a5c6-da41f36f2ec5"
+      },
+      "userMessages": 34,
+      "agentResponses": 32,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 340.0,
+      "weeklyData": [],
+      "rank": 9
+    },
+    {
+      "name": "Troy Grandi",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-16073eab-0568-4f78-9672-23cf0bee1edc"
+      },
+      "userMessages": 33,
+      "agentResponses": 24,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 330.0,
+      "weeklyData": [],
+      "rank": 10
+    },
+    {
+      "name": "Holland Peil",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-684ee898-3af6-4f94-aabb-7bed4c175a72"
+      },
+      "userMessages": 32,
+      "agentResponses": 40,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 320.0,
+      "weeklyData": [],
+      "rank": 11
+    },
+    {
+      "name": "Creator Agent Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-199c5bc4-74fb-44ea-b094-2db853d859d8"
+      },
+      "userMessages": 32,
+      "agentResponses": 14,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 320.0,
+      "weeklyData": [],
+      "rank": 12
+    },
+    {
+      "name": "Tanner Kocher",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-5a158910-2914-457e-bcb7-5caecb0ed4ed"
+      },
+      "userMessages": 31,
+      "agentResponses": 42,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 310.0,
+      "weeklyData": [],
+      "rank": 13
+    },
+    {
+      "name": "Creator Deprecated Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-ea1b28e9-8093-488a-9a89-60286e678ad8"
+      },
+      "userMessages": 31,
+      "agentResponses": 8,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 310.0,
+      "weeklyData": [],
+      "rank": 14
+    },
+    {
+      "name": "Interview Synthesis Craig",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-57fcaa44-da14-47f9-a3ee-986af40be823"
+      },
+      "userMessages": 31,
+      "agentResponses": 8,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 310.0,
+      "weeklyData": [],
+      "rank": 15
+    },
+    {
+      "name": "Notification Checkins Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-366b6532-8465-4045-8202-dc4b171870ba"
+      },
+      "userMessages": 31,
+      "agentResponses": 19,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 310.0,
+      "weeklyData": [],
+      "rank": 16
+    },
+    {
+      "name": "Gavin Bartow",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-348db52f-cf0f-4b11-b935-f6eaf05bd6df"
+      },
+      "userMessages": 28,
+      "agentResponses": 39,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 280.0,
+      "weeklyData": [],
+      "rank": 17
+    },
+    {
+      "name": "Wasay Zaman",
+      "cohorts": [
+        "inflight",
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight",
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-71b91f96-ae81-4e79-a691-87530ebb984a",
+        "inflight-v1": "agent-55cd9056-dacd-412f-b37e-a305b7cf819e"
+      },
+      "userMessages": 27,
+      "agentResponses": 31,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 270.0,
+      "weeklyData": [],
+      "rank": 18
+    },
+    {
+      "name": "Robert Sanchez",
+      "cohorts": [
+        "inflight",
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight",
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-b6cd497b-a963-41c7-94d6-10693fd2a09b",
+        "inflight-v1": "agent-1a6a2de1-50dd-4ae9-a97c-df5fb1702b80"
+      },
+      "userMessages": 26,
+      "agentResponses": 39,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 260.0,
+      "weeklyData": [],
+      "rank": 19
+    },
+    {
+      "name": "Vineeta Khanna",
+      "cohorts": [
+        "inflight",
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight",
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-4166e536-bb07-41b9-914e-3fbefd6abacd",
+        "inflight-v1": "agent-5f3ce967-acff-408b-a549-9336dcd85c14"
+      },
+      "userMessages": 26,
+      "agentResponses": 48,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 260.0,
+      "weeklyData": [],
+      "rank": 20
+    },
+    {
+      "name": "Sanchit Singh",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-dec5cca9-53cd-43b0-ba1c-28692a3a44a4"
+      },
+      "userMessages": 26,
+      "agentResponses": 31,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 260.0,
+      "weeklyData": [],
+      "rank": 21
+    },
+    {
+      "name": "Progress Leaderboard Craig",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-982a4be2-79c2-41db-9f02-131041bcfb55"
+      },
+      "userMessages": 25,
+      "agentResponses": 11,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 250.0,
+      "weeklyData": [],
+      "rank": 22
+    },
+    {
+      "name": "Rachel Dakin",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-0d801826-76b4-4d4b-b0b9-f9d29640476b"
+      },
+      "userMessages": 23,
+      "agentResponses": 30,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 230.0,
+      "weeklyData": [],
+      "rank": 23
+    },
+    {
+      "name": "Sammie Bradley",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-1d16bee6-a661-48e1-b303-efbbbfdbf76f"
+      },
+      "userMessages": 23,
+      "agentResponses": 28,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 230.0,
+      "weeklyData": [],
+      "rank": 24
+    },
+    {
+      "name": "Julrenzarobert Flores",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-f0e4718c-b0f8-4285-bf07-ecb97ac81c8d"
+      },
+      "userMessages": 23,
+      "agentResponses": 18,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 230.0,
+      "weeklyData": [],
+      "rank": 25
+    },
+    {
+      "name": "Brian Sussman",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-47facd16-e4a5-40a9-a275-0cc02f726ae6"
+      },
+      "userMessages": 23,
+      "agentResponses": 23,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 230.0,
+      "weeklyData": [],
+      "rank": 26
+    },
+    {
+      "name": "Daniel Self",
+      "cohorts": [
+        "inflight",
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight",
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-4a986b2f-6a1b-42be-a4af-50df964106d1",
+        "inflight-v1": "agent-546a677f-3132-4347-8086-410379239ebb"
+      },
+      "userMessages": 22,
+      "agentResponses": 25,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 220.0,
+      "weeklyData": [],
+      "rank": 27
+    },
+    {
+      "name": "Kanna Ecklund",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-329f7b2c-b614-4194-a819-4fd60fec3d47"
+      },
+      "userMessages": 21,
+      "agentResponses": 33,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 210.0,
+      "weeklyData": [],
+      "rank": 28
+    },
+    {
+      "name": "Pea Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-8a806865-5c55-49c2-ac89-3b2f4963a47e"
+      },
+      "userMessages": 21,
+      "agentResponses": 42,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 210.0,
+      "weeklyData": [],
+      "rank": 29
+    },
+    {
+      "name": "Restaurant Discovery Kavindi",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-20d2dffd-4fa2-4a3b-affb-03d9331cf546"
+      },
+      "userMessages": 20,
+      "agentResponses": 41,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 200.0,
+      "weeklyData": [],
+      "rank": 30
+    },
+    {
+      "name": "Mentor Update Craig",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-c6173a67-9b12-4c7f-bbd1-acaa9c46070a"
+      },
+      "userMessages": 20,
+      "agentResponses": 10,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 200.0,
+      "weeklyData": [],
+      "rank": 31
+    },
+    {
+      "name": "Pg Office Hours Craig",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-10edcd94-3c64-4334-acdd-8c1a9d1f7717"
+      },
+      "userMessages": 19,
+      "agentResponses": 19,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 190.0,
+      "weeklyData": [],
+      "rank": 32
+    },
+    {
+      "name": "Mohammad Qudsi",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-044bca01-f425-4072-8e5a-5e9ea89c5a9c"
+      },
+      "userMessages": 18,
+      "agentResponses": 32,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 180.0,
+      "weeklyData": [],
+      "rank": 33
+    },
+    {
+      "name": "Spark Creator Qudsi",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-828ee2e8-ed4f-420a-b8f0-da7edf071c78"
+      },
+      "userMessages": 18,
+      "agentResponses": 25,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 180.0,
+      "weeklyData": [],
+      "rank": 34
+    },
+    {
+      "name": "Ravyn Panopio",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-d30cd105-a5aa-4ab6-b60d-e7d126ac3442"
+      },
+      "userMessages": 18,
+      "agentResponses": 16,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 180.0,
+      "weeklyData": [],
+      "rank": 35
+    },
+    {
+      "name": "Volodymyr Kalinin",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-6bb43976-b930-4dec-9d03-066263e408e1"
+      },
+      "userMessages": 18,
+      "agentResponses": 15,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 180.0,
+      "weeklyData": [],
+      "rank": 36
+    },
+    {
+      "name": "Kristina Nguyen",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-0a9fbf96-a22b-422d-b4e1-1770b81cb878"
+      },
+      "userMessages": 18,
+      "agentResponses": 19,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 180.0,
+      "weeklyData": [],
+      "rank": 37
+    },
+    {
+      "name": "Aic Agent Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-300f6e26-ce14-4baa-b116-a333f335de43"
+      },
+      "userMessages": 18,
+      "agentResponses": 16,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 180.0,
+      "weeklyData": [],
+      "rank": 38
+    },
+    {
+      "name": "Overnight Cofounder Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-4b00ed1c-68a8-4bcc-8888-e298171b5e7c"
+      },
+      "userMessages": 18,
+      "agentResponses": 13,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 180.0,
+      "weeklyData": [],
+      "rank": 39
+    },
+    {
+      "name": "Matt Levie",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-ffed2e2a-8fa5-488b-979f-0d422a65d69d"
+      },
+      "userMessages": 17,
+      "agentResponses": 18,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 170.0,
+      "weeklyData": [],
+      "rank": 40
+    },
+    {
+      "name": "Paige Pucher",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-9a767ea7-df42-4286-b46f-9d3d6a110d60"
+      },
+      "userMessages": 16,
+      "agentResponses": 17,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 160.0,
+      "weeklyData": [],
+      "rank": 41
+    },
+    {
+      "name": "Alyssa Lim",
+      "cohorts": [
+        "bootcamp-s26"
+      ],
+      "cohortDisplay": [
+        "Bootcamp S26"
+      ],
+      "primaryCohort": "bootcamp-s26",
+      "agentIds": {
+        "bootcamp-s26": "agent-5d7e719f-174c-44fb-81ec-3cd425313f59"
+      },
+      "userMessages": 16,
+      "agentResponses": 18,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 160.0,
+      "weeklyData": [],
+      "rank": 42
+    },
+    {
+      "name": "Kyan Santiagocalling",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-4a668e9d-923a-4dc3-9a00-5c89fb41f5e4"
+      },
+      "userMessages": 14,
+      "agentResponses": 18,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 140.0,
+      "weeklyData": [],
+      "rank": 43
+    },
+    {
+      "name": "Daniel Generalov",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-90142b88-303e-4a8c-9d66-53ce06c0cc52"
+      },
+      "userMessages": 13,
+      "agentResponses": 42,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 130.0,
+      "weeklyData": [],
+      "rank": 44
+    },
+    {
+      "name": "Jourdan Ziff",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-991e4097-7780-4292-96d1-dd1c7d5eb24a"
+      },
+      "userMessages": 13,
+      "agentResponses": 29,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 130.0,
+      "weeklyData": [],
+      "rank": 45
+    },
+    {
+      "name": "Ian Hock",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-014ed3ea-131c-423e-9c37-5139e8e93396"
+      },
+      "userMessages": 12,
+      "agentResponses": 15,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 120.0,
+      "weeklyData": [],
+      "rank": 46
+    },
+    {
+      "name": "Lisa Lamb",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-b6b08d7a-5a70-4130-bea6-e83a0b1e007a"
+      },
+      "userMessages": 12,
+      "agentResponses": 44,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 120.0,
+      "weeklyData": [],
+      "rank": 47
+    },
+    {
+      "name": "Wayne Mcclellan",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-7fba8e49-1ebe-47bb-9250-91a0288422d8"
+      },
+      "userMessages": 12,
+      "agentResponses": 28,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 120.0,
+      "weeklyData": [],
+      "rank": 48
+    },
+    {
+      "name": "William Carter",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-db28e696-6396-438f-8116-48bbca751b10"
+      },
+      "userMessages": 11,
+      "agentResponses": 17,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 110.0,
+      "weeklyData": [],
+      "rank": 49
+    },
+    {
+      "name": "Nolan Walker",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-95a2a486-02ca-45bc-a4ca-4bd74cb296d8"
+      },
+      "userMessages": 10,
+      "agentResponses": 14,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 100.0,
+      "weeklyData": [],
+      "rank": 50
+    },
+    {
+      "name": "Thaddeus Okasinski",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-f278a7d5-3d08-408b-9799-c45202438038"
+      },
+      "userMessages": 10,
+      "agentResponses": 32,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 100.0,
+      "weeklyData": [],
+      "rank": 51
+    },
+    {
+      "name": "Validation Pipeline Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-49c5c157-dd3a-45af-bafa-267dc0ceb52f"
+      },
+      "userMessages": 10,
+      "agentResponses": 3,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 100.0,
+      "weeklyData": [],
+      "rank": 52
+    },
+    {
+      "name": "Jai Sharma",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-b7419c66-4a5f-4dac-a868-b83dbed325de"
+      },
+      "userMessages": 8,
+      "agentResponses": 34,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 80.0,
+      "weeklyData": [],
+      "rank": 53
+    },
+    {
+      "name": "Sandy Basaka",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-2528505e-8d17-4abf-9611-13fa12c93c2d"
+      },
+      "userMessages": 8,
+      "agentResponses": 27,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 80.0,
+      "weeklyData": [],
+      "rank": 54
+    },
+    {
+      "name": "Gaius Dulay",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-3bcff500-b26c-4d59-9fff-16670057f89a"
+      },
+      "userMessages": 5,
+      "agentResponses": 12,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 50.0,
+      "weeklyData": [],
+      "rank": 55
+    },
+    {
+      "name": "Donovan Traub",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-aea4e01c-a867-4e81-b8b0-3f8a677c2fec"
+      },
+      "userMessages": 3,
+      "agentResponses": 6,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 30.0,
+      "weeklyData": [],
+      "rank": 56
+    },
+    {
+      "name": "Sky Soltero",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-f3295a70-614a-4676-92a9-27a7e937a38b"
+      },
+      "userMessages": 3,
+      "agentResponses": 30,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 30.0,
+      "weeklyData": [],
+      "rank": 57
+    },
+    {
+      "name": "Joshua Shuttleworth",
+      "cohorts": [
+        "launch-track"
+      ],
+      "cohortDisplay": [
+        "Launch Track"
+      ],
+      "primaryCohort": "launch-track",
+      "agentIds": {
+        "launch-track": "agent-87b7316f-d67b-4806-aef8-2ed4f0f0e0b6"
+      },
+      "userMessages": 3,
+      "agentResponses": 32,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 30.0,
+      "weeklyData": [],
+      "rank": 58
+    },
+    {
+      "name": "Jani Shaik",
+      "cohorts": [
+        "inflight-v1"
+      ],
+      "cohortDisplay": [
+        "In Flight V1"
+      ],
+      "primaryCohort": "inflight-v1",
+      "agentIds": {
+        "inflight-v1": "agent-d69c83ac-62c5-4807-82e0-a24f1b28401b"
+      },
+      "userMessages": 2,
+      "agentResponses": 13,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 20.0,
+      "weeklyData": [],
+      "rank": 59
+    },
+    {
+      "name": "Ata Mohseni",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-ab4bf6c1-478b-4d27-8ee7-c19259b2ab7f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 60
+    },
+    {
+      "name": "Ben Lab",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-bc9d9407-1a2a-471b-b205-12f122f69326"
+      },
+      "userMessages": 0,
+      "agentResponses": 1,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 61
+    },
+    {
+      "name": "James Marsh",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-f60919d9-18db-4558-8cc5-889f994ca96f"
+      },
+      "userMessages": 0,
+      "agentResponses": 1,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 62
+    },
+    {
+      "name": "Joe Mikhail",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-4e53bbc3-4492-451a-abef-3bf9aefa1345"
+      },
+      "userMessages": 0,
+      "agentResponses": 1,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 63
+    },
+    {
+      "name": "Lillian Winger",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-5ba8c107-820c-427e-8e50-c4ed08d8d19c"
+      },
+      "userMessages": 0,
+      "agentResponses": 1,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 64
+    },
+    {
+      "name": "Mary Becker",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-542e37c4-3f64-4642-ad75-d5401e8568c6"
+      },
+      "userMessages": 0,
+      "agentResponses": 1,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 65
+    },
+    {
+      "name": "Nathan Shwedock",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-78e9d092-935a-4235-9277-a77cd3d33de5"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 66
+    },
+    {
+      "name": "Nathaniel Shalev",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-2db2e83f-5f27-4e60-856f-d88ab8c2570e"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 67
+    },
+    {
+      "name": "Riley Thompson",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-69ae39b4-fa99-49ee-a0e8-9e2896408ed5"
+      },
+      "userMessages": 0,
+      "agentResponses": 1,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 68
+    },
+    {
+      "name": "Samuel Braude",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-92f72ee2-b909-4bea-8e68-3461cbe95300"
+      },
+      "userMessages": 0,
+      "agentResponses": 1,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 69
+    },
+    {
+      "name": "Summer Kocher",
+      "cohorts": [
+        "inflight"
+      ],
+      "cohortDisplay": [
+        "In Flight"
+      ],
+      "primaryCohort": "inflight",
+      "agentIds": {
+        "inflight": "agent-a1ec11e8-9d5d-4a18-892d-2b8e2cd5e820"
+      },
+      "userMessages": 0,
+      "agentResponses": 1,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 70
+    },
+    {
+      "name": "Joseph Mikhail",
+      "cohorts": [
+        "community"
+      ],
+      "cohortDisplay": [
+        "Community"
+      ],
+      "primaryCohort": "community",
+      "agentIds": {
+        "community": "agent-3833d2f0-8e2c-4b1a-9f0d-7c8e1a3b5d6f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 71
+    },
+    {
+      "name": "Jacob Oliker",
+      "cohorts": [
+        "community"
+      ],
+      "cohortDisplay": [
+        "Community"
+      ],
+      "primaryCohort": "community",
+      "agentIds": {
+        "community": "agent-921da620-1a2b-3c4d-5e6f-7a8b9c0d1e2f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 72
+    },
+    {
+      "name": "Jayden Nguyen",
+      "cohorts": [
+        "community"
+      ],
+      "cohortDisplay": [
+        "Community"
+      ],
+      "primaryCohort": "community",
+      "agentIds": {
+        "community": "agent-4c38439e-1a2b-3c4d-5e6f-7a8b9c0d1e2f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 73
+    },
+    {
+      "name": "Nitin Chatlani",
+      "cohorts": [
+        "litf"
+      ],
+      "cohortDisplay": [
+        "LITF"
+      ],
+      "primaryCohort": "litf",
+      "agentIds": {
+        "litf": "agent-322d0dbc-4e4c-4a3f-9c33-4e3f0c5af252"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 74
+    },
+    {
+      "name": "Team Comm Synthesizer Craig",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-f44a314c-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 75
+    },
+    {
+      "name": "Expert Matching Craig",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-6c060271-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 76
+    },
+    {
+      "name": "Partnership Page Billy",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-a12c894c-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 77
+    },
+    {
+      "name": "Presentation Builder Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-e925aa73-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 78
+    },
+    {
+      "name": "Meeting Prep Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-f5b8940d-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 79
+    },
+    {
+      "name": "Exa Search Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-a1f0ca9e-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 80
+    },
+    {
+      "name": "Debug Analyzer Laura",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-bcbbd546-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 81
+    },
+    {
+      "name": "Priority Coordinator Michael",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-477efb95-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 82
+    },
+    {
+      "name": "Early Adopter Scout Kavindi",
+      "cohorts": [
+        "named-person"
+      ],
+      "cohortDisplay": [
+        "Named Agents"
+      ],
+      "primaryCohort": "named-person",
+      "agentIds": {
+        "named-person": "agent-f98bcbe1-0a1b-2c3d-4e5f-6a7b8c9d0e1f"
+      },
+      "userMessages": 0,
+      "agentResponses": 0,
+      "firstChat": "",
+      "lastChat": "",
+      "weeks": 0,
+      "msgsPerWeek": 0,
+      "weeklyData": [],
+      "rank": 83
+    }
+  ]
 }
