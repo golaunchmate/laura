@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LaunchMate Usage Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400,500,600,700;800&family=JetBrains+Mono:wght@400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600,700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,15 +51,6 @@
         .stat-value.inflight { color: var(--cohort-inflight); }
         .stat-value.launchtrack { color: var(--cohort-launchtrack); }
         
-        /* Founder Detail */
-        .founder-detail { display: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; }
-        .founder-detail.active { display: block; }
-        .founder-detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .founder-detail h3 { font-size: 1.25rem; color: var(--accent-blue); }
-        .close-btn { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; }
-        .close-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
-        .chart-wrapper-tall { height: 300px; }
-        
         /* Charts Section */
         .charts-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
         .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
@@ -74,8 +65,8 @@
         .tab { padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); cursor: pointer; font-size: 0.875rem; transition: all 0.2s; }
         .tab:hover { border-color: var(--accent-blue); }
         .tab.active { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
-        .leaderboard-table { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-        table { width: 100%; border-collapse: collapse; }
+        .leaderboard-table { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
         th { background: var(--bg-secondary); padding: 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
         td { padding: 1rem; border-top: 1px solid var(--border); }
         tr:hover td { background: rgba(255, 255, 255, 0.02); }
@@ -92,6 +83,17 @@
         .metric-highlight { color: var(--accent-green); }
         .metric-low { color: var(--accent-orange); }
         .metric-zero { color: var(--text-muted); }
+        
+        /* Inline founder detail row */
+        .founder-detail-row { display: none; }
+        .founder-detail-row.active { display: table-row; }
+        .founder-detail-row td { padding: 0; border-top: 1px solid var(--border); }
+        .founder-detail-inner { padding: 1.5rem; background: rgba(96, 165, 250, 0.05); border-bottom: 1px solid rgba(96, 165, 250, 0.2); }
+        .founder-detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .founder-detail-header h3 { font-size: 1rem; color: var(--accent-blue); }
+        .close-btn { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+        .close-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+        .chart-wrapper-inline { height: 250px; }
         
         /* Footer */
         footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem; }
@@ -119,7 +121,7 @@
             <p class="generated" id="generated">Loading data...</p>
         </header>
 
-        <div class="note" id="note">
+        <div class="note">
             <strong>📊 Methodology:</strong> Metrics calculated from each founder's FIRST USER MESSAGE date. Only counts user-typed messages (message_type = user_message).
         </div>
 
@@ -128,21 +130,10 @@
             <div class="loading">Loading summary...</div>
         </div>
 
-        <!-- Founder Detail Panel -->
-        <div class="founder-detail" id="founderDetail">
-            <div class="founder-detail-header">
-                <h3 id="detailName">Founder Week-by-Week Activity</h3>
-                <button class="close-btn" onclick="closeFounderDetail()">✕ Close</button>
-            </div>
-            <div class="chart-wrapper-tall">
-                <canvas id="founderActivityChart"></canvas>
-            </div>
-        </div>
-
         <!-- Charts -->
         <div class="charts-section">
             <div class="chart-card">
-                <h3>📊 Messages per Week Distribution (All Founders)</h3>
+                <h3>📊 Messages per Week Distribution</h3>
                 <div class="chart-wrapper">
                     <canvas id="distributionChart"></canvas>
                 </div>
@@ -178,10 +169,10 @@
                             <th>Rank</th>
                             <th>Founder</th>
                             <th>Cohort</th>
-                            <th style="text-align:center">User Messages</th>
-                            <th style="text-align:center">Agent Responses</th>
-                            <th style="text-align:center">Weeks Active</th>
-                            <th style="text-align:center">Msgs/Week</th>
+                            <th>User Messages</th>
+                            <th>Agent Responses</th>
+                            <th>Weeks Active</th>
+                            <th>Msgs/Week</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -199,7 +190,8 @@
 
     <script>
         let founders = [];
-        let founderActivityChart = null;
+        let currentDetailName = null;
+        let detailChartIndex = 0;
 
         async function loadData() {
             try {
@@ -217,7 +209,7 @@
                     `Source: ${data.metadata.source} • ${data.metadata.methodology}`;
                 
                 // Render summary cards
-                renderSummary(data.summary);
+                renderSummary(data);
                 
                 // Render leaderboard
                 populateTable(founders);
@@ -231,26 +223,29 @@
             }
         }
 
-        function renderSummary(summary) {
+        function renderSummary(data) {
             const grid = document.getElementById('summaryGrid');
+            const ifSummary = data.summary.inflight;
+            const ltSummary = data.summary.launch_track;
+            
             grid.innerHTML = `
                 <div class="summary-card inflight">
                     <h3>🚀 In Flight Cohort</h3>
                     <div class="summary-stats">
-                        <div><div class="stat-value inflight">${summary.inflight.founders}</div><div class="stat-label">Founders</div></div>
-                        <div><div class="stat-value inflight">${summary.inflight.avgMsgsPerWeek.toFixed(2)}</div><div class="stat-label">Avg Msgs/Week</div></div>
-                        <div><div class="stat-value inflight">${summary.inflight.totalUserMessages}</div><div class="stat-label">Total User Messages</div></div>
-                        <div><div class="stat-value inflight">${summary.inflight.totalAgentResponses}</div><div class="stat-label">Agent Responses</div></div>
+                        <div><div class="stat-value inflight">${ifSummary.founders}</div><div class="stat-label">Founders</div></div>
+                        <div><div class="stat-value inflight">${ifSummary.avgMsgsPerWeek.toFixed(2)}</div><div class="stat-label">Avg Msgs/Week</div></div>
+                        <div><div class="stat-value inflight">${ifSummary.totalUserMessages}</div><div class="stat-label">Total User Messages</div></div>
+                        <div><div class="stat-value inflight">${ifSummary.totalAgentResponses}</div><div class="stat-label">Agent Responses</div></div>
                     </div>
                 </div>
 
                 <div class="summary-card launchtrack">
                     <h3>🎯 Launch Track Cohort</h3>
                     <div class="summary-stats">
-                        <div><div class="stat-value launchtrack">${summary.launch_track.founders}</div><div class="stat-label">Founders</div></div>
-                        <div><div class="stat-value launchtrack">${summary.launch_track.avgMsgsPerWeek.toFixed(2)}</div><div class="stat-label">Avg Msgs/Week</div></div>
-                        <div><div class="stat-value launchtrack">${summary.launch_track.totalUserMessages}</div><div class="stat-label">Total User Messages</div></div>
-                        <div><div class="stat-value launchtrack">${summary.launch_track.totalAgentResponses}</div><div class="stat-label">Agent Responses</div></div>
+                        <div><div class="stat-value launchtrack">${ltSummary.founders}</div><div class="stat-label">Founders</div></div>
+                        <div><div class="stat-value launchtrack">${ltSummary.avgMsgsPerWeek.toFixed(2)}</div><div class="stat-label">Avg Msgs/Week</div></div>
+                        <div><div class="stat-value launchtrack">${ltSummary.totalUserMessages}</div><div class="stat-label">Total User Messages</div></div>
+                        <div><div class="stat-value launchtrack">${ltSummary.totalAgentResponses}</div><div class="stat-label">Agent Responses</div></div>
                     </div>
                 </div>
             `;
@@ -259,49 +254,73 @@
         function populateTable(data) {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
+            currentDetailName = null;
+            
             data.forEach(founder => {
                 const row = document.createElement('tr');
                 row.dataset.cohort = founder.cohort;
+                row.dataset.name = founder.name;
                 const rankClass = founder.rank <= 3 ? `rank-${founder.rank}` : '';
                 const metricClass = founder.msgsPerWeek >= 2 ? 'metric-highlight' : founder.msgsPerWeek >= 1 ? '' : founder.msgsPerWeek > 0 ? 'metric-low' : 'metric-zero';
                 const cohortDisplay = founder.cohort === 'inflight' ? 'In Flight' : 'Launch Track';
                 row.innerHTML = `
                     <td class="rank ${rankClass}">#${founder.rank}</td>
-                    <td class="founder-name" onclick="showFounderDetail('${founder.name}')">${founder.name}</td>
+                    <td class="founder-name" onclick="toggleFounderDetail('${founder.name}')">${founder.name}</td>
                     <td><span class="cohort-badge ${founder.cohort}">${cohortDisplay}</span></td>
-                    <td class="metric" style="text-align:center">${founder.userMessages}</td>
-                    <td class="metric" style="text-align:center">${founder.agentResponses}</td>
-                    <td class="metric" style="text-align:center">${founder.weeks}</td>
-                    <td class="metric ${metricClass}" style="text-align:center">${founder.msgsPerWeek.toFixed(2)}</td>
+                    <td class="metric">${founder.userMessages}</td>
+                    <td class="metric">${founder.agentResponses}</td>
+                    <td class="metric">${founder.weeks}</td>
+                    <td class="metric ${metricClass}">${founder.msgsPerWeek.toFixed(2)}</td>
                 `;
                 tbody.appendChild(row);
             });
         }
 
-        function filterTable(cohort) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-            if (cohort === 'all') populateTable(founders);
-            else populateTable(founders.filter(f => f.cohort === cohort));
-        }
-
-        function searchTable() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            populateTable(founders.filter(f => f.name.toLowerCase().includes(query)));
-        }
-
-        function showFounderDetail(name) {
-            const founder = founders.find(f => f.name === name);
-            if (!founder) return;
-            if (!founder.weeklyData || founder.weeklyData.length === 0) {
-                alert('No weekly activity data available for ' + name);
+        function toggleFounderDetail(name) {
+            // If clicking the same founder, close it
+            if (currentDetailName === name) {
+                closeFounderDetail();
                 return;
             }
-            document.getElementById('detailName').textContent = name + ' - Week-by-Week Activity';
-            document.getElementById('founderDetail').classList.add('active');
-            if (founderActivityChart) founderActivityChart.destroy();
-            const ctx = document.getElementById('founderActivityChart').getContext('2d');
-            founderActivityChart = new Chart(ctx, {
+            
+            // Close any existing detail
+            closeFounderDetail();
+            
+            const founder = founders.find(f => f.name === name);
+            if (!founder || !founder.weeklyData || founder.weeklyData.length === 0) {
+                return;
+            }
+            
+            currentDetailName = name;
+            
+            // Find the row for this founder
+            const founderRow = document.querySelector(`tr[data-name="${name}"]`);
+            if (!founderRow) return;
+            
+            // Create detail row
+            const detailRow = document.createElement('tr');
+            detailRow.className = 'founder-detail-row active';
+            detailRow.id = 'activeDetailRow';
+            detailRow.innerHTML = `
+                <td colspan="7">
+                    <div class="founder-detail-inner">
+                        <div class="founder-detail-header">
+                            <h3>${name} — Week-by-Week Activity</h3>
+                            <button class="close-btn" onclick="closeFounderDetail()">✕ Close</button>
+                        </div>
+                        <div class="chart-wrapper-inline">
+                            <canvas id="inlineChart"></canvas>
+                        </div>
+                    </div>
+                </td>
+            `;
+            
+            // Insert after the founder's row
+            founderRow.after(detailRow);
+            
+            // Render chart
+            const ctx = document.getElementById('inlineChart').getContext('2d');
+            new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: founder.weeklyData.map(w => w[0]),
@@ -311,7 +330,9 @@
                         borderColor: '#60a5fa',
                         backgroundColor: 'rgba(96, 165, 250, 0.1)',
                         fill: true,
-                        tension: 0.3
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#60a5fa'
                     }]
                 },
                 options: {
@@ -327,7 +348,23 @@
         }
 
         function closeFounderDetail() {
-            document.getElementById('founderDetail').classList.remove('active');
+            const existingRow = document.getElementById('activeDetailRow');
+            if (existingRow) {
+                existingRow.remove();
+            }
+            currentDetailName = null;
+        }
+
+        function filterTable(cohort) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            if (cohort === 'all') populateTable(founders);
+            else populateTable(founders.filter(f => f.cohort === cohort));
+        }
+
+        function searchTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            populateTable(founders.filter(f => f.name.toLowerCase().includes(query)));
         }
 
         function renderCharts() {
