@@ -1,365 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LaunchMate Usage Analytics</title>
-<meta name="tidbit-type" content="analytics">
-<meta name="tidbit-date" content="2026-04-22">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', -apple-system, sans-serif; background: #0a0a0a; color: #e5e5e5; line-height: 1.6; padding: 20px; max-width: 1200px; margin: 0 auto; }
-h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 4px; }
-h2 { font-size: 1.3rem; font-weight: 600; margin: 32px 0 16px; color: #fff; }
-h3 { font-size: 1rem; font-weight: 600; margin: 16px 0 8px; }
-.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.1em; }
-.label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; }
-.highlight { color: #60a5fa; }
-.decision { color: #34d399; }
-.tension { color: #f97316; }
-.methodology { font-size: 0.8rem; color: #6b7280; margin-bottom: 24px; padding: 12px 16px; background: #111; border: 1px solid #1a1a1a; border-radius: 8px; }
-
-/* Summary Cards */
-.summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 28px; }
-.summary-card { background: #111; border: 1px solid #1a1a1a; border-radius: 10px; padding: 16px; position: relative; overflow: hidden; }
-.summary-card .cohort-indicator { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.summary-card h3 { font-size: 0.85rem; font-weight: 600; margin: 0 0 8px; }
-.summary-card .stat { font-size: 1.5rem; font-weight: 700; color: #fff; }
-.summary-card .stat-label { font-size: 0.7rem; color: #6b7280; }
-.summary-card .stats-row { display: flex; gap: 16px; margin-top: 8px; }
-.summary-card .stats-row .mini-stat { text-align: center; }
-.summary-card .mini-val { font-size: 1.1rem; font-weight: 600; color: #d1d5db; }
-.summary-card .mini-label { font-size: 0.65rem; color: #6b7280; }
-
-/* Hidden cohorts toggle */
-.toggle-btn { background: #1a1a1a; border: 1px solid #2a2a2a; color: #9ca3af; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; margin-bottom: 12px; transition: all 0.2s; }
-.toggle-btn:hover { background: #222; color: #e5e5e5; }
-.hidden-cohorts { display: none; }
-.hidden-cohorts.visible { display: grid; }
-
-/* Cohort tabs */
-.cohort-tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
-.cohort-tab { padding: 8px 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; background: #111; border: 1px solid #1a1a1a; color: #9ca3af; transition: all 0.2s; }
-.cohort-tab:hover { background: #1a1a1a; color: #e5e5e5; }
-.cohort-tab.active { color: #fff; border-color: #3b82f6; }
-.cohort-tab .tab-count { font-size: 0.65rem; color: #6b7280; margin-left: 4px; }
-
-/* Charts */
-.chart-container { background: #111; border: 1px solid #1a1a1a; border-radius: 10px; padding: 20px; margin-bottom: 20px; overflow-x: auto; }
-.chart-container canvas { width: 100%; max-height: 300px; }
-
-/* Leaderboard */
-.search-box { width: 100%; max-width: 400px; padding: 10px 14px; background: #111; border: 1px solid #1a1a1a; border-radius: 8px; color: #e5e5e5; font-size: 0.85rem; margin-bottom: 16px; outline: none; }
-.search-box:focus { border-color: #3b82f6; }
-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-th { text-align: left; padding: 10px 12px; color: #6b7280; font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #1a1a1a; }
-td { padding: 10px 12px; border-bottom: 1px solid #111; }
-tr:hover td { background: #0f0f0f; }
-.founder-name { color: #60a5fa; cursor: pointer; font-weight: 500; }
-.founder-name:hover { text-decoration: underline; }
-.cohort-pills { display: flex; gap: 4px; flex-wrap: wrap; }
-.cohort-pill { font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
-.num { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #d1d5db; }
-
-/* Detail row */
-.detail-row { display: none; background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 8px; padding: 16px; margin: 4px 0 8px; }
-.detail-row.open { display: block; }
-.detail-row .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.detail-row canvas { width: 100%; height: 120px; }
-.agent-selector { display: flex; gap: 6px; flex-wrap: wrap; }
-.agent-selector .agent-chip { font-size: 0.7rem; padding: 3px 10px; border-radius: 4px; cursor: pointer; background: #1a1a1a; border: 1px solid #2a2a2a; color: #9ca3af; }
-.agent-selector .agent-chip.active { color: #fff; border-color: #3b82f6; }
-.agent-selector .agent-chip:hover { color: #e5e5e5; }
-
-/* Cohort filter dropdown for leaderboard */
-.filter-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
-.filter-group { display: flex; gap: 4px; }
-.filter-chip { padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; cursor: pointer; background: #111; border: 1px solid #1a1a1a; color: #9ca3af; transition: all 0.2s; }
-.filter-chip:hover { color: #e5e5e5; }
-.filter-chip.active { color: #fff; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaunchMate Usage Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600,700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a2e;
+            --bg-card: #16162a;
+            --accent-blue: #60a5fa;
+            --accent-green: #34d399;
+            --accent-orange: #f97316;
+            --accent-purple: #a78bfa;
+            --text-primary: #e5e5e5;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border: #2a2a3e;
+            --cohort-inflight: #3b82f6;
+            --cohort-launchtrack: #10b981;
+            --cohort-litf: #8b5cf6;
+            --cohort-inflightv1: #6366f1;
+            --cohort-bootcamp: #f59e0b;
+            --cohort-community: #ec4899;
+            --cohort-named: #f97316;
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        header { text-align: center; margin-bottom: 3rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+        h1 { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-secondary); font-size: 1.1rem; }
+        .generated { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; }
+        .note { background: rgba(76,175,80,0.1); border: 1px solid rgba(76,175,80,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 2rem; font-size: 0.875rem; color: #81c784; }
+        .loading { text-align: center; padding: 4rem; color: var(--text-muted); }
+        
+        /* Summary Cards */
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .summary-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; position: relative; overflow: hidden; }
+        .summary-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+        .summary-card.inflight::before { background: var(--cohort-inflight); }
+        .summary-card.launchtrack::before { background: var(--cohort-launchtrack); }
+        .summary-card.litf::before { background: var(--cohort-litf); }
+        .summary-card h3 { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; }
+        .summary-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .stat-value { font-size: 2.5rem; font-weight: 800; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+        .stat-value.inflight { color: var(--cohort-inflight); }
+        .stat-value.launchtrack { color: var(--cohort-launchtrack); }
+        .stat-value.litf { color: var(--cohort-litf); }
+        
+        /* Charts Section */
+        .charts-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+        .chart-card h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary); }
+        .chart-wrapper { height: 350px; }
+        
+        /* Leaderboard */
+        .leaderboard-section { margin-bottom: 3rem; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .section-header h2 { font-size: 1.5rem; font-weight: 700; }
+        .tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tab { padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); cursor: pointer; font-size: 0.875rem; transition: all 0.2s; }
+        .tab:hover { border-color: var(--accent-blue); }
+        .tab.active { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+        .leaderboard-table { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        th { background: var(--bg-secondary); padding: 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+        td { padding: 1rem; border-top: 1px solid var(--border); }
+        tr:hover td { background: rgba(255, 255, 255, 0.02); }
+        .rank { font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 50px; }
+        .rank-1 { color: #ffd700; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
+        .founder-name { font-weight: 600; cursor: pointer; }
+        .founder-name:hover { color: var(--accent-blue); text-decoration: underline; }
+        .cohort-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+        .cohort-badge.inflight { background: rgba(59, 130, 246, 0.15); color: var(--cohort-inflight); }
+        .cohort-badge.launch-track { background: rgba(16, 185, 129, 0.15); color: var(--cohort-launchtrack); }
+        .cohort-badge.litf { background: rgba(139, 92, 246, 0.15); color: var(--cohort-litf); }
+        .cohort-badge.inflight-v1 { background: rgba(99, 102, 241, 0.15); color: var(--cohort-inflightv1); }
+        .cohort-badge.bootcamp-s26 { background: rgba(245, 158, 11, 0.15); color: var(--cohort-bootcamp); }
+        .cohort-badge.community { background: rgba(236, 72, 153, 0.15); color: var(--cohort-community); }
+        .cohort-badge.named-person { background: rgba(249, 115, 22, 0.15); color: var(--cohort-named); }
+        .metric { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+        .metric-highlight { color: var(--accent-green); }
+        .metric-low { color: var(--accent-orange); }
+        .metric-zero { color: var(--text-muted); }
+        
+        /* Inline founder detail row */
+        .founder-detail-row { display: none; }
+        .founder-detail-row.active { display: table-row; }
+        .founder-detail-row td { padding: 0; border-top: 1px solid var(--border); }
+        .founder-detail-inner { padding: 1.5rem; background: rgba(96, 165, 250, 0.05); border-bottom: 1px solid rgba(96, 165, 250, 0.2); }
+        .founder-detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .founder-detail-header h3 { font-size: 1rem; color: var(--accent-blue); }
+        .close-btn { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+        .close-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+        .chart-wrapper-inline { height: 250px; }
+        
+        /* Footer */
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem; }
+        .data-source { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-top: 0.5rem; }
+        
+        /* Search */
+        .search-box { margin-bottom: 1rem; }
+        .search-input { width: 100%; padding: 0.75rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-size: 0.875rem; }
+        .search-input:focus { outline: none; border-color: var(--accent-blue); }
+        .search-input::placeholder { color: var(--text-muted); }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            .charts-section { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>LaunchMate Usage Analytics</h1>
+            <p class="subtitle">User engagement from first message date • Click founder name for week-by-week activity</p>
+            <p class="generated" id="generated">Loading data...</p>
+        </header>
 
-<h1>LaunchMate Usage Analytics</h1>
-<p class="methodology">📊 Methodology: Metrics calculated from each founder's FIRST USER MESSAGE date. Only counts user-typed messages (message_type = user_message).</p>
-
-<div id="summary-cards"></div>
-<button class="toggle-btn" id="toggle-hidden" onclick="toggleHidden()">Show all cohorts ▾</button>
-<div id="hidden-summary" class="hidden-cohorts summary-grid"></div>
-
-<h2>📊 Messages per Week Distribution</h2>
-<div class="chart-container"><canvas id="distChart"></canvas></div>
-
-<h2>📊 Cohort Comparison</h2>
-<div class="chart-container"><canvas id="compChart"></canvas></div>
-
-<h2>🏆 Founder Leaderboard</h2>
-<div class="filter-bar">
-  <div class="filter-group" id="leaderboard-filters"></div>
-</div>
-<input type="text" class="search-box" id="search" placeholder="Search by founder name..." oninput="filterTable()">
-<div style="overflow-x:auto">
-<table id="leaderboard">
-<thead><tr><th>#</th><th>Founder</th><th>Cohorts</th><th>User Msgs</th><th>Agent Msgs</th><th>Weeks</th><th>Msgs/Wk</th><th>First Chat</th><th>Last Chat</th></tr></thead>
-<tbody id="tbody"></tbody>
-</table>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
-<script>
-let data = null;
-let activeCohort = 'all';
-let activeLBFilters = new Set(['inflight', 'launch-track', 'litf']);
-let openDetail = null;
-
-const cohortMeta = {
-  'inflight': { name: 'In Flight', color: '#3b82f6', priority: 1, primary: true },
-  'launch-track': { name: 'Launch Track', color: '#10b981', priority: 2, primary: true },
-  'litf': { name: 'LITF', color: '#8b5cf6', priority: 3, primary: true },
-  'inflight-v1': { name: 'In Flight V1', color: '#6366f1', priority: 4, primary: false },
-  'bootcamp-s26': { name: 'Bootcamp S26', color: '#f59e0b', priority: 5, primary: false },
-  'community': { name: 'Community', color: '#ec4899', priority: 6, primary: false },
-  'named-person': { name: 'Named Agents', color: '#f97316', priority: 7, primary: false },
-};
-
-async function loadData() {
-  const r = await fetch('founders-data.json');
-  data = await r.json();
-  render();
-}
-
-function render() {
-  renderSummary();
-  renderDistChart();
-  renderCompChart();
-  renderLeaderboardFilters();
-  renderTable();
-}
-
-function renderSummary() {
-  const primary = document.getElementById('summary-cards');
-  const hidden = document.getElementById('hidden-summary');
-  primary.innerHTML = '';
-  hidden.innerHTML = '';
-
-  const sortedCohorts = Object.entries(data.cohorts).sort((a, b) => (cohortMeta[a[0]]?.priority || 99) - (cohortMeta[b[0]]?.priority || 99));
-
-  for (const [key, c] of sortedCohorts) {
-    const isPrimary = cohortMeta[key]?.primary;
-    const card = `
-      <div class="summary-card">
-        <div class="cohort-indicator" style="background:${c.color}"></div>
-        <h3 style="color:${c.color}">${c.name}</h3>
-        <div class="stat">${c.count}</div>
-        <div class="stat-label">agents</div>
-        <div class="stats-row">
-          <div class="mini-stat"><div class="mini-val">${c.totalUserMessages}</div><div class="mini-label">user msgs</div></div>
-          <div class="mini-stat"><div class="mini-val">${c.totalAgentResponses}</div><div class="mini-label">agent msgs</div></div>
-          <div class="mini-stat"><div class="mini-val">${c.avgMsgsPerWeek}</div><div class="mini-label">avg/wk</div></div>
+        <div class="note">
+            <strong>📊 Methodology:</strong> Metrics calculated from each founder's FIRST USER MESSAGE date. Only counts user-typed messages (message_type = user_message).
         </div>
-      </div>`;
-    if (isPrimary) primary.innerHTML += card;
-    else hidden.innerHTML += card;
-  }
-}
 
-function toggleHidden() {
-  const el = document.getElementById('hidden-summary');
-  const btn = document.getElementById('toggle-hidden');
-  el.classList.toggle('visible');
-  btn.textContent = el.classList.contains('visible') ? 'Hide other cohorts ▴' : 'Show all cohorts ▾';
-}
-
-function getFilteredFounders(cohortFilter) {
-  if (cohortFilter === 'all') return data.founders;
-  return data.founders.filter(f => f.cohorts.includes(cohortFilter));
-}
-
-function renderDistChart() {
-  const founders = getFilteredFounders(activeCohort);
-  const sorted = [...founders].sort((a, b) => b.msgsPerWeek - a.msgsPerWeek).slice(0, 30);
-  const ctx = document.getElementById('distChart').getContext('2d');
-
-  if (window.distChartObj) window.distChartObj.destroy();
-  window.distChartObj = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: sorted.map(f => f.name),
-      datasets: [{
-        label: 'Msgs/Week',
-        data: sorted.map(f => f.msgsPerWeek),
-        backgroundColor: sorted.map(f => {
-          const pc = f.primaryCohort;
-          return cohortMeta[pc]?.color || '#3b82f6';
-        }),
-        borderRadius: 4,
-      }]
-    },
-    options: {
-      responsive: true, indexAxis: 'y', plugins: { legend: { display: false } },
-      scales: { x: { grid: { color: '#1a1a1a' }, ticks: { color: '#6b7280' } }, y: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } } }
-    }
-  });
-}
-
-function renderCompChart() {
-  // Only show In Flight, Launch Track, LITF
-  const compCohorts = ['inflight', 'launch-track', 'litf'];
-  const allWeeks = new Set();
-  const cohortWeekly = {};
-
-  compCohorts.forEach(ck => {
-    cohortWeekly[ck] = {};
-    const founders = data.founders.filter(f => f.cohorts.includes(ck));
-    founders.forEach(f => {
-      f.weeklyData.forEach(([wk, cnt]) => {
-        cohortWeekly[ck][wk] = (cohortWeekly[ck][wk] || 0) + cnt;
-        allWeeks.add(wk);
-      });
-    });
-  });
-
-  const weeks = [...allWeeks].sort();
-  const ctx = document.getElementById('compChart').getContext('2d');
-
-  if (window.compChartObj) window.compChartObj.destroy();
-
-  const datasets = compCohorts.map(ck => ({
-    label: cohortMeta[ck]?.name || ck,
-    data: weeks.map(w => cohortWeekly[ck][w] || 0),
-    borderColor: cohortMeta[ck]?.color || '#fff',
-    backgroundColor: (cohortMeta[ck]?.color || '#fff') + '20',
-    fill: true,
-    tension: 0.3,
-    pointRadius: 0,
-  }));
-
-  window.compChartObj = new Chart(ctx, {
-    type: 'line',
-    data: { labels: weeks, datasets },
-    options: {
-      responsive: true, plugins: { legend: { labels: { color: '#9ca3af' } } },
-      scales: { x: { grid: { color: '#1a1a1a' }, ticks: { color: '#6b7280', maxRotation: 45, font: { size: 10 } } }, y: { grid: { color: '#1a1a1a' }, ticks: { color: '#6b7280' } } }
-    }
-  });
-}
-
-function renderLeaderboardFilters() {
-  const container = document.getElementById('leaderboard-filters');
-  container.innerHTML = '';
-
-  const allChip = document.createElement('div');
-  allChip.className = 'filter-chip' + (activeLBFilters.size === 7 ? ' active' : '');
-  allChip.textContent = 'All';
-  allChip.style.borderColor = activeLBFilters.size === 7 ? '#fff' : '#1a1a1a';
-  allChip.onclick = () => { activeLBFilters = new Set(Object.keys(cohortMeta)); renderLeaderboardFilters(); renderTable(); };
-  container.appendChild(allChip);
-
-  const sortedCohorts = Object.entries(cohortMeta).sort((a, b) => a[1].priority - b[1].priority);
-  for (const [key, meta] of sortedCohorts) {
-    const chip = document.createElement('div');
-    const isActive = activeLBFilters.has(key);
-    chip.className = 'filter-chip' + (isActive ? ' active' : '');
-    chip.textContent = meta.name;
-    chip.style.borderColor = isActive ? meta.color : '#1a1a1a';
-    chip.style.color = isActive ? meta.color : '#9ca3af';
-    chip.onclick = () => {
-      if (activeLBFilters.has(key)) activeLBFilters.delete(key);
-      else activeLBFilters.add(key);
-      renderLeaderboardFilters();
-      renderTable();
-    };
-    container.appendChild(chip);
-  }
-}
-
-function renderTable() {
-  const tbody = document.getElementById('tbody');
-  const search = document.getElementById('search').value.toLowerCase();
-  const filtered = data.founders.filter(f => {
-    const matchesCohort = activeLBFilters.size === 0 || f.cohorts.some(c => activeLBFilters.has(c));
-    const matchesSearch = f.name.toLowerCase().includes(search);
-    return matchesCohort && matchesSearch;
-  });
-
-  tbody.innerHTML = filtered.map((f, i) => `
-    <tr>
-      <td class="num">${f.rank}</td>
-      <td><span class="founder-name" onclick="toggleDetail('${f.name}')">${f.name}</span></td>
-      <td><div class="cohort-pills">${f.cohorts.map(c => `<span class="cohort-pill" style="background:${cohortMeta[c]?.color || '#333'}22;color:${cohortMeta[c]?.color || '#999'}">${cohortMeta[c]?.name || c}</span>`).join('')}</div></td>
-      <td class="num">${f.userMessages}</td>
-      <td class="num">${f.agentResponses}</td>
-      <td class="num">${f.weeks}</td>
-      <td class="num">${f.msgsPerWeek}</td>
-      <td style="color:#6b7280;font-size:0.8rem">${f.firstChat || '—'}</td>
-      <td style="color:#6b7280;font-size:0.8rem">${f.lastChat || '—'}</td>
-    </tr>
-    <tr id="detail-${f.name.replace(/\s/g, '_')}" style="display:none">
-      <td colspan="9">
-        <div class="detail-row open">
-          <div class="detail-header">
-            <div>
-              <span class="label">Agent IDs</span>
-              <div class="agent-selector">${Object.entries(f.agentIds).map(([ck, aid]) => `<span class="agent-chip" style="border-color:${cohortMeta[ck]?.color || '#333'}" onclick="renderDetailChart('${f.name}','${ck}')">${cohortMeta[ck]?.name || ck}: ${aid.slice(0,12)}...</span>`).join('')}</div>
-            </div>
-            <div style="text-align:right">
-              <span style="color:#6b7280;font-size:0.8rem">${f.firstChat || '—'} → ${f.lastChat || '—'}</span>
-            </div>
-          </div>
-          <canvas id="detail-canvas-${f.name.replace(/\s/g, '_')}" height="120"></canvas>
+        <!-- Summary Cards -->
+        <div class="summary-grid" id="summaryGrid">
+            <div class="loading">Loading summary...</div>
         </div>
-      </td>
-    </tr>
-  `).join('');
-}
 
-function toggleDetail(name) {
-  const row = document.getElementById('detail-' + name.replace(/ /g, '_'));
-  if (!row) return;
-  const isOpen = row.style.display !== 'none';
-  row.style.display = isOpen ? 'none' : '';
-  if (!isOpen) {
-    const defCohort = data.founders.find(f => f.name === name)?.primaryCohort || 'inflight';
-    renderDetailChart(name, defCohort);
-  }
-}
+        <!-- Charts -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3>📊 Messages per Week Distribution</h3>
+                <div class="chart-wrapper">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+            </div>
 
-function renderDetailChart(name, cohort) {
-  const founder = data.founders.find(f => f.name === name);
-  if (!founder) return;
-  const canvasId = 'detail-canvas-' + name.replace(/ /g, '_');
-  const ctx = document.getElementById(canvasId)?.getContext('2d');
-  if (!ctx) return;
+            <div class="chart-card">
+                <h3>👥 Cohort Comparison</h3>
+                <div class="chart-wrapper">
+                    <canvas id="cohortChart"></canvas>
+                </div>
+            </div>
+        </div>
 
-  if (window['detailChart_' + name]) window['detailChart_' + name].destroy();
+        <!-- Leaderboard -->
+        <div class="leaderboard-section">
+            <div class="section-header">
+                <h2>🏆 Founder Leaderboard</h2>
+                <div class="tabs">
+                    <button class="tab active" onclick="filterTable('default')">In Flight + Launch Track + LITF</button>
+                    <button class="tab" onclick="filterTable('all')">All Cohorts</button>
+                    <button class="tab" onclick="filterTable('inflight')">In Flight</button>
+                    <button class="tab" onclick="filterTable('launch-track')">Launch Track</button>
+                    <button class="tab" onclick="filterTable('litf')">LITF</button>
+                </div>
+            </div>
 
-  const color = cohortMeta[cohort]?.color || '#3b82f6';
-  window['detailChart_' + name] = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: founder.weeklyData.map(w => w[0]),
-      datasets: [{
-        label: 'User messages/week',
-        data: founder.weeklyData.map(w => w[1]),
-        borderColor: color,
-        backgroundColor: color + '20',
-        fill: true,
-        tension: 0.3,
-        pointRadius: 0,
-      }]
-    },
-    options: {
-      responsive: true, plugins: { legend: { display: false } },
-      scales: { x: { grid: { display: false }, ticks: { color: '#6b7280', maxRotation: 45, font: { size: 9 } } }, y: { grid: { color: '#1a1a1a' }, ticks: { color: '#6b7280' }, beginAtZero: true } }
-    }
-  });
-}
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search founders..." onkeyup="searchTable()">
+            </div>
 
-function filterTable() { renderTable(); }
+            <div class="leaderboard-table">
+                <table id="leaderboard">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Founder</th>
+                            <th>Cohort</th>
+                            <th>User Messages</th>
+                            <th>Agent Responses</th>
+                            <th>Weeks Active</th>
+                            <th>Msgs/Week</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr><td colspan="7" class="loading">Loading leaderboard...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-loadData();
-</script>
+        <footer>
+            <p>Data collected directly from Letta API for accuracy</p>
+            <p class="data-source" id="dataSource">Loading...</p>
+        </footer>
+    </div>
+
+    <script>
+        let founders = [];
+        let currentDetailName = null;
+        let detailChartIndex = 0;
+        const defaultCohorts = ['inflight', 'launch-track', 'litf'];
+        const cohortMeta = {
+            'inflight': { name: 'In Flight', color: '#3b82f6' },
+            'launch-track': { name: 'Launch Track', color: '#10b981' },
+            'litf': { name: 'LITF', color: '#8b5cf6' },
+            'inflight-v1': { name: 'In Flight V1', color: '#6366f1' },
+            'bootcamp-s26': { name: 'Bootcamp S26', color: '#f59e0b' },
+            'community': { name: 'Community', color: '#ec4899' },
+            'named-person': { name: 'Named Agents', color: '#f97316' },
+        };
+
+        async function loadData() {
+            try {
+                const response = await fetch('founders-data.json');
+                const data = await response.json();
+                
+                founders = data.founders;
+                
+                // Update header
+                document.getElementById('generated').textContent = 
+                    `Updated: ${data.metadata.lastUpdated} • ${data.totalFounders} founders tracked`;
+                
+                // Update data source
+                document.getElementById('dataSource').textContent = 
+                    `Source: ${data.metadata.source} • ${data.metadata.methodology}`;
+                
+                // Render summary cards
+                renderSummary(data);
+                
+                // Render leaderboard with default filter
+                populateTable(founders.filter(f => f.cohorts.some(c => defaultCohorts.includes(c))));
+                
+                // Render charts
+                renderCharts();
+                
+            } catch (error) {
+                document.getElementById('tableBody').innerHTML = 
+                    `<tr><td colspan="7" style="color:#ef4444;text-align:center;padding:2rem;">Error loading data: ${error.message}</td></tr>`;
+            }
+        }
+
+        function makeSummaryCard(key, c, cssClass) {
+            return `<div class="summary-card ${cssClass}">
+                    <h3>${c.name} Cohort</h3>
+                    <div class="summary-stats">
+                        <div><div class="stat-value ${cssClass}">${c.founderCount || c.count}</div><div class="stat-label">Founders</div></div>
+                        <div><div class="stat-value ${cssClass}">${c.avgMsgsPerWeek.toFixed(2)}</div><div class="stat-label">Avg Msgs/Week</div></div>
+                        <div><div class="stat-value ${cssClass}">${c.totalUserMessages}</div><div class="stat-label">Total User Messages</div></div>
+                        <div><div class="stat-value ${cssClass}">${c.totalAgentResponses}</div><div class="stat-label">Agent Responses</div></div>
+                    </div>
+                </div>`;
+        }
+
+        function renderSummary(data) {
+            const grid = document.getElementById('summaryGrid');
+            const c = data.cohorts;
+            grid.innerHTML = 
+                makeSummaryCard('inflight', c.inflight, 'inflight') +
+                makeSummaryCard('launch-track', c['launch-track'], 'launchtrack') +
+                makeSummaryCard('litf', c.litf, 'litf');
+        }
+
+        function populateTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            currentDetailName = null;
+            
+            data.forEach(founder => {
+                const row = document.createElement('tr');
+                row.dataset.cohorts = JSON.stringify(founder.cohorts);
+                row.dataset.name = founder.name;
+                const rankClass = founder.rank <= 3 ? `rank-${founder.rank}` : '';
+                const metricClass = founder.msgsPerWeek >= 2 ? 'metric-highlight' : founder.msgsPerWeek >= 1 ? '' : founder.msgsPerWeek > 0 ? 'metric-low' : 'metric-zero';
+                const badges = founder.cohorts.map(c => `<span class="cohort-badge ${c}">${cohortMeta[c]?.name || c}</span>`).join(' ');
+                row.innerHTML = `
+                    <td class="rank ${rankClass}">#${founder.rank}</td>
+                    <td class="founder-name" onclick="toggleFounderDetail('${founder.name}')">${founder.name}</td>
+                    <td>${badges}</td>
+                    <td class="metric">${founder.userMessages}</td>
+                    <td class="metric">${founder.agentResponses}</td>
+                    <td class="metric">${founder.weeks}</td>
+                    <td class="metric ${metricClass}">${founder.msgsPerWeek.toFixed(2)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleFounderDetail(name) {
+            if (currentDetailName === name) { closeFounderDetail(); return; }
+            closeFounderDetail();
+            
+            const founder = founders.find(f => f.name === name);
+            if (!founder || !founder.weeklyData || founder.weeklyData.length === 0) return;
+            
+            currentDetailName = name;
+            const founderRow = document.querySelector(`tr[data-name="${name}"]`);
+            if (!founderRow) return;
+            
+            const detailRow = document.createElement('tr');
+            detailRow.className = 'founder-detail-row active';
+            detailRow.id = 'activeDetailRow';
+            detailRow.innerHTML = `
+                <td colspan="7">
+                    <div class="founder-detail-inner">
+                        <div class="founder-detail-header">
+                            <h3>${name} — Week-by-Week Activity</h3>
+                            <button class="close-btn" onclick="closeFounderDetail()">✕ Close</button>
+                        </div>
+                        <div class="chart-wrapper-inline">
+                            <canvas id="inlineChart"></canvas>
+                        </div>
+                    </div>
+                </td>
+            `;
+            
+            founderRow.after(detailRow);
+            
+            const pc = founder.primaryCohort;
+            const color = cohortMeta[pc]?.color || '#3b82f6';
+            const ctx = document.getElementById('inlineChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: founder.weeklyData.map(w => w[0]),
+                    datasets: [{
+                        label: 'User Messages',
+                        data: founder.weeklyData.map(w => w[1]),
+                        borderColor: color,
+                        backgroundColor: color + '1a',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: color
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
+                    }
+                }
+            });
+        }
+
+        function closeFounderDetail() {
+            const existingRow = document.getElementById('activeDetailRow');
+            if (existingRow) existingRow.remove();
+            currentDetailName = null;
+        }
+
+        function filterTable(cohort) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            if (cohort === 'all') populateTable(founders);
+            else if (cohort === 'default') populateTable(founders.filter(f => f.cohorts.some(c => defaultCohorts.includes(c))));
+            else populateTable(founders.filter(f => f.cohorts.includes(cohort)));
+        }
+
+        function searchTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            populateTable(founders.filter(f => f.name.toLowerCase().includes(query)));
+        }
+
+        function renderCharts() {
+            // Distribution Chart — only In Flight, Launch Track, LITF
+            const visible = founders.filter(f => f.cohorts.some(c => defaultCohorts.includes(c)) && f.msgsPerWeek > 0);
+            const ctx1 = document.getElementById('distributionChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: visible.map(f => f.name.split(' ')[0]),
+                    datasets: [{
+                        label: 'Messages per Week',
+                        data: visible.map(f => f.msgsPerWeek),
+                        backgroundColor: visible.map(f => cohortMeta[f.primaryCohort]?.color + 'b3' || 'rgba(96, 165, 250, 0.7)'),
+                        borderColor: visible.map(f => cohortMeta[f.primaryCohort]?.color || '#60a5fa'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af', maxRotation: 45 } }
+                    }
+                }
+            });
+
+            // Cohort Comparison Chart — In Flight, Launch Track, LITF
+            const compCohorts = ['inflight', 'launch-track', 'litf'];
+            const compData = compCohorts.map(ck => {
+                const cf = founders.filter(f => f.cohorts.includes(ck) && f.msgsPerWeek > 0);
+                return cf.length > 0 ? cf.reduce((s, f) => s + f.msgsPerWeek, 0) / cf.length : 0;
+            });
+            
+            const ctx2 = document.getElementById('cohortChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: compCohorts.map(ck => cohortMeta[ck].name),
+                    datasets: [{
+                        label: 'Avg Messages/Week',
+                        data: compData,
+                        backgroundColor: compCohorts.map(ck => cohortMeta[ck].color + 'b3'),
+                        borderColor: compCohorts.map(ck => cohortMeta[ck].color),
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
+                    }
+                }
+            });
+        }
+
+        // Load data on page load
+        loadData();
+    </script>
 </body>
 </html>
