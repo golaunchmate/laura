@@ -1,435 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaunchMate Usage Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --bg-primary: #0f0f0f; --bg-secondary: #1a1a2e; --bg-card: #16162a;
-            --accent-blue: #60a5fa; --accent-green: #34d399; --accent-orange: #f97316;
-            --accent-purple: #a78bfa; --accent-pink: #f472b6; --accent-amber: #fbbf24;
-            --accent-indigo: #818cf8;
-            --text-primary: #e5e5e5; --text-secondary: #9ca3af; --text-muted: #6b7280;
-            --border: #2a2a3e;
-        }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
-        .container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
-        header { text-align: center; margin-bottom: 3rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
-        h1 { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
-        .subtitle { color: var(--text-secondary); font-size: 1.1rem; }
-        .generated { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; }
-        .note { background: rgba(76,175,80,0.1); border: 1px solid rgba(76,175,80,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 2rem; font-size: 0.875rem; color: #81c784; }
-        .loading { text-align: center; padding: 4rem; color: var(--text-muted); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaunchMate Usage Analytics</title>
+<meta name="tidbit-type" content="analytics">
+<meta name="tidbit-date" content="2026-04-22">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #0a0a0a; color: #e5e5e5; line-height: 1.6; padding: 20px; max-width: 1200px; margin: 0 auto; }
+h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 4px; }
+h2 { font-size: 1.3rem; font-weight: 600; margin: 32px 0 16px; color: #fff; }
+h3 { font-size: 1rem; font-weight: 600; margin: 16px 0 8px; }
+.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.1em; }
+.label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; }
+.highlight { color: #60a5fa; }
+.decision { color: #34d399; }
+.tension { color: #f97316; }
+.methodology { font-size: 0.8rem; color: #6b7280; margin-bottom: 24px; padding: 12px 16px; background: #111; border: 1px solid #1a1a1a; border-radius: 8px; }
 
-        /* Summary Cards */
-        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 3rem; }
-        .summary-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; position: relative; overflow: hidden; }
-        .summary-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
-        .summary-card.c-founder-s26::before { background: var(--accent-blue); }
-        .summary-card.c-founder-v1-inflight::before { background: var(--accent-indigo); }
-        .summary-card.c-founder-v1-launch_track::before { background: var(--accent-green); }
-        .summary-card.c-bootcamp-s26::before { background: var(--accent-amber); }
-        .summary-card.c-founder-community::before { background: var(--accent-pink); }
-        .summary-card.c-litf::before { background: var(--accent-purple); }
-        .summary-card.c-named_person::before { background: var(--accent-orange); }
-        .summary-card h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.75rem; }
-        .summary-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-        .stat-value { font-size: 2rem; font-weight: 800; }
-        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
-        .stat-value.c-founder-s26 { color: var(--accent-blue); }
-        .stat-value.c-founder-v1-inflight { color: var(--accent-indigo); }
-        .stat-value.c-founder-v1-launch_track { color: var(--accent-green); }
-        .stat-value.c-bootcamp-s26 { color: var(--accent-amber); }
-        .stat-value.c-founder-community { color: var(--accent-pink); }
-        .stat-value.c-litf { color: var(--accent-purple); }
-        .stat-value.c-named_person { color: var(--accent-orange); }
+/* Summary Cards */
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 28px; }
+.summary-card { background: #111; border: 1px solid #1a1a1a; border-radius: 10px; padding: 16px; position: relative; overflow: hidden; }
+.summary-card .cohort-indicator { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.summary-card h3 { font-size: 0.85rem; font-weight: 600; margin: 0 0 8px; }
+.summary-card .stat { font-size: 1.5rem; font-weight: 700; color: #fff; }
+.summary-card .stat-label { font-size: 0.7rem; color: #6b7280; }
+.summary-card .stats-row { display: flex; gap: 16px; margin-top: 8px; }
+.summary-card .stats-row .mini-stat { text-align: center; }
+.summary-card .mini-val { font-size: 1.1rem; font-weight: 600; color: #d1d5db; }
+.summary-card .mini-label { font-size: 0.65rem; color: #6b7280; }
 
-        /* Charts */
-        .charts-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
-        .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
-        .chart-card h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary); }
-        .chart-wrapper { height: 350px; }
+/* Hidden cohorts toggle */
+.toggle-btn { background: #1a1a1a; border: 1px solid #2a2a2a; color: #9ca3af; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; margin-bottom: 12px; transition: all 0.2s; }
+.toggle-btn:hover { background: #222; color: #e5e5e5; }
+.hidden-cohorts { display: none; }
+.hidden-cohorts.visible { display: grid; }
 
-        /* Leaderboard */
-        .leaderboard-section { margin-bottom: 3rem; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
-        .section-header h2 { font-size: 1.5rem; font-weight: 700; }
-        .tabs { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-        .tab { padding: 0.4rem 0.85rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
-        .tab:hover { border-color: var(--accent-blue); }
-        .tab.active { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
-        .tab.active.c-founder-s26 { background: var(--accent-blue); border-color: var(--accent-blue); }
-        .tab.active.c-founder-v1-inflight { background: var(--accent-indigo); border-color: var(--accent-indigo); }
-        .tab.active.c-founder-v1-launch_track { background: var(--accent-green); border-color: var(--accent-green); }
-        .tab.active.c-bootcamp-s26 { background: var(--accent-amber); border-color: var(--accent-amber); color: #000; }
-        .tab.active.c-founder-community { background: var(--accent-pink); border-color: var(--accent-pink); }
-        .tab.active.c-litf { background: var(--accent-purple); border-color: var(--accent-purple); }
-        .tab.active.c-named_person { background: var(--accent-orange); border-color: var(--accent-orange); }
-        .leaderboard-table { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        th { background: var(--bg-secondary); padding: 0.75rem; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
-        td { padding: 0.75rem; border-top: 1px solid var(--border); font-size: 0.875rem; }
-        tr:hover td { background: rgba(255, 255, 255, 0.02); }
-        .rank { font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 40px; }
-        .rank-1 { color: #ffd700; }
-        .rank-2 { color: #c0c0c0; }
-        .rank-3 { color: #cd7f32; }
-        .founder-name { font-weight: 600; cursor: pointer; }
-        .founder-name:hover { color: var(--accent-blue); text-decoration: underline; }
-        .cohort-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.65rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px; }
-        .cohort-badge.founder-s26 { background: rgba(96,165,250,0.15); color: var(--accent-blue); }
-        .cohort-badge.founder-v1-inflight { background: rgba(129,140,248,0.15); color: var(--accent-indigo); }
-        .cohort-badge.founder-v1-launch_track { background: rgba(52,211,153,0.15); color: var(--accent-green); }
-        .cohort-badge.bootcamp-s26 { background: rgba(251,191,36,0.15); color: var(--accent-amber); }
-        .cohort-badge.founder-community { background: rgba(244,114,182,0.15); color: var(--accent-pink); }
-        .cohort-badge.litf { background: rgba(167,139,250,0.15); color: var(--accent-purple); }
-        .cohort-badge.named_person { background: rgba(249,115,22,0.15); color: var(--accent-orange); }
-        .metric { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 0.8rem; }
-        .metric-highlight { color: var(--accent-green); }
-        .metric-low { color: var(--accent-orange); }
-        .metric-zero { color: var(--text-muted); }
-        .agent-id { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-muted); }
+/* Cohort tabs */
+.cohort-tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+.cohort-tab { padding: 8px 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; background: #111; border: 1px solid #1a1a1a; color: #9ca3af; transition: all 0.2s; }
+.cohort-tab:hover { background: #1a1a1a; color: #e5e5e5; }
+.cohort-tab.active { color: #fff; border-color: #3b82f6; }
+.cohort-tab .tab-count { font-size: 0.65rem; color: #6b7280; margin-left: 4px; }
 
-        /* Inline founder detail */
-        .founder-detail-row { display: none; }
-        .founder-detail-row.active { display: table-row; }
-        .founder-detail-row td { padding: 0; border-top: 1px solid var(--border); }
-        .founder-detail-inner { padding: 1.5rem; background: rgba(96,165,250,0.05); border-bottom: 1px solid rgba(96,165,250,0.2); }
-        .founder-detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .founder-detail-header h3 { font-size: 1rem; color: var(--accent-blue); }
-        .close-btn { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
-        .close-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
-        .cohort-selector { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem; }
-        .cohort-selector label { font-size: 0.8rem; color: var(--text-secondary); }
-        .cohort-selector select { padding: 0.3rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; }
-        .chart-wrapper-inline { height: 250px; }
-        .detail-meta { display: flex; gap: 1.5rem; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-secondary); flex-wrap: wrap; }
-        .detail-meta span { font-family: 'JetBrains Mono', monospace; }
+/* Charts */
+.chart-container { background: #111; border: 1px solid #1a1a1a; border-radius: 10px; padding: 20px; margin-bottom: 20px; overflow-x: auto; }
+.chart-container canvas { width: 100%; max-height: 300px; }
 
-        /* Search */
-        .search-box { margin-bottom: 1rem; }
-        .search-input { width: 100%; padding: 0.6rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; }
-        .search-input:focus { outline: none; border-color: var(--accent-blue); }
-        .search-input::placeholder { color: var(--text-muted); }
+/* Leaderboard */
+.search-box { width: 100%; max-width: 400px; padding: 10px 14px; background: #111; border: 1px solid #1a1a1a; border-radius: 8px; color: #e5e5e5; font-size: 0.85rem; margin-bottom: 16px; outline: none; }
+.search-box:focus { border-color: #3b82f6; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th { text-align: left; padding: 10px 12px; color: #6b7280; font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #1a1a1a; }
+td { padding: 10px 12px; border-bottom: 1px solid #111; }
+tr:hover td { background: #0f0f0f; }
+.founder-name { color: #60a5fa; cursor: pointer; font-weight: 500; }
+.founder-name:hover { text-decoration: underline; }
+.cohort-pills { display: flex; gap: 4px; flex-wrap: wrap; }
+.cohort-pill { font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+.num { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #d1d5db; }
 
-        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem; }
-        .data-source { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-top: 0.5rem; }
+/* Detail row */
+.detail-row { display: none; background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 8px; padding: 16px; margin: 4px 0 8px; }
+.detail-row.open { display: block; }
+.detail-row .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.detail-row canvas { width: 100%; height: 120px; }
+.agent-selector { display: flex; gap: 6px; flex-wrap: wrap; }
+.agent-selector .agent-chip { font-size: 0.7rem; padding: 3px 10px; border-radius: 4px; cursor: pointer; background: #1a1a1a; border: 1px solid #2a2a2a; color: #9ca3af; }
+.agent-selector .agent-chip.active { color: #fff; border-color: #3b82f6; }
+.agent-selector .agent-chip:hover { color: #e5e5e5; }
 
-        @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            h1 { font-size: 2rem; }
-            .charts-section { grid-template-columns: 1fr; }
-            .summary-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+/* Cohort filter dropdown for leaderboard */
+.filter-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-group { display: flex; gap: 4px; }
+.filter-chip { padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; cursor: pointer; background: #111; border: 1px solid #1a1a1a; color: #9ca3af; transition: all 0.2s; }
+.filter-chip:hover { color: #e5e5e5; }
+.filter-chip.active { color: #fff; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>LaunchMate Usage Analytics</h1>
-            <p class="subtitle">7 cohorts &bull; 136 agents &bull; Click founder name for week-by-week activity</p>
-            <p class="generated" id="generated">Loading data...</p>
-        </header>
 
-        <div class="note">
-            <strong>📊 Methodology:</strong> Metrics from first user message date. Weekly data extends to <strong>current date</strong> (zeros for inactive weeks = visible flatlines). Cross-cohort people show merged activity.
+<h1>LaunchMate Usage Analytics</h1>
+<p class="methodology">📊 Methodology: Metrics calculated from each founder's FIRST USER MESSAGE date. Only counts user-typed messages (message_type = user_message).</p>
+
+<div id="summary-cards"></div>
+<button class="toggle-btn" id="toggle-hidden" onclick="toggleHidden()">Show all cohorts ▾</button>
+<div id="hidden-summary" class="hidden-cohorts summary-grid"></div>
+
+<h2>📊 Messages per Week Distribution</h2>
+<div class="chart-container"><canvas id="distChart"></canvas></div>
+
+<h2>📊 Cohort Comparison</h2>
+<div class="chart-container"><canvas id="compChart"></canvas></div>
+
+<h2>🏆 Founder Leaderboard</h2>
+<div class="filter-bar">
+  <div class="filter-group" id="leaderboard-filters"></div>
+</div>
+<input type="text" class="search-box" id="search" placeholder="Search by founder name..." oninput="filterTable()">
+<div style="overflow-x:auto">
+<table id="leaderboard">
+<thead><tr><th>#</th><th>Founder</th><th>Cohorts</th><th>User Msgs</th><th>Agent Msgs</th><th>Weeks</th><th>Msgs/Wk</th><th>First Chat</th><th>Last Chat</th></tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script>
+let data = null;
+let activeCohort = 'all';
+let activeLBFilters = new Set(['inflight', 'launch-track', 'litf']);
+let openDetail = null;
+
+const cohortMeta = {
+  'inflight': { name: 'In Flight', color: '#3b82f6', priority: 1, primary: true },
+  'launch-track': { name: 'Launch Track', color: '#10b981', priority: 2, primary: true },
+  'litf': { name: 'LITF', color: '#8b5cf6', priority: 3, primary: true },
+  'inflight-v1': { name: 'In Flight V1', color: '#6366f1', priority: 4, primary: false },
+  'bootcamp-s26': { name: 'Bootcamp S26', color: '#f59e0b', priority: 5, primary: false },
+  'community': { name: 'Community', color: '#ec4899', priority: 6, primary: false },
+  'named-person': { name: 'Named Agents', color: '#f97316', priority: 7, primary: false },
+};
+
+async function loadData() {
+  const r = await fetch('founders-data.json');
+  data = await r.json();
+  render();
+}
+
+function render() {
+  renderSummary();
+  renderDistChart();
+  renderCompChart();
+  renderLeaderboardFilters();
+  renderTable();
+}
+
+function renderSummary() {
+  const primary = document.getElementById('summary-cards');
+  const hidden = document.getElementById('hidden-summary');
+  primary.innerHTML = '';
+  hidden.innerHTML = '';
+
+  const sortedCohorts = Object.entries(data.cohorts).sort((a, b) => (cohortMeta[a[0]]?.priority || 99) - (cohortMeta[b[0]]?.priority || 99));
+
+  for (const [key, c] of sortedCohorts) {
+    const isPrimary = cohortMeta[key]?.primary;
+    const card = `
+      <div class="summary-card">
+        <div class="cohort-indicator" style="background:${c.color}"></div>
+        <h3 style="color:${c.color}">${c.name}</h3>
+        <div class="stat">${c.count}</div>
+        <div class="stat-label">agents</div>
+        <div class="stats-row">
+          <div class="mini-stat"><div class="mini-val">${c.totalUserMessages}</div><div class="mini-label">user msgs</div></div>
+          <div class="mini-stat"><div class="mini-val">${c.totalAgentResponses}</div><div class="mini-label">agent msgs</div></div>
+          <div class="mini-stat"><div class="mini-val">${c.avgMsgsPerWeek}</div><div class="mini-label">avg/wk</div></div>
         </div>
+      </div>`;
+    if (isPrimary) primary.innerHTML += card;
+    else hidden.innerHTML += card;
+  }
+}
 
-        <div class="summary-grid" id="summaryGrid">
-            <div class="loading">Loading summary...</div>
+function toggleHidden() {
+  const el = document.getElementById('hidden-summary');
+  const btn = document.getElementById('toggle-hidden');
+  el.classList.toggle('visible');
+  btn.textContent = el.classList.contains('visible') ? 'Hide other cohorts ▴' : 'Show all cohorts ▾';
+}
+
+function getFilteredFounders(cohortFilter) {
+  if (cohortFilter === 'all') return data.founders;
+  return data.founders.filter(f => f.cohorts.includes(cohortFilter));
+}
+
+function renderDistChart() {
+  const founders = getFilteredFounders(activeCohort);
+  const sorted = [...founders].sort((a, b) => b.msgsPerWeek - a.msgsPerWeek).slice(0, 30);
+  const ctx = document.getElementById('distChart').getContext('2d');
+
+  if (window.distChartObj) window.distChartObj.destroy();
+  window.distChartObj = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sorted.map(f => f.name),
+      datasets: [{
+        label: 'Msgs/Week',
+        data: sorted.map(f => f.msgsPerWeek),
+        backgroundColor: sorted.map(f => {
+          const pc = f.primaryCohort;
+          return cohortMeta[pc]?.color || '#3b82f6';
+        }),
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, indexAxis: 'y', plugins: { legend: { display: false } },
+      scales: { x: { grid: { color: '#1a1a1a' }, ticks: { color: '#6b7280' } }, y: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } } }
+    }
+  });
+}
+
+function renderCompChart() {
+  // Only show In Flight, Launch Track, LITF
+  const compCohorts = ['inflight', 'launch-track', 'litf'];
+  const allWeeks = new Set();
+  const cohortWeekly = {};
+
+  compCohorts.forEach(ck => {
+    cohortWeekly[ck] = {};
+    const founders = data.founders.filter(f => f.cohorts.includes(ck));
+    founders.forEach(f => {
+      f.weeklyData.forEach(([wk, cnt]) => {
+        cohortWeekly[ck][wk] = (cohortWeekly[ck][wk] || 0) + cnt;
+        allWeeks.add(wk);
+      });
+    });
+  });
+
+  const weeks = [...allWeeks].sort();
+  const ctx = document.getElementById('compChart').getContext('2d');
+
+  if (window.compChartObj) window.compChartObj.destroy();
+
+  const datasets = compCohorts.map(ck => ({
+    label: cohortMeta[ck]?.name || ck,
+    data: weeks.map(w => cohortWeekly[ck][w] || 0),
+    borderColor: cohortMeta[ck]?.color || '#fff',
+    backgroundColor: (cohortMeta[ck]?.color || '#fff') + '20',
+    fill: true,
+    tension: 0.3,
+    pointRadius: 0,
+  }));
+
+  window.compChartObj = new Chart(ctx, {
+    type: 'line',
+    data: { labels: weeks, datasets },
+    options: {
+      responsive: true, plugins: { legend: { labels: { color: '#9ca3af' } } },
+      scales: { x: { grid: { color: '#1a1a1a' }, ticks: { color: '#6b7280', maxRotation: 45, font: { size: 10 } } }, y: { grid: { color: '#1a1a1a' }, ticks: { color: '#6b7280' } } }
+    }
+  });
+}
+
+function renderLeaderboardFilters() {
+  const container = document.getElementById('leaderboard-filters');
+  container.innerHTML = '';
+
+  const allChip = document.createElement('div');
+  allChip.className = 'filter-chip' + (activeLBFilters.size === 7 ? ' active' : '');
+  allChip.textContent = 'All';
+  allChip.style.borderColor = activeLBFilters.size === 7 ? '#fff' : '#1a1a1a';
+  allChip.onclick = () => { activeLBFilters = new Set(Object.keys(cohortMeta)); renderLeaderboardFilters(); renderTable(); };
+  container.appendChild(allChip);
+
+  const sortedCohorts = Object.entries(cohortMeta).sort((a, b) => a[1].priority - b[1].priority);
+  for (const [key, meta] of sortedCohorts) {
+    const chip = document.createElement('div');
+    const isActive = activeLBFilters.has(key);
+    chip.className = 'filter-chip' + (isActive ? ' active' : '');
+    chip.textContent = meta.name;
+    chip.style.borderColor = isActive ? meta.color : '#1a1a1a';
+    chip.style.color = isActive ? meta.color : '#9ca3af';
+    chip.onclick = () => {
+      if (activeLBFilters.has(key)) activeLBFilters.delete(key);
+      else activeLBFilters.add(key);
+      renderLeaderboardFilters();
+      renderTable();
+    };
+    container.appendChild(chip);
+  }
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tbody');
+  const search = document.getElementById('search').value.toLowerCase();
+  const filtered = data.founders.filter(f => {
+    const matchesCohort = activeLBFilters.size === 0 || f.cohorts.some(c => activeLBFilters.has(c));
+    const matchesSearch = f.name.toLowerCase().includes(search);
+    return matchesCohort && matchesSearch;
+  });
+
+  tbody.innerHTML = filtered.map((f, i) => `
+    <tr>
+      <td class="num">${f.rank}</td>
+      <td><span class="founder-name" onclick="toggleDetail('${f.name}')">${f.name}</span></td>
+      <td><div class="cohort-pills">${f.cohorts.map(c => `<span class="cohort-pill" style="background:${cohortMeta[c]?.color || '#333'}22;color:${cohortMeta[c]?.color || '#999'}">${cohortMeta[c]?.name || c}</span>`).join('')}</div></td>
+      <td class="num">${f.userMessages}</td>
+      <td class="num">${f.agentResponses}</td>
+      <td class="num">${f.weeks}</td>
+      <td class="num">${f.msgsPerWeek}</td>
+      <td style="color:#6b7280;font-size:0.8rem">${f.firstChat || '—'}</td>
+      <td style="color:#6b7280;font-size:0.8rem">${f.lastChat || '—'}</td>
+    </tr>
+    <tr id="detail-${f.name.replace(/\s/g, '_')}" style="display:none">
+      <td colspan="9">
+        <div class="detail-row open">
+          <div class="detail-header">
+            <div>
+              <span class="label">Agent IDs</span>
+              <div class="agent-selector">${Object.entries(f.agentIds).map(([ck, aid]) => `<span class="agent-chip" style="border-color:${cohortMeta[ck]?.color || '#333'}" onclick="renderDetailChart('${f.name}','${ck}')">${cohortMeta[ck]?.name || ck}: ${aid.slice(0,12)}...</span>`).join('')}</div>
+            </div>
+            <div style="text-align:right">
+              <span style="color:#6b7280;font-size:0.8rem">${f.firstChat || '—'} → ${f.lastChat || '—'}</span>
+            </div>
+          </div>
+          <canvas id="detail-canvas-${f.name.replace(/\s/g, '_')}" height="120"></canvas>
         </div>
+      </td>
+    </tr>
+  `).join('');
+}
 
-        <div class="charts-section">
-            <div class="chart-card">
-                <h3>📊 Messages per Week Distribution</h3>
-                <div class="chart-wrapper"><canvas id="distributionChart"></canvas></div>
-            </div>
-            <div class="chart-card">
-                <h3>👥 Cohort Comparison</h3>
-                <div class="chart-wrapper"><canvas id="cohortChart"></canvas></div>
-            </div>
-        </div>
+function toggleDetail(name) {
+  const row = document.getElementById('detail-' + name.replace(/ /g, '_'));
+  if (!row) return;
+  const isOpen = row.style.display !== 'none';
+  row.style.display = isOpen ? 'none' : '';
+  if (!isOpen) {
+    const defCohort = data.founders.find(f => f.name === name)?.primaryCohort || 'inflight';
+    renderDetailChart(name, defCohort);
+  }
+}
 
-        <div class="leaderboard-section">
-            <div class="section-header">
-                <h2>🏆 Founder Leaderboard</h2>
-                <div class="tabs" id="tabContainer">
-                    <button class="tab active" onclick="filterTable('all')">All</button>
-                    <button class="tab c-founder-s26" onclick="filterTable('founder-s26')">In Flight S26</button>
-                    <button class="tab c-founder-v1-inflight" onclick="filterTable('founder-v1-inflight')">V1 In Flight</button>
-                    <button class="tab c-founder-v1-launch_track" onclick="filterTable('founder-v1-launch_track')">Launch Track</button>
-                    <button class="tab c-bootcamp-s26" onclick="filterTable('bootcamp-s26')">Bootcamp</button>
-                    <button class="tab c-founder-community" onclick="filterTable('founder-community')">Community</button>
-                    <button class="tab c-litf" onclick="filterTable('litf')">LITF</button>
-                    <button class="tab c-named_person" onclick="filterTable('named_person')">Named</button>
-                </div>
-            </div>
+function renderDetailChart(name, cohort) {
+  const founder = data.founders.find(f => f.name === name);
+  if (!founder) return;
+  const canvasId = 'detail-canvas-' + name.replace(/ /g, '_');
+  const ctx = document.getElementById(canvasId)?.getContext('2d');
+  if (!ctx) return;
 
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search founders..." onkeyup="searchTable()">
-            </div>
+  if (window['detailChart_' + name]) window['detailChart_' + name].destroy();
 
-            <div class="leaderboard-table">
-                <table id="leaderboard">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Founder</th>
-                            <th>Cohort(s)</th>
-                            <th>User Msgs</th>
-                            <th>Agent Resp</th>
-                            <th>Weeks</th>
-                            <th>Msgs/Wk</th>
-                            <th>First Chat</th>
-                            <th>Last Chat</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr><td colspan="9" class="loading">Loading leaderboard...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  const color = cohortMeta[cohort]?.color || '#3b82f6';
+  window['detailChart_' + name] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: founder.weeklyData.map(w => w[0]),
+      datasets: [{
+        label: 'User messages/week',
+        data: founder.weeklyData.map(w => w[1]),
+        borderColor: color,
+        backgroundColor: color + '20',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 0,
+      }]
+    },
+    options: {
+      responsive: true, plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false }, ticks: { color: '#6b7280', maxRotation: 45, font: { size: 9 } } }, y: { grid: { color: '#1a1a1a' }, ticks: { color: '#6b7280' }, beginAtZero: true } }
+    }
+  });
+}
 
-        <footer>
-            <p>Data collected directly from Letta API for accuracy</p>
-            <p class="data-source" id="dataSource">Loading...</p>
-        </footer>
-    </div>
+function filterTable() { renderTable(); }
 
-    <script>
-        let founders = [];
-        let currentDetailName = null;
-        const cohortColors = {
-            'founder-s26': '#60a5fa', 'founder-v1-inflight': '#818cf8',
-            'founder-v1-launch_track': '#34d399', 'bootcamp-s26': '#fbbf24',
-            'founder-community': '#f472b6', 'litf': '#a78bfa', 'named_person': '#fb923c'
-        };
-        const cohortNames = {
-            'founder-s26': 'In Flight S26', 'founder-v1-inflight': 'V1 In Flight',
-            'founder-v1-launch_track': 'Launch Track', 'bootcamp-s26': 'Bootcamp S26',
-            'founder-community': 'Community', 'litf': 'LITF', 'named_person': 'Named Agents'
-        };
-
-        async function loadData() {
-            try {
-                const response = await fetch('founders-data.json');
-                const data = await response.json();
-                founders = data.founders;
-                document.getElementById('generated').textContent =
-                    `Updated: ${data.metadata.lastUpdated} • ${data.totalFounders} founders tracked • ${data.metadata.crossCohortPeople} cross-cohort`;
-                document.getElementById('dataSource').textContent =
-                    `Source: ${data.metadata.source} • ${data.metadata.totalAgents} total agents`;
-                renderSummary(data);
-                populateTable(founders);
-                renderCharts();
-            } catch (error) {
-                document.getElementById('tableBody').innerHTML =
-                    `<tr><td colspan="9" style="color:#ef4444;text-align:center;padding:2rem;">Error loading data: ${error.message}</td></tr>`;
-            }
-        }
-
-        function renderSummary(data) {
-            const grid = document.getElementById('summaryGrid');
-            const order = ['founder-s26','founder-v1-inflight','founder-v1-launch_track','bootcamp-s26','founder-community','litf','named_person'];
-            grid.innerHTML = order.map(ck => {
-                const s = data.cohorts[ck];
-                if (!s) return '';
-                return `<div class="summary-card c-${ck}">
-                    <h3>${s.name}</h3>
-                    <div class="summary-stats">
-                        <div><div class="stat-value c-${ck}">${s.count}</div><div class="stat-label">Founders</div></div>
-                        <div><div class="stat-value c-${ck}">${s.avgMsgsPerWeek}</div><div class="stat-label">Avg Msgs/Wk</div></div>
-                        <div><div class="stat-value c-${ck}">${s.totalUserMessages}</div><div class="stat-label">User Msgs</div></div>
-                        <div><div class="stat-value c-${ck}">${s.totalAgentResponses}</div><div class="stat-label">Agent Resp</div></div>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function populateTable(data) {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-            currentDetailName = null;
-            data.forEach(founder => {
-                const row = document.createElement('tr');
-                row.dataset.cohorts = JSON.stringify(founder.cohorts);
-                row.dataset.name = founder.name;
-                const rankClass = founder.rank <= 3 ? `rank-${founder.rank}` : '';
-                const metricClass = founder.msgsPerWeek >= 5 ? 'metric-highlight' : founder.msgsPerWeek >= 1 ? '' : founder.msgsPerWeek > 0 ? 'metric-low' : 'metric-zero';
-                const cohortBadges = founder.cohorts.map(c => `<span class="cohort-badge ${c}">${cohortNames[c] || c}</span>`).join(' ');
-                const primaryId = Object.values(founder.agentIds)[0] || '';
-                const shortId = primaryId ? primaryId.substring(7, 19) + '...' : '';
-                row.innerHTML = `
-                    <td class="rank ${rankClass}">#${founder.rank}</td>
-                    <td class="founder-name" onclick="toggleFounderDetail('${founder.name}')">${founder.name}</td>
-                    <td>${cohortBadges}</td>
-                    <td class="metric">${founder.userMessages}</td>
-                    <td class="metric">${founder.agentResponses}</td>
-                    <td class="metric">${founder.weeks}</td>
-                    <td class="metric ${metricClass}">${founder.msgsPerWeek.toFixed(2)}</td>
-                    <td style="font-size:0.8rem;color:var(--text-secondary)">${founder.firstChat || '—'}</td>
-                    <td style="font-size:0.8rem;color:var(--text-secondary)">${founder.lastChat || '—'}</td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function toggleFounderDetail(name) {
-            if (currentDetailName === name) { closeFounderDetail(); return; }
-            closeFounderDetail();
-            const founder = founders.find(f => f.name === name);
-            if (!founder || !founder.weeklyData || founder.weeklyData.length === 0) return;
-            currentDetailName = name;
-            const founderRow = document.querySelector(`tr[data-name="${name}"]`);
-            if (!founderRow) return;
-
-            // Build cohort selector
-            const cohortOptions = founder.cohorts.map((c, i) => {
-                const aid = founder.agentIds[c] || '';
-                return `<option value="${i}" ${i===0?'selected':''}>${cohortNames[c]} (${aid.substring(7,15)}...)</option>`;
-            }).join('');
-
-            const detailRow = document.createElement('tr');
-            detailRow.className = 'founder-detail-row active';
-            detailRow.id = 'activeDetailRow';
-            detailRow.innerHTML = `<td colspan="9">
-                <div class="founder-detail-inner">
-                    <div class="founder-detail-header">
-                        <h3>${name} — Week-by-Week Activity</h3>
-                        <button class="close-btn" onclick="closeFounderDetail()">✕ Close</button>
-                    </div>
-                    <div class="cohort-selector">
-                        <label>Agent:</label>
-                        <select id="cohortSelect" onchange="updateDetailChart('${name}')">${cohortOptions}</select>
-                    </div>
-                    <div class="detail-meta">
-                        <span>Agent ID: ${Object.values(founder.agentIds)[0] || '—'}</span>
-                        <span>First: ${founder.firstChat || '—'}</span>
-                        <span>Last: ${founder.lastChat || '—'}</span>
-                        <span>Total: ${founder.userMessages} user / ${founder.agentResponses} agent</span>
-                    </div>
-                    <div class="chart-wrapper-inline"><canvas id="inlineChart"></canvas></div>
-                </div>
-            </td>`;
-            founderRow.after(detailRow);
-            renderDetailChart(founder);
-        }
-
-        function renderDetailChart(founder, cohortIndex) {
-            const ctx = document.getElementById('inlineChart');
-            if (!ctx) return;
-            // Remove old chart if exists
-            const oldChart = Chart.getChart(ctx);
-            if (oldChart) oldChart.destroy();
-
-            const color = cohortColors[founder.primaryCohort] || '#60a5fa';
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: founder.weeklyData.map(w => w[0]),
-                    datasets: [{
-                        label: 'User Messages',
-                        data: founder.weeklyData.map(w => w[1]),
-                        borderColor: color,
-                        backgroundColor: color + '20',
-                        fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
-                        x: { grid: { display: false }, ticks: { color: '#9ca3af', maxRotation: 60 } }
-                    }
-                }
-            });
-        }
-
-        function updateDetailChart(name) {
-            // For cross-cohort people, this could switch between agent views
-            // For now, it shows the merged weekly data
-            const founder = founders.find(f => f.name === name);
-            if (founder) renderDetailChart(founder);
-        }
-
-        function closeFounderDetail() {
-            const existing = document.getElementById('activeDetailRow');
-            if (existing) existing.remove();
-            currentDetailName = null;
-        }
-
-        function filterTable(cohort) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            if (cohort === 'all') populateTable(founders);
-            else populateTable(founders.filter(f => f.cohorts.includes(cohort)));
-        }
-
-        function searchTable() {
-            const q = document.getElementById('searchInput').value.toLowerCase();
-            populateTable(founders.filter(f => f.name.toLowerCase().includes(q)));
-        }
-
-        function renderCharts() {
-            // Distribution
-            const active = founders.filter(f => f.msgsPerWeek > 0);
-            const ctx1 = document.getElementById('distributionChart').getContext('2d');
-            new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: active.slice(0, 30).map(f => f.name.split(' ')[0]),
-                    datasets: [{
-                        label: 'Msgs/Week',
-                        data: active.slice(0, 30).map(f => f.msgsPerWeek),
-                        backgroundColor: active.slice(0, 30).map(f => cohortColors[f.primaryCohort] || '#60a5fa'),
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
-                        x: { grid: { display: false }, ticks: { color: '#9ca3af', maxRotation: 60 } }
-                    }
-                }
-            });
-
-            // Cohort comparison
-            const order = ['founder-s26','founder-v1-inflight','founder-v1-launch_track','bootcamp-s26','founder-community','litf','named_person'];
-            const ctx2 = document.getElementById('cohortChart').getContext('2d');
-            new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: order.map(k => cohortNames[k]),
-                    datasets: [{
-                        label: 'Avg Msgs/Week',
-                        data: order.map(k => {
-                            const cf = founders.filter(f => f.cohorts.includes(k));
-                            return cf.length > 0 ? cf.reduce((s, f) => s + f.msgsPerWeek, 0) / cf.length : 0;
-                        }),
-                        backgroundColor: order.map(k => cohortColors[k]),
-                        borderRadius: 8, borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
-                        x: { grid: { display: false }, ticks: { color: '#9ca3af', maxRotation: 45 } }
-                    }
-                }
-            });
-        }
-
-        loadData();
-    </script>
+loadData();
+</script>
 </body>
 </html>
