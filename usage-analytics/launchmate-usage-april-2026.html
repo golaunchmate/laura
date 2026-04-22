@@ -4,107 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LaunchMate Usage Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600,700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg-primary: #0f0f0f;
-            --bg-secondary: #1a1a2e;
-            --bg-card: #16162a;
-            --accent-blue: #60a5fa;
-            --accent-green: #34d399;
-            --accent-orange: #f97316;
-            --accent-purple: #a78bfa;
-            --text-primary: #e5e5e5;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
+            --bg-primary: #0f0f0f; --bg-secondary: #1a1a2e; --bg-card: #16162a;
+            --accent-blue: #60a5fa; --accent-green: #34d399; --accent-orange: #f97316;
+            --accent-purple: #a78bfa; --accent-pink: #f472b6; --accent-amber: #fbbf24;
+            --accent-indigo: #818cf8;
+            --text-primary: #e5e5e5; --text-secondary: #9ca3af; --text-muted: #6b7280;
             --border: #2a2a3e;
-            --cohort-inflight: #60a5fa;
-            --cohort-launchtrack: #34d399;
         }
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
         header { text-align: center; margin-bottom: 3rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
         h1 { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
         .subtitle { color: var(--text-secondary); font-size: 1.1rem; }
         .generated { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; }
         .note { background: rgba(76,175,80,0.1); border: 1px solid rgba(76,175,80,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 2rem; font-size: 0.875rem; color: #81c784; }
         .loading { text-align: center; padding: 4rem; color: var(--text-muted); }
-        
+
         /* Summary Cards */
-        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-        .summary-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; position: relative; overflow: hidden; }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 3rem; }
+        .summary-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; position: relative; overflow: hidden; }
         .summary-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
-        .summary-card.inflight::before { background: var(--cohort-inflight); }
-        .summary-card.launchtrack::before { background: var(--cohort-launchtrack); }
-        .summary-card h3 { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; }
-        .summary-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-        .stat-value { font-size: 2.5rem; font-weight: 800; }
-        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
-        .stat-value.inflight { color: var(--cohort-inflight); }
-        .stat-value.launchtrack { color: var(--cohort-launchtrack); }
-        
-        /* Charts Section */
+        .summary-card.c-founder-s26::before { background: var(--accent-blue); }
+        .summary-card.c-founder-v1-inflight::before { background: var(--accent-indigo); }
+        .summary-card.c-founder-v1-launch_track::before { background: var(--accent-green); }
+        .summary-card.c-bootcamp-s26::before { background: var(--accent-amber); }
+        .summary-card.c-founder-community::before { background: var(--accent-pink); }
+        .summary-card.c-litf::before { background: var(--accent-purple); }
+        .summary-card.c-named_person::before { background: var(--accent-orange); }
+        .summary-card h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.75rem; }
+        .summary-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        .stat-value { font-size: 2rem; font-weight: 800; }
+        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+        .stat-value.c-founder-s26 { color: var(--accent-blue); }
+        .stat-value.c-founder-v1-inflight { color: var(--accent-indigo); }
+        .stat-value.c-founder-v1-launch_track { color: var(--accent-green); }
+        .stat-value.c-bootcamp-s26 { color: var(--accent-amber); }
+        .stat-value.c-founder-community { color: var(--accent-pink); }
+        .stat-value.c-litf { color: var(--accent-purple); }
+        .stat-value.c-named_person { color: var(--accent-orange); }
+
+        /* Charts */
         .charts-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
         .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
         .chart-card h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary); }
         .chart-wrapper { height: 350px; }
-        
+
         /* Leaderboard */
         .leaderboard-section { margin-bottom: 3rem; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
         .section-header h2 { font-size: 1.5rem; font-weight: 700; }
-        .tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .tab { padding: 0.5rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); cursor: pointer; font-size: 0.875rem; transition: all 0.2s; }
+        .tabs { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+        .tab { padding: 0.4rem 0.85rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
         .tab:hover { border-color: var(--accent-blue); }
         .tab.active { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+        .tab.active.c-founder-s26 { background: var(--accent-blue); border-color: var(--accent-blue); }
+        .tab.active.c-founder-v1-inflight { background: var(--accent-indigo); border-color: var(--accent-indigo); }
+        .tab.active.c-founder-v1-launch_track { background: var(--accent-green); border-color: var(--accent-green); }
+        .tab.active.c-bootcamp-s26 { background: var(--accent-amber); border-color: var(--accent-amber); color: #000; }
+        .tab.active.c-founder-community { background: var(--accent-pink); border-color: var(--accent-pink); }
+        .tab.active.c-litf { background: var(--accent-purple); border-color: var(--accent-purple); }
+        .tab.active.c-named_person { background: var(--accent-orange); border-color: var(--accent-orange); }
         .leaderboard-table { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 700px; }
-        th { background: var(--bg-secondary); padding: 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
-        td { padding: 1rem; border-top: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        th { background: var(--bg-secondary); padding: 0.75rem; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+        td { padding: 0.75rem; border-top: 1px solid var(--border); font-size: 0.875rem; }
         tr:hover td { background: rgba(255, 255, 255, 0.02); }
-        .rank { font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 50px; }
+        .rank { font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 40px; }
         .rank-1 { color: #ffd700; }
         .rank-2 { color: #c0c0c0; }
         .rank-3 { color: #cd7f32; }
         .founder-name { font-weight: 600; cursor: pointer; }
         .founder-name:hover { color: var(--accent-blue); text-decoration: underline; }
-        .cohort-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
-        .cohort-badge.inflight { background: rgba(96, 165, 250, 0.15); color: var(--cohort-inflight); }
-        .cohort-badge.launch_track { background: rgba(52, 211, 153, 0.15); color: var(--cohort-launchtrack); }
-        .metric { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+        .cohort-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.65rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px; }
+        .cohort-badge.founder-s26 { background: rgba(96,165,250,0.15); color: var(--accent-blue); }
+        .cohort-badge.founder-v1-inflight { background: rgba(129,140,248,0.15); color: var(--accent-indigo); }
+        .cohort-badge.founder-v1-launch_track { background: rgba(52,211,153,0.15); color: var(--accent-green); }
+        .cohort-badge.bootcamp-s26 { background: rgba(251,191,36,0.15); color: var(--accent-amber); }
+        .cohort-badge.founder-community { background: rgba(244,114,182,0.15); color: var(--accent-pink); }
+        .cohort-badge.litf { background: rgba(167,139,250,0.15); color: var(--accent-purple); }
+        .cohort-badge.named_person { background: rgba(249,115,22,0.15); color: var(--accent-orange); }
+        .metric { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 0.8rem; }
         .metric-highlight { color: var(--accent-green); }
         .metric-low { color: var(--accent-orange); }
         .metric-zero { color: var(--text-muted); }
-        
-        /* Inline founder detail row */
+        .agent-id { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-muted); }
+
+        /* Inline founder detail */
         .founder-detail-row { display: none; }
         .founder-detail-row.active { display: table-row; }
         .founder-detail-row td { padding: 0; border-top: 1px solid var(--border); }
-        .founder-detail-inner { padding: 1.5rem; background: rgba(96, 165, 250, 0.05); border-bottom: 1px solid rgba(96, 165, 250, 0.2); }
+        .founder-detail-inner { padding: 1.5rem; background: rgba(96,165,250,0.05); border-bottom: 1px solid rgba(96,165,250,0.2); }
         .founder-detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
         .founder-detail-header h3 { font-size: 1rem; color: var(--accent-blue); }
         .close-btn { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
         .close-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+        .cohort-selector { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem; }
+        .cohort-selector label { font-size: 0.8rem; color: var(--text-secondary); }
+        .cohort-selector select { padding: 0.3rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; }
         .chart-wrapper-inline { height: 250px; }
-        
-        /* Footer */
-        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem; }
-        .data-source { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-top: 0.5rem; }
-        
+        .detail-meta { display: flex; gap: 1.5rem; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-secondary); flex-wrap: wrap; }
+        .detail-meta span { font-family: 'JetBrains Mono', monospace; }
+
         /* Search */
         .search-box { margin-bottom: 1rem; }
-        .search-input { width: 100%; padding: 0.75rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-size: 0.875rem; }
+        .search-input { width: 100%; padding: 0.6rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; }
         .search-input:focus { outline: none; border-color: var(--accent-blue); }
         .search-input::placeholder { color: var(--text-muted); }
-        
+
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem; }
+        .data-source { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-top: 0.5rem; }
+
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             h1 { font-size: 2rem; }
@@ -117,44 +131,41 @@
     <div class="container">
         <header>
             <h1>LaunchMate Usage Analytics</h1>
-            <p class="subtitle">User engagement from first message date • Click founder name for week-by-week activity</p>
+            <p class="subtitle">7 cohorts &bull; 136 agents &bull; Click founder name for week-by-week activity</p>
             <p class="generated" id="generated">Loading data...</p>
         </header>
 
         <div class="note">
-            <strong>📊 Methodology:</strong> Metrics calculated from each founder's FIRST USER MESSAGE date. Only counts user-typed messages (message_type = user_message).
+            <strong>📊 Methodology:</strong> Metrics from first user message date. Weekly data extends to <strong>current date</strong> (zeros for inactive weeks = visible flatlines). Cross-cohort people show merged activity.
         </div>
 
-        <!-- Summary Cards -->
         <div class="summary-grid" id="summaryGrid">
             <div class="loading">Loading summary...</div>
         </div>
 
-        <!-- Charts -->
         <div class="charts-section">
             <div class="chart-card">
                 <h3>📊 Messages per Week Distribution</h3>
-                <div class="chart-wrapper">
-                    <canvas id="distributionChart"></canvas>
-                </div>
+                <div class="chart-wrapper"><canvas id="distributionChart"></canvas></div>
             </div>
-
             <div class="chart-card">
                 <h3>👥 Cohort Comparison</h3>
-                <div class="chart-wrapper">
-                    <canvas id="cohortChart"></canvas>
-                </div>
+                <div class="chart-wrapper"><canvas id="cohortChart"></canvas></div>
             </div>
         </div>
 
-        <!-- Leaderboard -->
         <div class="leaderboard-section">
             <div class="section-header">
                 <h2>🏆 Founder Leaderboard</h2>
-                <div class="tabs">
+                <div class="tabs" id="tabContainer">
                     <button class="tab active" onclick="filterTable('all')">All</button>
-                    <button class="tab" onclick="filterTable('inflight')">In Flight</button>
-                    <button class="tab" onclick="filterTable('launch_track')">Launch Track</button>
+                    <button class="tab c-founder-s26" onclick="filterTable('founder-s26')">In Flight S26</button>
+                    <button class="tab c-founder-v1-inflight" onclick="filterTable('founder-v1-inflight')">V1 In Flight</button>
+                    <button class="tab c-founder-v1-launch_track" onclick="filterTable('founder-v1-launch_track')">Launch Track</button>
+                    <button class="tab c-bootcamp-s26" onclick="filterTable('bootcamp-s26')">Bootcamp</button>
+                    <button class="tab c-founder-community" onclick="filterTable('founder-community')">Community</button>
+                    <button class="tab c-litf" onclick="filterTable('litf')">LITF</button>
+                    <button class="tab c-named_person" onclick="filterTable('named_person')">Named</button>
                 </div>
             </div>
 
@@ -168,15 +179,17 @@
                         <tr>
                             <th>Rank</th>
                             <th>Founder</th>
-                            <th>Cohort</th>
-                            <th>User Messages</th>
-                            <th>Agent Responses</th>
-                            <th>Weeks Active</th>
-                            <th>Msgs/Week</th>
+                            <th>Cohort(s)</th>
+                            <th>User Msgs</th>
+                            <th>Agent Resp</th>
+                            <th>Weeks</th>
+                            <th>Msgs/Wk</th>
+                            <th>First Chat</th>
+                            <th>Last Chat</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
-                        <tr><td colspan="7" class="loading">Loading leaderboard...</td></tr>
+                        <tr><td colspan="9" class="loading">Loading leaderboard...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -191,135 +204,130 @@
     <script>
         let founders = [];
         let currentDetailName = null;
-        let detailChartIndex = 0;
+        const cohortColors = {
+            'founder-s26': '#60a5fa', 'founder-v1-inflight': '#818cf8',
+            'founder-v1-launch_track': '#34d399', 'bootcamp-s26': '#fbbf24',
+            'founder-community': '#f472b6', 'litf': '#a78bfa', 'named_person': '#fb923c'
+        };
+        const cohortNames = {
+            'founder-s26': 'In Flight S26', 'founder-v1-inflight': 'V1 In Flight',
+            'founder-v1-launch_track': 'Launch Track', 'bootcamp-s26': 'Bootcamp S26',
+            'founder-community': 'Community', 'litf': 'LITF', 'named_person': 'Named Agents'
+        };
 
         async function loadData() {
             try {
                 const response = await fetch('founders-data.json');
                 const data = await response.json();
-                
                 founders = data.founders;
-                
-                // Update header
-                document.getElementById('generated').textContent = 
-                    `Updated: ${data.metadata.lastUpdated} • ${data.totalFounders} founders tracked`;
-                
-                // Update data source
-                document.getElementById('dataSource').textContent = 
-                    `Source: ${data.metadata.source} • ${data.metadata.methodology}`;
-                
-                // Render summary cards
+                document.getElementById('generated').textContent =
+                    `Updated: ${data.metadata.lastUpdated} • ${data.totalFounders} founders tracked • ${data.metadata.crossCohortPeople} cross-cohort`;
+                document.getElementById('dataSource').textContent =
+                    `Source: ${data.metadata.source} • ${data.metadata.totalAgents} total agents`;
                 renderSummary(data);
-                
-                // Render leaderboard
                 populateTable(founders);
-                
-                // Render charts
                 renderCharts();
-                
             } catch (error) {
-                document.getElementById('tableBody').innerHTML = 
-                    `<tr><td colspan="7" style="color:#ef4444;text-align:center;padding:2rem;">Error loading data: ${error.message}</td></tr>`;
+                document.getElementById('tableBody').innerHTML =
+                    `<tr><td colspan="9" style="color:#ef4444;text-align:center;padding:2rem;">Error loading data: ${error.message}</td></tr>`;
             }
         }
 
         function renderSummary(data) {
             const grid = document.getElementById('summaryGrid');
-            const ifSummary = data.summary.inflight;
-            const ltSummary = data.summary.launch_track;
-            
-            grid.innerHTML = `
-                <div class="summary-card inflight">
-                    <h3>🚀 In Flight Cohort</h3>
+            const order = ['founder-s26','founder-v1-inflight','founder-v1-launch_track','bootcamp-s26','founder-community','litf','named_person'];
+            grid.innerHTML = order.map(ck => {
+                const s = data.cohorts[ck];
+                if (!s) return '';
+                return `<div class="summary-card c-${ck}">
+                    <h3>${s.name}</h3>
                     <div class="summary-stats">
-                        <div><div class="stat-value inflight">${ifSummary.founders}</div><div class="stat-label">Founders</div></div>
-                        <div><div class="stat-value inflight">${ifSummary.avgMsgsPerWeek.toFixed(2)}</div><div class="stat-label">Avg Msgs/Week</div></div>
-                        <div><div class="stat-value inflight">${ifSummary.totalUserMessages}</div><div class="stat-label">Total User Messages</div></div>
-                        <div><div class="stat-value inflight">${ifSummary.totalAgentResponses}</div><div class="stat-label">Agent Responses</div></div>
+                        <div><div class="stat-value c-${ck}">${s.count}</div><div class="stat-label">Founders</div></div>
+                        <div><div class="stat-value c-${ck}">${s.avgMsgsPerWeek}</div><div class="stat-label">Avg Msgs/Wk</div></div>
+                        <div><div class="stat-value c-${ck}">${s.totalUserMessages}</div><div class="stat-label">User Msgs</div></div>
+                        <div><div class="stat-value c-${ck}">${s.totalAgentResponses}</div><div class="stat-label">Agent Resp</div></div>
                     </div>
-                </div>
-
-                <div class="summary-card launchtrack">
-                    <h3>🎯 Launch Track Cohort</h3>
-                    <div class="summary-stats">
-                        <div><div class="stat-value launchtrack">${ltSummary.founders}</div><div class="stat-label">Founders</div></div>
-                        <div><div class="stat-value launchtrack">${ltSummary.avgMsgsPerWeek.toFixed(2)}</div><div class="stat-label">Avg Msgs/Week</div></div>
-                        <div><div class="stat-value launchtrack">${ltSummary.totalUserMessages}</div><div class="stat-label">Total User Messages</div></div>
-                        <div><div class="stat-value launchtrack">${ltSummary.totalAgentResponses}</div><div class="stat-label">Agent Responses</div></div>
-                    </div>
-                </div>
-            `;
+                </div>`;
+            }).join('');
         }
 
         function populateTable(data) {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
             currentDetailName = null;
-            
             data.forEach(founder => {
                 const row = document.createElement('tr');
-                row.dataset.cohort = founder.cohort;
+                row.dataset.cohorts = JSON.stringify(founder.cohorts);
                 row.dataset.name = founder.name;
                 const rankClass = founder.rank <= 3 ? `rank-${founder.rank}` : '';
-                const metricClass = founder.msgsPerWeek >= 2 ? 'metric-highlight' : founder.msgsPerWeek >= 1 ? '' : founder.msgsPerWeek > 0 ? 'metric-low' : 'metric-zero';
-                const cohortDisplay = founder.cohort === 'inflight' ? 'In Flight' : 'Launch Track';
+                const metricClass = founder.msgsPerWeek >= 5 ? 'metric-highlight' : founder.msgsPerWeek >= 1 ? '' : founder.msgsPerWeek > 0 ? 'metric-low' : 'metric-zero';
+                const cohortBadges = founder.cohorts.map(c => `<span class="cohort-badge ${c}">${cohortNames[c] || c}</span>`).join(' ');
+                const primaryId = Object.values(founder.agentIds)[0] || '';
+                const shortId = primaryId ? primaryId.substring(7, 19) + '...' : '';
                 row.innerHTML = `
                     <td class="rank ${rankClass}">#${founder.rank}</td>
                     <td class="founder-name" onclick="toggleFounderDetail('${founder.name}')">${founder.name}</td>
-                    <td><span class="cohort-badge ${founder.cohort}">${cohortDisplay}</span></td>
+                    <td>${cohortBadges}</td>
                     <td class="metric">${founder.userMessages}</td>
                     <td class="metric">${founder.agentResponses}</td>
                     <td class="metric">${founder.weeks}</td>
                     <td class="metric ${metricClass}">${founder.msgsPerWeek.toFixed(2)}</td>
+                    <td style="font-size:0.8rem;color:var(--text-secondary)">${founder.firstChat || '—'}</td>
+                    <td style="font-size:0.8rem;color:var(--text-secondary)">${founder.lastChat || '—'}</td>
                 `;
                 tbody.appendChild(row);
             });
         }
 
         function toggleFounderDetail(name) {
-            // If clicking the same founder, close it
-            if (currentDetailName === name) {
-                closeFounderDetail();
-                return;
-            }
-            
-            // Close any existing detail
+            if (currentDetailName === name) { closeFounderDetail(); return; }
             closeFounderDetail();
-            
             const founder = founders.find(f => f.name === name);
-            if (!founder || !founder.weeklyData || founder.weeklyData.length === 0) {
-                return;
-            }
-            
+            if (!founder || !founder.weeklyData || founder.weeklyData.length === 0) return;
             currentDetailName = name;
-            
-            // Find the row for this founder
             const founderRow = document.querySelector(`tr[data-name="${name}"]`);
             if (!founderRow) return;
-            
-            // Create detail row
+
+            // Build cohort selector
+            const cohortOptions = founder.cohorts.map((c, i) => {
+                const aid = founder.agentIds[c] || '';
+                return `<option value="${i}" ${i===0?'selected':''}>${cohortNames[c]} (${aid.substring(7,15)}...)</option>`;
+            }).join('');
+
             const detailRow = document.createElement('tr');
             detailRow.className = 'founder-detail-row active';
             detailRow.id = 'activeDetailRow';
-            detailRow.innerHTML = `
-                <td colspan="7">
-                    <div class="founder-detail-inner">
-                        <div class="founder-detail-header">
-                            <h3>${name} — Week-by-Week Activity</h3>
-                            <button class="close-btn" onclick="closeFounderDetail()">✕ Close</button>
-                        </div>
-                        <div class="chart-wrapper-inline">
-                            <canvas id="inlineChart"></canvas>
-                        </div>
+            detailRow.innerHTML = `<td colspan="9">
+                <div class="founder-detail-inner">
+                    <div class="founder-detail-header">
+                        <h3>${name} — Week-by-Week Activity</h3>
+                        <button class="close-btn" onclick="closeFounderDetail()">✕ Close</button>
                     </div>
-                </td>
-            `;
-            
-            // Insert after the founder's row
+                    <div class="cohort-selector">
+                        <label>Agent:</label>
+                        <select id="cohortSelect" onchange="updateDetailChart('${name}')">${cohortOptions}</select>
+                    </div>
+                    <div class="detail-meta">
+                        <span>Agent ID: ${Object.values(founder.agentIds)[0] || '—'}</span>
+                        <span>First: ${founder.firstChat || '—'}</span>
+                        <span>Last: ${founder.lastChat || '—'}</span>
+                        <span>Total: ${founder.userMessages} user / ${founder.agentResponses} agent</span>
+                    </div>
+                    <div class="chart-wrapper-inline"><canvas id="inlineChart"></canvas></div>
+                </div>
+            </td>`;
             founderRow.after(detailRow);
-            
-            // Render chart
-            const ctx = document.getElementById('inlineChart').getContext('2d');
+            renderDetailChart(founder);
+        }
+
+        function renderDetailChart(founder, cohortIndex) {
+            const ctx = document.getElementById('inlineChart');
+            if (!ctx) return;
+            // Remove old chart if exists
+            const oldChart = Chart.getChart(ctx);
+            if (oldChart) oldChart.destroy();
+
+            const color = cohortColors[founder.primaryCohort] || '#60a5fa';
             new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -327,68 +335,91 @@
                     datasets: [{
                         label: 'User Messages',
                         data: founder.weeklyData.map(w => w[1]),
-                        borderColor: '#60a5fa',
-                        backgroundColor: 'rgba(96, 165, 250, 0.1)',
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#60a5fa'
+                        borderColor: color,
+                        backgroundColor: color + '20',
+                        fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
                         y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
-                        x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af', maxRotation: 60 } }
                     }
                 }
             });
         }
 
+        function updateDetailChart(name) {
+            // For cross-cohort people, this could switch between agent views
+            // For now, it shows the merged weekly data
+            const founder = founders.find(f => f.name === name);
+            if (founder) renderDetailChart(founder);
+        }
+
         function closeFounderDetail() {
-            const existingRow = document.getElementById('activeDetailRow');
-            if (existingRow) {
-                existingRow.remove();
-            }
+            const existing = document.getElementById('activeDetailRow');
+            if (existing) existing.remove();
             currentDetailName = null;
         }
 
         function filterTable(cohort) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             if (cohort === 'all') populateTable(founders);
-            else populateTable(founders.filter(f => f.cohort === cohort));
+            else populateTable(founders.filter(f => f.cohorts.includes(cohort)));
         }
 
         function searchTable() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            populateTable(founders.filter(f => f.name.toLowerCase().includes(query)));
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            populateTable(founders.filter(f => f.name.toLowerCase().includes(q)));
         }
 
         function renderCharts() {
-            // Distribution Chart
+            // Distribution
+            const active = founders.filter(f => f.msgsPerWeek > 0);
             const ctx1 = document.getElementById('distributionChart').getContext('2d');
             new Chart(ctx1, {
                 type: 'bar',
                 data: {
-                    labels: founders.filter(f => f.msgsPerWeek > 0).map(f => f.name.split(' ')[0]),
+                    labels: active.slice(0, 30).map(f => f.name.split(' ')[0]),
                     datasets: [{
-                        label: 'Messages per Week',
-                        data: founders.filter(f => f.msgsPerWeek > 0).map(f => f.msgsPerWeek),
-                        backgroundColor: founders.filter(f => f.msgsPerWeek > 0).map(f => 
-                            f.cohort === 'inflight' ? 'rgba(96, 165, 250, 0.7)' : 'rgba(52, 211, 153, 0.7)'
-                        ),
-                        borderColor: founders.filter(f => f.msgsPerWeek > 0).map(f => 
-                            f.cohort === 'inflight' ? '#60a5fa' : '#34d399'
-                        ),
+                        label: 'Msgs/Week',
+                        data: active.slice(0, 30).map(f => f.msgsPerWeek),
+                        backgroundColor: active.slice(0, 30).map(f => cohortColors[f.primaryCohort] || '#60a5fa'),
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af', maxRotation: 60 } }
+                    }
+                }
+            });
+
+            // Cohort comparison
+            const order = ['founder-s26','founder-v1-inflight','founder-v1-launch_track','bootcamp-s26','founder-community','litf','named_person'];
+            const ctx2 = document.getElementById('cohortChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: order.map(k => cohortNames[k]),
+                    datasets: [{
+                        label: 'Avg Msgs/Week',
+                        data: order.map(k => {
+                            const cf = founders.filter(f => f.cohorts.includes(k));
+                            return cf.length > 0 ? cf.reduce((s, f) => s + f.msgsPerWeek, 0) / cf.length : 0;
+                        }),
+                        backgroundColor: order.map(k => cohortColors[k]),
+                        borderRadius: 8, borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
                         y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
@@ -396,41 +427,8 @@
                     }
                 }
             });
-
-            // Cohort Comparison Chart
-            const inflight = founders.filter(f => f.cohort === 'inflight');
-            const launchTrack = founders.filter(f => f.cohort === 'launch_track');
-            
-            const ctx2 = document.getElementById('cohortChart').getContext('2d');
-            new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: ['In Flight', 'Launch Track'],
-                    datasets: [{
-                        label: 'Avg Messages/Week',
-                        data: [
-                            inflight.reduce((sum, f) => sum + f.msgsPerWeek, 0) / inflight.length,
-                            launchTrack.reduce((sum, f) => sum + f.msgsPerWeek, 0) / launchTrack.length
-                        ],
-                        backgroundColor: ['rgba(96, 165, 250, 0.7)', 'rgba(52, 211, 153, 0.7)'],
-                        borderColor: ['#60a5fa', '#34d399'],
-                        borderWidth: 2,
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
-                        x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
-                    }
-                }
-            });
         }
 
-        // Load data on page load
         loadData();
     </script>
 </body>
