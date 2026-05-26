@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="drop-type" content="reminder">
+    <meta name="drop-recipient" content="Laura Wetherhold">
+    <meta name="drop-date" content="2026-05-26">
+    <title>Drop Reminder · Laura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0f0f0f;
+            color: #e5e5e5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
+        }
+        .drop-card {
+            max-width: 520px;
+            width: 90%;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border: 1px solid #2a2a4a;
+            border-radius: 20px;
+            padding: 48px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .drop-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.08), transparent 60%);
+            pointer-events: none;
+        }
+        .drop-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 24px;
+        }
+        .drop-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .drop-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #f0f0f0;
+            margin-bottom: 12px;
+        }
+        .drop-subtitle {
+            font-size: 0.95rem;
+            color: #9ca3af;
+            margin-bottom: 32px;
+        }
+        .commitment-box {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+        .commitment-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #818cf8;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 8px;
+        }
+        .commitment-text {
+            font-size: 0.9rem;
+            color: #d1d5db;
+        }
+        .personal-note {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            font-style: italic;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+        .drop-footer {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #4b5563;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #6366f1;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+    </style>
+</head>
+<body>
+    <div class="drop-card">
+        <p class="drop-badge">Drop · Reminder · Dispatched</p>
+        <span class="drop-icon">📬</span>
+        <h1 class="drop-title">Hey Laura — your drop arrived</h1>
+        <p class="drop-subtitle">The dispatcher works. This is the first real drop you've ever received.</p>
+
+        <div class="commitment-box">
+            <p class="commitment-label">Your Commitment</p>
+            <p class="commitment-text">Test the new drop dispatcher flow with your founder agent by end of day Tuesday.</p>
+        </div>
+
+        <p class="personal-note">
+            You built the architecture for this. The Drop Agent dispatched, your founder agent received it, 
+            and now you're holding the proof. From OCF sessions to meta-agent systems to this — 
+            the pipeline is real. Time to finish what you started.
+        </p>
+
+        <p class="drop-footer"><span class="pulse"></span>Delivered by founder agent · 2026-05-26 · 1:00 PM PDT</p>
+    </div>
+</body>
+</html>
